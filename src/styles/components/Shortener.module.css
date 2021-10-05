@@ -179,6 +179,17 @@
   font-size: 1.6rem;
 }
 
+.surnameContainer .invalidSurnameMessage {
+  display: block;
+  transform: translateY(-10px);
+}
+
+.surnameContainer .invalidSurnameMessage,
+.invalidInput {
+  color: #e32d2d;
+  font-size: 1.6rem;
+}
+
 .shortedLinkContainer button.enable .copyPopBubble {
     opacity: 1;
     transform: translateY(0);

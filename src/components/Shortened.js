@@ -1,14 +1,16 @@
 import { useContext, useState } from 'react'
 import { ShortenerContext } from '../contexts/Shortener'
 import styles from '../styles/components/Shortener.module.css'
+import copy from 'copy-to-clipboard'
 
 export function Shortened() {
 
   const [copyToClip, setCopyToClip] = useState(false)
-  const {handleShortOtherLink} = useContext(ShortenerContext)
+  const {handleShortOtherLink, shortednedLink} = useContext(ShortenerContext)
 
   function handleCopyToClipBoard() {
     if (copyToClip) return
+    copy(shortednedLink)
     setCopyToClip(true)
     setTimeout(()=> {
       setCopyToClip(false)
@@ -18,7 +20,7 @@ export function Shortened() {
   return(
     <>
     <div className={styles.shortedLinkContainer}>
-      <i><input type="text" defaultValue=""></input></i>
+      <i><input type="text" value={shortednedLink} readOnly="readonly"></input></i>
         <button onClick={handleCopyToClipBoard} className={`${copyToClip ? styles.enable : 'disable'}`}>
           <span className={styles.copyAltIcon}/>
           <span className={styles.copyPopBubble}>URL Copiada</span>
