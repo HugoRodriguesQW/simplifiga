@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 10px;
+}
+
+body, input, button, p {
+  font-family: Sarala, sans-serif;
+  font-size: 2.4rem;
+  border: 0;
+  color: #363636;
+
+  font-style: normal;
+}
+
+button {
+  cursor: pointer;
+
+  border-radius: 5px;
+  color: #FFF;
+  background: #1A73E8;
+}
