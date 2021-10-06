@@ -57,8 +57,14 @@ export function ShortenerContextProvider ({children}) {
   }
 
   async function validateSurname(surname) { 
-    const hasOnDatabase = await Fetch({id: surname, action: 'has'})
+    const permitted =  /^[a-zA-Z-0-9\-]+$/
     
+    if (surname.replace(permitted, '')){
+      setIsSurnameValid(false)
+      return
+    }
+
+    const hasOnDatabase = await Fetch({id: surname, action: 'has'})
     if(!hasOnDatabase) {
       setIsSurnameValid(true)
       return true
