@@ -15,8 +15,5 @@ Encurtador e Simplificador de URLs para torná-las memoráveis.
  ```shell 
  git clone https://github.com/HugoRodriguesQW/simplifiga.git nlw4 && npm run dev
  # É necessário uma chave para acessar o banco de dados
- ```
- ##### Entre na pasta do projeto, instale as dependências e inicie:
- ```shell 
- cd ./moveit-whats && yarn &&  yarn start
+
  ```
