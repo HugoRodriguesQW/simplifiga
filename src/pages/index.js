@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { MainComponent } from '../components/MainComponent'
 import styles from '../styles/pages/Home.module.css'
+import { Error } from '../components/Error'
 
 export default function Home() {
 
@@ -22,6 +23,7 @@ export default function Home() {
 
       <MainComponent/>
 
+      <Error/>
     </div>
   )
 }

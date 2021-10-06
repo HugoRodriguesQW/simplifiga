@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import * as database from "../databaseExample.json" 
+import Fetch from "../pages/api/fetch";
 
 
 export const ShortenerContext = createContext({})
@@ -11,33 +11,34 @@ export function ShortenerContextProvider ({children}) {
   const [shortednedLink, setShortenedLink] = useState(null)
 
   const [isShortened, setIsShortened] = useState(false)
-  const [isSurnameValid, setIsSurnameValid] = useState(true) // Para exibição visual de erro
-  const [isLinkInputValid, setIsLinkInputValid] = useState(true) // Para exibição visual de erro
+  const [isSurnameValid, setIsSurnameValid] = useState(true) 
+  const [isLinkInputValid, setIsLinkInputValid] = useState(true)
 
-  function handleShortLink() { // Toda vez que o botão for pressionado
+  const [error, setError] = useState(null)
+
+  async function handleShortLink() {
     const inputLink = link
     const base = document.location.origin
     let surname =  linkSurname
     
-    if(!validateLinkInput(inputLink)) {
-      console.info(">Shortener: invalid input URL")
-      return
-    }
+    if(!validateLinkInput(inputLink)) return
 
     if(!surname) {
       surname = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 4)
     }
 
-    if(validateSurname(surname)) {
-      console.info("> Shortener:", surname," is a valid surname.", "link:", link)
-      
-      setShortenedLink(base+"/"+surname)
-      setIsShortened(true)
+    if(await validateSurname(surname)) {
+      const response = await Fetch({id: surname, link: inputLink, action: 'create'})
+      if(!response?.error && response) {
+        setShortenedLink(base+"/"+surname)
+        setIsShortened(true)
+        return
+      }
 
+      setError(100)
       return
     } 
 
-    console.info("> Shortener: invalid surname. Try out.")
     if(!linkSurname)  handleShortLink() 
   }
 
@@ -55,27 +56,33 @@ export function ShortenerContextProvider ({children}) {
     }
   }
 
-  function validateSurname(surname) { // Completo: Verifica apelido e seta FALSO se digitado
-    for(const key in database) {
-      if (surname === key) {
-        if (linkSurname) setIsSurnameValid(false)
-        return false
-      }
+  async function validateSurname(surname) { 
+    const hasOnDatabase = await Fetch({id: surname, action: 'has'})
+    
+    if(!hasOnDatabase) {
+      setIsSurnameValid(true)
+      return true
     }
-    setIsSurnameValid(true)
-    return true
+
+    if (linkSurname) setIsSurnameValid(false)
+    return false
   }
 
-  function handleShortOtherLink() { // Completo: Limpa e reseta a página
-    console.info("> Shortener: Clear Link, Surname and reset page" )
+  function handleShortOtherLink() {
     setLink(null)
     setLinkSurname(null)
     setIsShortened(false)
+    setIsSurnameValid(true)
+    setIsLinkInputValid(true)
   }
 
-  useEffect(()=> { // Completo: Observa e seta o estado do encurtamento.
+  useEffect(()=> { 
     setIsShortened(shortednedLink != null)
   },[shortednedLink])
+
+  useEffect(()=> {
+    setTimeout(() => {setError(null)}, 4000)
+  }, [error])
 
   return (
     <ShortenerContext.Provider value={{
@@ -87,7 +94,8 @@ export function ShortenerContextProvider ({children}) {
       isSurnameValid,
       isLinkInputValid,
       handleShortLink,
-      handleShortOtherLink
+      handleShortOtherLink,
+      error
     }}>
       {children}
     </ShortenerContext.Provider>
