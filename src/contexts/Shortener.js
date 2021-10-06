@@ -18,7 +18,7 @@ export function ShortenerContextProvider ({children}) {
 
   async function handleShortLink() {
     const inputLink = link
-    const base = document.location.origin
+    const base = document.location.origin.replace('wwww.', '')
     let surname =  linkSurname
     
     if(!validateLinkInput(inputLink)) return
