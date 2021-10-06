@@ -11,6 +11,7 @@ export default async function Fetch(commands){
       },
       body: JSON.stringify(commands),
     })
+    
     const values = await response.json()
     if(values.error) {return null}
     return values

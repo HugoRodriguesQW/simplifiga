@@ -46,7 +46,12 @@ export const database = {
 
 const handler = nc()
 .post(async (req, res) => {
-  await database.connect()
+  try {
+    await database.connect()
+  } catch {
+    res.json({'error': 'db-error-connect'})
+    return
+  }
 
   const body    = await JSON.parse(req.body)
   const {id, link, action} = body 
@@ -57,9 +62,12 @@ const handler = nc()
   if(! NotRequirePermission.includes(action) ) res.json({'error': 'refused'})
 
   if(exec) {
-    const response = await exec({id, link})
-    res.json(response)
-    return
+    try {
+      const response = await exec({id, link})
+      res.json(response)
+    } catch {
+      res.json({'error': 'error-exec'})
+    }
   }
 })
 
