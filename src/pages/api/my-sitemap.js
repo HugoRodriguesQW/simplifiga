@@ -1,11 +1,12 @@
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { Readable } = require("stream");
 
+import database from './database'
+
 const handler = async (req, res) => {
 
   const links = [
-    { url: "/[redirect]", changefreq: "daily", priority: 1 },
-    { url: "/index", changefreq: "daily", priority: 1 },
+    { url: "", changefreq: "daily", priority: 1 },
   ];
 
 
