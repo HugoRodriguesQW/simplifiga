@@ -1,8 +1,6 @@
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { Readable } = require("stream");
 
-import database from './database'
-
 const handler = async (req, res) => {
 
   const links = [

@@ -1,0 +1,52 @@
+.privacyContainer {
+  padding: 4rem;
+  max-width: 960px;
+  text-align: center;
+
+  margin: 0 auto;
+}
+
+.privacyContainer .logo {
+  display: inline-flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.privacyContainer .logo img {
+  width: 3.7rem;
+}
+
+.privacyContainer .logo span {
+  line-height: 1;
+}
+.privacyContainer p, 
+.privacyContainer ul, 
+.privacyContainer li {
+  font-size: 1.7rem;
+  line-height: 1.6;
+}
+
+.privacyContainer p,
+.privacyContainer ul {
+  text-align: justify;
+  margin-bottom: 2rem;
+}
+
+.privacyContainer ul {
+  list-style-type: none;
+  margin: 4rem 0;
+}
+
+.privacyContainer li {
+  margin: 1rem 0;
+}
+
+.privacyContainer h1,
+.privacyContainer h2 {
+  font-size: 3rem;
+  margin: 7rem 0 2rem 0;
+}
+
+.privacyContainer .date {
+  text-align: center;
+}

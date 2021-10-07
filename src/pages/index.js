@@ -8,14 +8,6 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="shortcut icon" href="/favicon.png"/>
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-        <meta name="google-site-verification" content="QrL3AgdnXVfVbQtBBH0KSaKerIN1CGVcZ-78luRQdl4" />
-        <link href="https://fonts.googleapis.com/css2?family=Sarala&display=swap" rel="stylesheet" />
-     
-        { /* SEO TAG */ }
 
         <title>Simplifiga</title>
         <meta name="title" content="Simplifiga" />
@@ -23,6 +15,7 @@ export default function Home() {
         <meta name="robots" content="index, follow"/>
         <link rel="canonical" href="https://simplifi.ga/" />
 
+        { /* SEO TAG */ }
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="https://simplifi.ga/"/>
         <meta property="og:title" content="Simplifiga"/>

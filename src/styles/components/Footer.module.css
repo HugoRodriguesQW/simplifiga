@@ -1,0 +1,28 @@
+.footerContainer {
+  position: absolute;
+  left:0;
+  right: 0;
+  padding: 4rem 0;
+
+  background: #040404;
+  border-top: 4px solid #1A73E8;
+  text-align: center;
+}
+
+.footerContainer p,
+.footerContainer a {
+  font-size: 1.6rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.footerContainer p {
+  color: #eee;
+}
+
+.footerContainer .siteMap {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  list-style-type: none;
+}
