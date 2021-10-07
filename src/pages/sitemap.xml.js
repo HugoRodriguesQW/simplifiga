@@ -1,5 +1,4 @@
 import React from "react";
-import fs from "fs";
 
 const Sitemap = () => {};
 
@@ -9,18 +8,13 @@ export const getServerSideProps = ({ res }) => {
     production: "https://simplifi.ga",
   }[process.env.NODE_ENV];
 
-  const staticPages = fs
-    .readdirSync("./src/pages")
-    .filter((staticPage) => {
-      return ![
-        "api",
-        "_app.js",
-        "sitemap.xml.js",
-      ].includes(staticPage);
-    })
-    .map((staticPagePath) => {
-      return `${baseUrl}/${staticPagePath}`;
-    });
+  const staticPages = [
+    "index",
+    "[redirect]",
+    ""
+  ].map(local => {
+    return `${baseUrl}/${local}`
+  })
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -36,16 +30,6 @@ export const getServerSideProps = ({ res }) => {
           `;
         })
         .join("")}
-      ${
-        `
-            <url>
-              <loc>${baseUrl}</loc>
-              <lastmod>${new Date().toISOString()}</lastmod>
-              <changefreq>monthly</changefreq>
-              <priority>1.0</priority>
-            </url>
-          `
-      }
     </urlset>
   `;
 
