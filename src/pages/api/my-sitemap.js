@@ -5,6 +5,8 @@ const handler = async (req, res) => {
 
   const links = [
     { url: "", changefreq: "daily", priority: 1 },
+    { url: "/privacy", changefreq: "daily", priority: 1 },
+    { url: "/about", changefreq: "daily", priority: 1 }
   ];
 
 
