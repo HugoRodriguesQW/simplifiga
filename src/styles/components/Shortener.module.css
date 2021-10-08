@@ -9,7 +9,7 @@
   transition: .2s;
 }
 
-.shortenerContainer i {
+.shortenerContainer .inputBox {
   position: relative;
 }
 
@@ -193,7 +193,7 @@
 .shortedLinkContainer button.enable .copyPopBubble {
     opacity: 1;
     transform: translateY(0);
-}
+} 
 
 /* Media Queries */
 

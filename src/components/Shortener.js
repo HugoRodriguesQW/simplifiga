@@ -9,8 +9,8 @@ export function Shortener() {
 
   return (
     <>
-      <div className={styles.linkInputContainer}>
-        <i>
+      <section className={styles.linkInputContainer}>
+        <div className={styles.inputBox}>
           <input 
           required   
           type="url" 
@@ -18,22 +18,22 @@ export function Shortener() {
           onChange={(e)=> {setLink(e.target.value)}}
           ></input>
           <span className={styles.keyboardIcon}/>
-        </i>
+        </div>
         <button onClick={(e)=>{handleShortLink()}}>Encurtar</button>
         {isLinkInputValid === false ? (
         <span className={styles.invalidInput}>Esse campo deve ser preenchido corretamente.</span>
         ) : null }
-      </div>
+      </section>
 
-      <div className={styles.surnameContainer}>
-        <i><input 
+      <section className={styles.surnameContainer}>
+        <div className={styles.inputBox}><input 
             type="text" 
             placeholder="Apelido (opicional)"
             onChange={(e)=> {setLinkSurname(e.target.value)}}
             >
           </input>
           <span className={styles.keyboardIcon}/>
-        </i>
+        </div>
         <p className={styles.surnameMessage}>
           {isSurnameValid === false ? ( 
           <span className={styles.invalidSurnameMessage}>Esse apelido não está disponível.</span>
@@ -41,7 +41,7 @@ export function Shortener() {
           : null }
           Use esse campo para definir um apelido para sua URL. Apenas caracteres de ‘0’ a ‘9’, ‘a’ a ‘z’ e ‘-’ são permitidos
         </p>
-      </div>
+      </section>
         
 
       <div className={styles.mobileButtonContainer}>

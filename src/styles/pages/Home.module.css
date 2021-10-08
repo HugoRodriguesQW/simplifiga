@@ -1,4 +1,5 @@
-.container {
+.container,
+.contentBox  {
   width: 100vw;
   height: 100vh;
   padding: 2.7rem;
@@ -7,6 +8,13 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.contentBox {
+  height: auto;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .titleLogoImage {
@@ -23,6 +31,44 @@
 .titleLogoImage span {
   font-size: 3rem;
   color: #000;
+}
+
+.benefitBox {
+  margin-top: 3rem;
+  width: 100%;
+
+  display: flex;
+  gap: 3rem;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.benefitBox .benefit {
+  padding: 1rem;
+  flex: 25rem 1;
+  height: auto;
+ 
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+.benefit img {
+  height: 5rem;
+  max-height: 8rem;
+}
+
+.benefit h3 {
+  font-size: 2.2rem;
+}
+
+.benefit p {
+  text-align: center;
+}
+
+.benefitBox:nth-child(3) { /* the last 4 boxes */
+  grid-column: span 3;
 }
 
 @media screen and (max-height: 547px) {

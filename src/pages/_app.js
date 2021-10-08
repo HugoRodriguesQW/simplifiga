@@ -5,6 +5,7 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
   return (
   <ShortenerContextProvider>
+    <Component {...pageProps} />
     <Head>
         <link rel="canonical" href="https://simplifi.ga/" />
         <link rel="shortcut icon" href="/favicon.png"/>
@@ -14,7 +15,6 @@ function MyApp({ Component, pageProps }) {
         <meta name="google-site-verification" content="QrL3AgdnXVfVbQtBBH0KSaKerIN1CGVcZ-78luRQdl4" />
         <link href="https://fonts.googleapis.com/css2?family=Sarala&display=swap" rel="stylesheet" />
     </Head>
-    <Component {...pageProps} />
   </ShortenerContextProvider>
   )
 }
