@@ -5,6 +5,8 @@ import { MainComponent } from '../components/MainComponent'
 import styles from '../styles/pages/Home.module.css'
 import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
+import AdSense from 'react-adsense';
+
 
 export default function Home() {
 
@@ -96,7 +98,18 @@ export default function Home() {
         
     </div>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    crossOrigin="anonymous"></script>
+
+    <AdSense.Google
+      client='ca-pub-9364972557220794'
+      slot='8953066911'
+      style={{ width: '100%', height: 300 }}
+      format=''
+    />
+
     <Footer/>
     </>
+    
   )
 }
