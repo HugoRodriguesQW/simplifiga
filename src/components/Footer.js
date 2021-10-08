@@ -14,7 +14,7 @@ export function Footer() {
             return (
             <>
             <li key={`${i}${Math.random().toFixed(100)}`}>
-              <a href={`https://localhost:3000/${obj.loc}`}>{obj.name}</a>
+              <a href={`https://simplifi.ga/${obj.loc}`}>{obj.name}</a>
             </li>
 
             {i === arr.length-1 ? null : (
