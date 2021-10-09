@@ -39,6 +39,12 @@ export default function Home() {
         <script type="text/javascript" src="/ads.js" async="true">
         </script>
 
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1">
+        </script>
+        
+        <script async type="text/javascript" src="/google.js">
+        </script>
+
       </Head>
 
       <h1 className={styles.titleLogoImage}>
