@@ -11,7 +11,6 @@ function MyApp({ Component, pageProps }) {
         <link rel="shortcut icon" href="/favicon.png"/>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="google-site-verification" content="QrL3AgdnXVfVbQtBBH0KSaKerIN1CGVcZ-78luRQdl4" />
-        <meta name="propeller" content="f0e453dfceedf3c3d728bcef026f370c" />
         <link href="https://fonts.googleapis.com/css2?family=Sarala&display=swap" rel="stylesheet" />
     </Head>
   </ShortenerContextProvider>

@@ -5,8 +5,13 @@ import { MainComponent } from '../components/MainComponent'
 import styles from '../styles/pages/Home.module.css'
 import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
+import { useEffect } from 'react'
 
 export default function Home() {
+
+  useEffect(()=> {
+
+  }, [])
 
   return (
     <>
