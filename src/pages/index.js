@@ -33,9 +33,6 @@ export default function Home() {
         <meta property="twitter:title" content="Simplifiga"/>
         <meta property="twitter:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
         <meta property="twitter:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
-
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9364972557220794"
-        crossOrigin="anonymous" />
       </Head>
 
       <h1 className={styles.titleLogoImage}>
