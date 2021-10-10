@@ -53,12 +53,12 @@ export default function Home() {
     </div>
 
     <div id="content" className={styles.contentBox}>
-        <h2>Simplifique suas URLs de forma simples e fácil!</h2>
+        <h2>Encurtar links de forma simples e fácil!</h2>
         <p>
-          O Simplifiga é uma ferramenta gratuita para encurtar links longos tornando-os curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opicional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
+          O Simplifiga é um encurtador de links longos tornando-os simples, curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opicional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
         </p>
         <p>
-          Você pode encurtar suas URLs longas e usá-las em posts, blogs, fórums, mensagens e outros. Esta plataforma é totalmente segura e permite tornar seus links pequenos e memoráveis.
+          Você pode reduzir URLs longas e usá-las em posts, blogs, fórums, mensagens e outros. Esta plataforma é totalmente segura e permite tornar seus links pequenos e memoráveis.
         </p>
 
         <h2>Benefícios do Simplifiga</h2>
