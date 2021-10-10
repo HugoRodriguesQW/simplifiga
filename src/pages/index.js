@@ -5,7 +5,6 @@ import { MainComponent } from '../components/MainComponent'
 import styles from '../styles/pages/Home.module.css'
 import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
-import { useEffect } from 'react'
 
 export default function Home() {
 
@@ -14,7 +13,6 @@ export default function Home() {
     <>
     <div className={styles.container}>
       <Head>
-
         <title>Simplifiga</title>
         <meta name="title" content="Simplifiga" />
         <meta name="description" content="Encurtador e Simplificador de URLs para torná-las memoráveis." />
@@ -38,13 +36,10 @@ export default function Home() {
 
         <script type="text/javascript" src="/ads.js" async="true">
         </script>
-
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1">
         </script>
-        
         <script async type="text/javascript" src="/google.js">
         </script>
-
       </Head>
 
       <h1 className={styles.titleLogoImage}>
@@ -105,7 +100,6 @@ export default function Home() {
             <p>Totalmente compatível com vários tamanhos de telas</p>
           </div>
         </div>
-        
     </div>
     <Footer/>
     </>

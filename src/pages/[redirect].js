@@ -4,7 +4,7 @@ import { database } from './api/database'
 export default function RedirectPage (props) {
 
   return (
-    <div>Mensagem de erro</div>
+    <div>Destino não encontrado</div>
   )
 }
 
