@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga */
 /* eslint-disable @next/next/no-img-element */
 
 import Head from 'next/head'
@@ -34,12 +35,12 @@ export default function Home() {
         <meta property="twitter:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
         <meta property="twitter:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
 
-        <script type="text/javascript" src="/ads.js" async="true">
-        </script>
+        { /* Google Analytics */ }
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1">
         </script>
         <script async type="text/javascript" src="/google.js">
         </script>
+        
       </Head>
 
       <h1 className={styles.titleLogoImage}>
@@ -102,6 +103,10 @@ export default function Home() {
         </div>
     </div>
     <Footer/>
+
+    { /* InfoLinks Ads Service */}
+    <script type="text/javascript"> var infolinks_pid = 3347327; var infolinks_wsid = 0; </script> 
+    <script async type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
     </>
     
   )
