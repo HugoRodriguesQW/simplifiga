@@ -8,9 +8,11 @@ export default function Privacy() {
     <>
     <div className={styles.privacyContainer}>
       <Head>
+        
         <title>Privacidade & Termos – Simplifiga</title>
         <meta name="description" content="Entenda a política de privacidade & termos de uso do Simplifiga"/>
         <meta name="robots" content="index, follow"/>
+        <link rel="canonical" href="https://simplifi.ga/privacy" />
       </Head>
 
       <div className={styles.logo}>

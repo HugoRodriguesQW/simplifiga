@@ -9,7 +9,6 @@ function MyApp({ Component, pageProps }) {
   <ShortenerContextProvider>
     <Component {...pageProps} />
     <Head>
-        <link rel="canonical" href="https://simplifi.ga/" />
         <link rel="shortcut icon" href="/favicon.png"/>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link href="https://fonts.googleapis.com/css2?family=Sarala&display=swap" rel="stylesheet" />
