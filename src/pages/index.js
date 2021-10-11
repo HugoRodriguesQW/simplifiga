@@ -14,11 +14,10 @@ export default function Home() {
     <>
     <div className={styles.container}>
       <Head>
-        <title>Simplifiga</title>
+        <title>Simplifiga | Encurtador de Links</title>
         <meta name="title" content="Simplifiga" />
         <meta name="description" content="Encurtador e Simplificador de URLs para torná-las memoráveis." />
         <meta name="robots" content="index, follow"/>
-        <link rel="canonical" href="https://simplifi.ga/" />
 
         { /* SEO TAG */ }
         <meta property="og:type" content="website"/>
