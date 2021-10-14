@@ -1,55 +1,21 @@
-/* eslint-disable @next/next/next-script-for-ga */
 /* eslint-disable @next/next/no-img-element */
 
-import Head from 'next/head'
 import { MainComponent } from '../components/MainComponent'
 import styles from '../styles/pages/Home.module.css'
 import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
+import { IndexHead } from '../components/Head/IndexHead'
+import { Logo } from '../components/Logo'
 
 export default function Home() {
 
-
   return (
     <>
+    <IndexHead/>
+
     <div className={styles.container}>
-      <Head>
-        <title>Simplifiga | Encurtador de Links</title>
-        <meta name="title" content="Simplifiga" />
-        <meta name="description" content="Encurtador e Simplificador de URLs para torná-las memoráveis." />
-        <meta name="robots" content="index, follow"/>
-        <link rel="canonical" href="https://simplifi.ga/" />
-
-        { /* SEO TAG */ }
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://simplifi.ga/"/>
-        <meta property="og:title" content="Simplifiga"/>
-        <meta property="og:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
-        <meta property="og:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
-        <meta property="og:url" content="https://simplifi.ga/" />
-        <meta property="og:site_name" content="Simplifiga" />
-
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:url" content="https://simplifi.ga/"/>
-        <meta property="twitter:title" content="Simplifiga"/>
-        <meta property="twitter:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
-        <meta property="twitter:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
-
-        { /* Google Analytics */ }
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1">
-        </script>
-        <script async type="text/javascript" src="/google.js">
-        </script>
-        
-      </Head>
-
-      <h1 className={styles.titleLogoImage}>
-        <img src="/favicon.png" loading="lazy" alt="Simplifi.ga" title="Simplifiga"/>
-        <span>Simplifi.ga</span>
-      </h1>
-
+      <Logo type="full" />
       <MainComponent/>
-
       <Error/>
     </div>
 
@@ -102,6 +68,7 @@ export default function Home() {
           </div>
         </div>
     </div>
+
     <Footer/>
 
     { /* InfoLinks Ads Service */}

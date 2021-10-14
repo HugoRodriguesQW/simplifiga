@@ -1,0 +1,34 @@
+.fullLogoImage {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullLogoImage img {
+  width: 10rem;
+  margin-top: -3rem;
+}
+
+.fullLogoImage span {
+  font-size: 3rem;
+  color: #000;
+}
+
+.halfLogoImage {
+  display: inline-flex;
+  gap: 1rem;
+  margin: 0;
+}
+
+.halfLogoImage img {
+  width: 3.7rem;
+}
+
+.halfLogoImage span {
+  line-height: 1;
+  font-size: 2.4rem;
+  font-weight: 400;
+}
+
+.fullLogoImage, .halfLogoImage {
+  align-items: center;
+}

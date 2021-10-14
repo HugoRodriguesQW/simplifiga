@@ -6,20 +6,6 @@
   margin: 0 auto;
 }
 
-.privacyContainer .logo {
-  display: inline-flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.privacyContainer .logo img {
-  width: 3.7rem;
-}
-
-.privacyContainer .logo span {
-  line-height: 1;
-}
-
 .privacyContainer .date {
   text-align: center;
 }
