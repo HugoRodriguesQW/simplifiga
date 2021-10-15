@@ -6,7 +6,7 @@ import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
 import { IndexHead } from '../components/Head/IndexHead'
 import { Logo } from '../components/Logo'
-import { Ad_001, Ad_002 } from '../components/Advertisement'
+import { Ad_001 } from '../components/Advertisement'
 
 export default function Home() {
 
@@ -70,9 +70,7 @@ export default function Home() {
             <p>Totalmente compatível com vários tamanhos de telas</p>
           </div>
         </div>
-        <Ad_002/>
     </div>
-
     <Footer/>
     </>
     

@@ -2,7 +2,6 @@ import { useContext, useState } from 'react'
 import { ShortenerContext } from '../contexts/Shortener'
 import styles from '../styles/components/Shortener.module.css'
 import copy from 'copy-to-clipboard'
-import { Ad_001 } from './advertisement'
 
 export function Shortened() {
 
