@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { ShortenerContext } from '../contexts/Shortener'
 import styles from '../styles/components/Shortener.module.css'
 import copy from 'copy-to-clipboard'
+import { Ad_001 } from './advertisement'
 
 export function Shortened() {
 
@@ -27,10 +28,10 @@ export function Shortened() {
           <span className={styles.copyPopRect}>URL Copiada para transferência</span>
           <strong>Copiar para transferir</strong>
         </button> 
-      </div>
+    </div>
 
-      <div className={styles.shortMoreLink}>
-        <button onClick={()=>{handleShortOtherLink()}}> Encurtar mais <span/></button>
+    <div className={styles.shortMoreLink}>
+      <button onClick={()=>{handleShortOtherLink()}}> Encurtar mais <span/></button>
     </div>
     </>
   )

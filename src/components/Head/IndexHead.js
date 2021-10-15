@@ -9,7 +9,8 @@ export function IndexHead() {
     <Head>
         <title>Simplifiga | Encurtador de Links</title>    
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1"></script>
-        <script async type="text/javascript" src="/google.js"></script>
+        <script async type="text/javascript" src="/google.js"></script> 
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6743241043832959"></script>
     </Head>
 
     <MetaTags>

@@ -6,6 +6,7 @@ import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
 import { IndexHead } from '../components/Head/IndexHead'
 import { Logo } from '../components/Logo'
+import { Ad_001, Ad_002 } from '../components/advertisement'
 
 export default function Home() {
 
@@ -20,6 +21,8 @@ export default function Home() {
     </div>
 
     <div id="content" className={styles.contentBox}>
+    <Ad_001/>
+    
         <h2>Encurtar links de forma simples e fácil!</h2>
         <p>
           O Simplifiga é um encurtador de links longos tornando-os simples, curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opicional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
@@ -67,13 +70,10 @@ export default function Home() {
             <p>Totalmente compatível com vários tamanhos de telas</p>
           </div>
         </div>
+        <Ad_002/>
     </div>
 
     <Footer/>
-
-    { /* InfoLinks Ads Service */}
-    <script type="text/javascript"> var infolinks_pid = 3347327; var infolinks_wsid = 0; </script> 
-    <script async type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
     </>
     
   )
