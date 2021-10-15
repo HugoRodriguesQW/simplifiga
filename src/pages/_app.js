@@ -19,6 +19,8 @@ function MyApp({ Component, pageProps }) {
       <meta name="google-site-verification" content="QrL3AgdnXVfVbQtBBH0KSaKerIN1CGVcZ-78luRQdl4" />
       <meta httpEquiv='content-language' content='pt-br' />
       <meta httpEquiv="content-type"  content="text/html;charset=utf-8"></meta>
+
+      <meta name="a.validate.01" content="64e78119cd9cdf140f1e6dfe4f7a47932b73" />
     </MetaTags>
   </ShortenerContextProvider>
   )
