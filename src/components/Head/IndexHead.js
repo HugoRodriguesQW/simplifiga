@@ -41,6 +41,9 @@ export function IndexHead() {
       <meta property="twitter:title" content="Simplifiga"/>
       <meta property="twitter:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
       <meta property="twitter:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
+    
+      {/* META - ADS */}
+      <meta name="a.validate.01" content="64e78119cd9cdf140f1e6dfe4f7a47932b73" />
     </MetaTags>
     </>
   )
