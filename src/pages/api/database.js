@@ -42,6 +42,12 @@ export const database = {
     await cachedDb?.collection('links')?.findOne({'id': id}) != null
     return hasOnDatabase
   },
+
+  async validate({token}){
+    const isValid = 
+    await cachedDb?.collection('clients')?.findOne({'token': token}) != null
+    return isValid
+  }
 }
 
 const handler = nc()
