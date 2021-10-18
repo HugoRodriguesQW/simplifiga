@@ -6,7 +6,7 @@ import { Error } from '../components/Error'
 import { Footer } from '../components/Footer'
 import { IndexHead } from '../components/Head/IndexHead'
 import { Logo } from '../components/Logo'
-import { Ad_001 } from '../components/Advertisement'
+// import { Ad_001 } from '../components/Advertisement'
 
 export default function Home() {
 
@@ -21,7 +21,7 @@ export default function Home() {
     </div>
 
     <div id="content" className={styles.contentBox}>
-    <Ad_001/>
+    {/** <Ad_001/> */}
     
         <h2>Encurtar links de forma simples e fácil!</h2>
         <p>
