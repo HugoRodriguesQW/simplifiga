@@ -4,7 +4,7 @@ import styles from '../styles/components/Shortener.module.css'
 
 export function Shortener() {
 
-  const {handleShortLink, setLink, setLinkSurname, 
+  const {handleShortLink, setLink, setLinkSurname, isProcessing,
   isSurnameValid, isLinkInputValid} = useContext(ShortenerContext)
 
   return (
@@ -19,7 +19,13 @@ export function Shortener() {
           ></input>
           <span className={styles.keyboardIcon}/>
         </div>
-        <button onClick={(e)=>{handleShortLink()}}>Encurtar</button>
+
+        { isProcessing ? (
+          <button className={styles.processingButton}>Encurtando</button>
+        ) : (
+          <button onClick={()=>{handleShortLink()}}>Encurtar</button>
+        )}
+
         {isLinkInputValid === false ? (
         <span className={styles.invalidInput}>Esse campo deve ser preenchido corretamente.</span>
         ) : null }
@@ -45,7 +51,11 @@ export function Shortener() {
         
 
       <div className={styles.mobileButtonContainer}>
-        <button onClick={(e)=>{handleShortLink(e)}}>Encurtar</button> 
+      { isProcessing ? (
+          <button className={styles.processingButton}>Encurtando</button>
+        ) : (
+          <button onClick={()=>{handleShortLink()}}>Encurtar</button>
+        )}
       </div>
     </>
   )

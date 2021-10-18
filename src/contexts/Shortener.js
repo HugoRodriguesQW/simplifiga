@@ -13,33 +13,44 @@ export function ShortenerContextProvider ({children}) {
   const [isShortened, setIsShortened] = useState(false)
   const [isSurnameValid, setIsSurnameValid] = useState(true) 
   const [isLinkInputValid, setIsLinkInputValid] = useState(true)
+  const [isProcessing, setProcessState] = useState(false)
 
   const [error, setError] = useState(null)
 
   async function handleShortLink() {
+    setProcessState(true)
+
     const inputLink = link
     const base = document.location.origin.replace('wwww.', '')
     let surname =  linkSurname
     
-    if(!validateLinkInput(inputLink)) return
+    if(!validateLinkInput(inputLink)){
+      setProcessState(false)
+      return
+    }
 
     if(!surname) {
       surname = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 4)
     }
 
-    if(await validateSurname(surname)) {
-      const response = await Fetch({id: surname, link: inputLink, action: 'create'})
-      if(!response?.error && response) {
-        setShortenedLink(base+"/"+surname)
-        setIsShortened(true)
+    try {
+      if(await validateSurname(surname)) {
+        const response = await Fetch({id: surname, link: inputLink, action: 'create'})
+        if(!response?.error && response) {
+          setShortenedLink(base+"/"+surname)
+          setIsShortened(true)
+          setProcessState(false)
+          return
+        }
+
+        setError(100)
         return
       }
 
+      if(!linkSurname)  handleShortLink()
+    } catch {
       setError(100)
-      return
-    } 
-
-    if(!linkSurname)  handleShortLink() 
+    }
   }
 
   function validateLinkInput(link) {
@@ -87,6 +98,7 @@ export function ShortenerContextProvider ({children}) {
   },[shortednedLink])
 
   useEffect(()=> {
+    setProcessState(false)
     setTimeout(() => {setError(null)}, 4000)
   }, [error])
 
@@ -101,7 +113,8 @@ export function ShortenerContextProvider ({children}) {
       isLinkInputValid,
       handleShortLink,
       handleShortOtherLink,
-      error
+      error,
+      isProcessing
     }}>
       {children}
     </ShortenerContext.Provider>
