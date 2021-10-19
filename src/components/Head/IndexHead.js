@@ -22,7 +22,7 @@ export function IndexHead() {
       {/* SEO - GOOGLE+ */}
       <meta itemProp="name" content="Simplifiga"/>
       <meta itemProp="description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
-      <meta itemProp="image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
+      <meta itemProp="image" content="https://simplifi.ga/banner.png"/>
     
       {/* SEO - FACEBOOK */}
       <meta property="og:url" content="https://simplifi.ga/"/>
@@ -30,7 +30,7 @@ export function IndexHead() {
       <meta property="og:title" content="Encurtador de links"/>
       <meta property="og:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
       <meta property="og:type" content="website"/>
-      <meta property="og:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
+      <meta property="og:image" content="https://simplifi.ga/banner.png"/>
       <meta property="og:image:type" content="image/png"/>
       <meta property="og:image:width" content="1200"/>
       <meta property="og:image:height" content="628"/>
@@ -40,7 +40,7 @@ export function IndexHead() {
       <meta property="twitter:card" content="summary_large_image"/>
       <meta property="twitter:title" content="Simplifiga"/>
       <meta property="twitter:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
-      <meta property="twitter:image" content="https://raw.githubusercontent.com/HugoRodriguesQW/simplifiga/main/banner.png"/>
+      <meta property="twitter:image" content="https://simplifi.ga/banner.png"/>
     </MetaTags>
     </>
   )
