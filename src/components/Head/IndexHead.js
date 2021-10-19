@@ -1,18 +1,15 @@
 /* eslint-disable @next/next/next-script-for-ga */
 
-import MetaTags from 'react-meta-tags'
 import Head from 'next/head'
 
 export function IndexHead() {
   return (
     <>
     <Head>
-        <title>Simplifiga | Encurtador de Links</title>    
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1"></script>
-        <script async type="text/javascript" src="/google.js"></script> 
-    </Head>
+      <title>Simplifiga | Encurtador de Links</title>    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-209851230-1"></script>
+      <script async type="text/javascript" src="/google.js"></script> 
 
-    <MetaTags>
       {/* SEO - ROBOTS */}
       <link rel="canonical" href="https://simplifi.ga/" />
       <meta name="title" content="Simplifiga | Encurtador de Links" />
@@ -41,7 +38,7 @@ export function IndexHead() {
       <meta property="twitter:title" content="Simplifiga"/>
       <meta property="twitter:description" content="Encurtador e Simplificador de URLs para torná-las memoráveis."/>
       <meta property="twitter:image" content="https://simplifi.ga/banner.png"/>
-    </MetaTags>
+    </Head>
     </>
   )
 }
