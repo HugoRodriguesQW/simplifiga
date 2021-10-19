@@ -1,11 +1,14 @@
 .fullLogoImage {
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
 
 .fullLogoImage img {
-  width: 10rem;
-  margin-top: -3rem;
+  width: 7rem;
+  border-radius: 5px;
+  margin: .5rem;
 }
 
 .fullLogoImage span {
@@ -14,21 +17,26 @@
 }
 
 .halfLogoImage {
-  display: inline-flex;
-  gap: 1rem;
   margin: 0;
+  width: 100%;
 }
 
 .halfLogoImage img {
-  width: 3.7rem;
+  height: 4rem;
 }
 
-.halfLogoImage span {
-  line-height: 1;
-  font-size: 2.4rem;
-  font-weight: 400;
-}
 
 .fullLogoImage, .halfLogoImage {
   align-items: center;
+}
+
+@media screen and (max-height: 512px) {
+  .fullLogoImage {
+    display: inline-flex;
+    flex-direction: row;
+  }
+
+  .fullLogoImage img {
+    width: 4rem;
+  }
 }
