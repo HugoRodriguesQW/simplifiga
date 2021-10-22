@@ -1,6 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import Fetch from "../pages/api/fetch";
-
 
 export const ShortenerContext = createContext({})
 
@@ -22,35 +20,39 @@ export function ShortenerContextProvider ({children}) {
 
     const inputLink = link
     const base = document.location.origin.replace('wwww.', '')
-    let surname =  linkSurname
     
     if(!validateLinkInput(inputLink)){
-      setProcessState(false)
-      return
-    }
-
-    if(!surname) {
-      surname = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 4)
+      return setProcessState(false)
     }
 
     try {
-      if(await validateSurname(surname)) {
-        const response = await Fetch({id: surname, link: inputLink, action: 'create'})
-        if(!response?.error && response) {
-          setShortenedLink(base+"/"+surname)
-          setIsShortened(true)
-          setProcessState(false)
-          return
-        }
+      const res = await fetch(`${base}/api/${process.env.NEXT_PUBLIC_API_TOKEN}/`, {
+        method: "POST",
+        body: JSON.stringify({
+          url: link,
+          nick: linkSurname
+        })
+      })
 
-        setError(100)
-        return
+      const result = await res.json()
+      
+      if(!result.shortened) {
+        console.info(result)
+        throw result.code
       }
 
-      if(!linkSurname)  handleShortLink()
-    } catch {
-      setError(100)
+      setShortenedLink(result.shortened)
+      setIsShortened(true)
+    } catch (err) {
+      switch(err) {
+        case 3000:
+          setIsSurnameValid(false)
+          break
+        default:
+          setError(100)
+      }
     }
+    setProcessState(false)
   }
 
   function validateLinkInput(link) {
@@ -65,24 +67,6 @@ export function ShortenerContextProvider ({children}) {
     setIsLinkInputValid(false)
     return false
     }
-  }
-
-  async function validateSurname(surname) { 
-    const permitted =  /^[a-zA-Z-0-9\-]+$/
-    
-    if (surname.replace(permitted, '')){
-      setIsSurnameValid(false)
-      return
-    }
-
-    const hasOnDatabase = await Fetch({id: surname, action: 'has'})
-    if(!hasOnDatabase) {
-      setIsSurnameValid(true)
-      return true
-    }
-
-    if (linkSurname) setIsSurnameValid(false)
-    return false
   }
 
   function handleShortOtherLink() {

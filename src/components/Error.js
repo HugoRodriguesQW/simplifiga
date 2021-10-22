@@ -11,7 +11,7 @@ export function Error() {
     <>
     { error ? (
       <div className={styles.errorContainer}>
-        {errors[100]}
+        {errors[100].message}
       </div>
     ): null }
     </>

@@ -1,3 +1,26 @@
 {
-  "100": "Não foi possível encurtar o link digitado. Tente novamente."
+  "100": {
+    "code": 100,
+    "message": "Não foi possível encurtar o link digitado. Tente novamente."
+  },
+  "400": {
+    "code": 1000,
+    "message": "Parameters were not passed correctly."
+  },
+  "401": {
+    "code": 2000,
+    "message": "The informed token is not valid."
+  },
+  "422": {
+    "code": 3000,
+    "message": "The informed nick is not valid."
+  },
+  "500": {
+    "code": 4000,
+    "message": "Unable to generate."}
+    ,
+  "405": {
+    "code": 5000,
+    "message": "Method Not Allowed"
+  }
 }
