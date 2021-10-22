@@ -21,7 +21,8 @@ export function Shortened() {
     <>
     <div className={styles.shortedLinkContainer}>
       <i><input type="text" value={shortednedLink} readOnly="readonly"></input></i>
-        <button onClick={handleCopyToClipBoard} className={`${copyToClip ? styles.enable : 'disable'}`}>
+        <button onClick={handleCopyToClipBoard} 
+          className={`${styles.overflow} ${copyToClip ? styles.enable : 'disable'}`}>
           <span className={styles.copyAltIcon}/>
           <span className={styles.copyPopBubble}>URL Copiada</span>
           <span className={styles.copyPopRect}>URL Copiada para transferência</span>
