@@ -15,10 +15,7 @@
 
 .shortenerContainer input {
   width: 100%;
-  padding: .1rem;
   padding-left: calc(3.4rem + 2.4rem);
-  border: 1px solid #6d6d6d;
-  border-radius: 5px;
 }
 
 .shortedLinkContainer input {
@@ -256,15 +253,6 @@
 
 .overflow {
   overflow: visible;
-}
-
-@keyframes pulse {
-  from {
-    opacity: 0.7;
-  }
-  to {
-    opacity: 0.9;
-  }
 }
 
 @keyframes loading {

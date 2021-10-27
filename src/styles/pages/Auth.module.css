@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.contentBox {
+  max-width: 870px;
+}
+
+.contentBox p,
+.contentBox label {
+  max-width: 470px;
+}
+
+.contentBox h1 {
+  font-size: clamp(2rem, 2vw, 4.5rem);
+  color: #000;
+  margin: 1rem;
+}
+
+.contentBox > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contentBox span,
+.contentBox label,
+.contentBox p {
+  font-size: clamp(1.5rem, 1.6vh, 2.4rem);
+  color: #000;
+  font-weight: 400;
+}
+
+.contentBox button {
+  padding: 0 2rem;
+}
+
+.contentBox .form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(.9rem, 3vh, 5rem);
+}
+
+.form .doubleField {
+  display: flex;
+  gap: 2rem;
+}
+
+.form .doubleField div {
+  flex: 1 1;
+}
+
+.form .submit {
+  display: flex;
+  justify-content: right;
+}
+
+.submit.withText {
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  gap: 2rem;
+}
+
+.submit.withText p{
+  margin: 0;
+}
+
+@media screen and (max-width: 712px) {
+  .form .submit {
+    flex-direction: column;
+  }
+}

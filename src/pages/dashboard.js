@@ -1,6 +1,4 @@
-
-export default function About() {
-
+export default function Dashboard() {
   return (
     <div>
       Página em construção...

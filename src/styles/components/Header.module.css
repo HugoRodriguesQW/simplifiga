@@ -1,0 +1,49 @@
+.headerContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+}
+
+.headerContainer.fixed {
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left:0;
+}
+
+.headerContainer.padding {
+  padding: 1rem;
+}
+
+.headerContainer h1 {
+  font-size: 1.8rem;
+  display: flex;
+}
+
+.headerContainer div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.linksBox {
+  display: flex;
+  gap: 3rem;
+  font-size: 1.8rem;
+}
+
+.linksBox a {
+  color: #343434;
+  transition: .2s;
+}
+
+.linksBox a:hover {
+  color: #005bff;
+}
+
+.linkBox a.currentLink {
+  color: red;
+}
+
