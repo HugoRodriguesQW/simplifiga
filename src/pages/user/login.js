@@ -37,7 +37,7 @@ export default function Login () {
   return (
     <>
     <LoginHead/>
-    <Header routes={['/', '/dashboard']}  padding />
+    <Header routes={['/']}  padding />
     <div className={styles.container}>
       <div className={styles.contentBox}>
       <div>

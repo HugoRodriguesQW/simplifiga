@@ -12,9 +12,11 @@ export function Header({routes, ...style}) {
   }
 
   return (
-    <div className={`${styles.headerContainer} ${Object.keys(style).map((s) => {
+    <div className={`
+      ${styles.headerContainer} 
+      ${Object.keys(style).map((s) => {
+      if(s === 'pos') return
       const isEnableBool = style[s] === true
-      console.info(isEnableBool, style[s])
       return styles[ isEnableBool ? s : style[s]]
     })}`}>
       <div>

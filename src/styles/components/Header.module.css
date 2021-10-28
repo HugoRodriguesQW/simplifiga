@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: space-between;
   background: #fff;
+  transition: 0.2;
 }
 
 .headerContainer.fixed {
@@ -46,4 +47,3 @@
 .linkBox a.currentLink {
   color: red;
 }
-
