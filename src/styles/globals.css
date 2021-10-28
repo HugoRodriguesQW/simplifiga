@@ -6,12 +6,16 @@
 
 :root {
   font-size: 10px;
+  --blue: #005bff;
+  --white: #fff;
+  --gray-6d: #6d6d6d;
+  --black-36: #363636;
 }
 
 body, input, button {
   font: 400 2.4rem 'Sarala', sans-serif;
   border: 0;
-  color: #363636;
+  color: var(--black-36);
 
   font-style: normal;
 
@@ -22,8 +26,8 @@ button{
   cursor: pointer;
 
   border-radius: 5px;
-  color: #FFF;
-  background: #005bff;
+  color: var(--white);
+  background: var(--blue);
   transition: .2s;
 }
 
@@ -55,9 +59,8 @@ li {
 }
 
 a {cursor: pointer;
-  color: #005bff;
+  color: var(--blue);
   text-decoration: none;
-  
 } 
 
 h1,
@@ -69,11 +72,22 @@ h2 {
 input {
   padding: .1rem;
   border-radius: 5px;
-  border: 1px solid #6d6d6d;
+  border: 1px solid var(--gray-6d);
 }
 
 label {
   font-size: 12px;
+}
+
+.active_button {
+  animation: pulse 1s infinite alternate-reverse;
+  position: relative;
+}
+
+.active_button::after { 
+  content: ' ';
+  position: absolute;
+  animation: loading 1s infinite linear;
 }
 
 @keyframes pulse {
@@ -82,5 +96,20 @@ label {
   }
   to {
     opacity: 0.9;
+  }
+}
+
+@keyframes loading {
+  0% {
+    content: ''
+  }
+  25% {
+    content: '.'
+  }
+  50% {
+    content: '..'
+  }
+  75%{
+    content: '...'
   }
 }

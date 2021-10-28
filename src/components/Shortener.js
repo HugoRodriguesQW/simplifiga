@@ -21,7 +21,7 @@ export function Shortener() {
         </div>
 
         { isProcessing ? (
-          <button className={styles.processingButton}>Encurtando</button>
+          <button className='active_button'>Encurtando</button>
         ) : (
           <button onClick={()=>{handleShortLink()}}>Encurtar</button>
         )}
@@ -52,7 +52,7 @@ export function Shortener() {
 
       <div className={styles.mobileButtonContainer}>
       { isProcessing ? (
-          <button className={styles.processingButton}>Encurtando</button>
+          <button className='active_button'>Encurtando</button>
         ) : (
           <button onClick={()=>{handleShortLink()}}>Encurtar</button>
         )}

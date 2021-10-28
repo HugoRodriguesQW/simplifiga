@@ -3,9 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
   transition: 0.2;
-}
+  z-index: 9999;
+  background: var(--white);
+} 
 
 .headerContainer.fixed {
   padding: 1rem;
@@ -29,10 +30,29 @@
   justify-content: center;
 }
 
+.menu {
+  display: flex;
+  gap: 2rem;
+  background: #f2f2f2;
+  border-radius: 30px;
+  transition: .2s;
+}
+
+.menu img{ 
+  height: 4.5rem;
+}
+
+.opened {
+  padding-left: 2rem;
+  border-radius: 5px 30px 30px 5px;
+}
+
 .linksBox {
   display: flex;
   gap: 3rem;
   font-size: 1.8rem;
+  animation: appear .2s;
+  flex-wrap: wrap;
 }
 
 .linksBox a {
@@ -41,9 +61,40 @@
 }
 
 .linksBox a:hover {
-  color: #005bff;
+  color: var(--blue);
 }
 
 .linkBox a.currentLink {
   color: red;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .menu {
+    flex-direction: column-reverse;
+    text-align: center;
+    position: absolute;
+    right: 2rem;
+    top: 1rem;
+    z-index: 99999;
+  }
+
+  .menu.opened {
+    border-radius: 5px 30px 5px 5px;
+    padding: 2rem;
+  }
+
+  .menu .linksBox {
+    flex-direction: column;
+  }
 }

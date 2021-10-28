@@ -12,10 +12,8 @@ export const database = {
       return cachedDb
     }
     databaseClient = await MongoClient.connect(secret, {
-    useNewUrlParser: true, useUnifiedTopology: true })
-    
+    useNewUrlParser: true, useUnifiedTopology: true})
     cachedDb = databaseClient.db('simplifiga')
-
     return cachedDb
   },
 
@@ -23,7 +21,6 @@ export const database = {
     if(!data.link || !data.id)   return null
 
     const res = await cachedDb?.collection('links')?.insertOne(data)
-    console.info("> DB: Create", data.id, 'Response:', res)
     return res
   },
 
@@ -46,5 +43,43 @@ export const database = {
     const isValid = 
     await cachedDb?.collection('clients')?.findOne({'token': token}) != null
     return isValid
+  },
+
+  async addClient(data) {
+    const res =
+    await cachedDb?.collection('clients')?.insertOne(data)
+    return res
+  },
+
+  async login ({email, password}) {
+    console.info("Loggin", email, password)
+    const  user = 
+    await cachedDb?.collection('clients')?.findOne({'email': email, 'password': password})
+    console.info(user)
+    return user
+  },
+
+  async createCode({email}) {
+    const code = (Math.floor(100000 + Math.random() * 900000)).toString()
+
+    cachedDb.collection('reset').createIndex( { "createdAt": 2 }, { expireAfterSeconds: 60*10 } )
+    const res = await cachedDb.collection('reset').insertOne( {
+      "createdAt": new Date(),
+      'email': email,
+      'code': code
+   } )
+   return res.acknowledged ? code : null
+  },
+
+  async validateCode({code, email}) {
+    const isValid = 
+    await cachedDb?.collection('reset')?.findOne({'email': email, 'code': code}) != null
+    return isValid
+  },
+
+  async find({collection, key, data}) {
+    const has = 
+    await cachedDb?.collection(collection)?.findOne({[key] : data})
+    return has
   }
 }

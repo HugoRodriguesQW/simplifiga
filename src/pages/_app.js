@@ -3,11 +3,21 @@
 import { ShortenerContextProvider } from '../contexts/Shortener'
 import Head from 'next/head'
 import '../styles/globals.css'
+import { useEffect, useState } from 'react'
 
 function MyApp({ Component, pageProps }) {
+
+  const [isLogged, setIsLogged] = useState(false)
+
+  useEffect(()=> {
+    const user = localStorage.getItem('user')
+    if(user) setIsLogged(true)
+  },[])
+
   return (
+  
   <ShortenerContextProvider>
-    <Component {...pageProps} />
+    <Component logged={isLogged} {...pageProps} />
     <Head>
       <link href="https://fonts.googleapis.com/css2?family=Sarala&display=swap" rel="stylesheet" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

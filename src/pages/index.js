@@ -7,14 +7,20 @@ import { Footer } from '../components/Footer'
 import { IndexHead } from '../components/Head/IndexHead'
 import { Logo } from '../components/Logo'
 import { Header } from '../components/Header'
-// import { Ad_001 } from '../components/Advertisement'
+import  Router  from 'next/router'
 
-export default function Home() {
+export default function Home({logged}) {
+  
 
   return (
     <>
     <IndexHead/>
-    <Header padding routes={['/dashboard', '/user/register']}/>
+    { logged ? (
+      <Header fixed padding routes={['/dashboard', '/developer','Sair']}/>
+    ) : (
+      <Header fixed padding routes={[ '/user/register', '/user/login', '/developer']}/>
+    )
+    }
     <div className={styles.container}>
       <Logo type="full" />
       <MainComponent/>
@@ -27,13 +33,24 @@ export default function Home() {
         <p>
           O Simplifiga é um encurtador de links longos tornando-os simples, curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opicional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
         </p>
+
+        <div className={styles.apiBox}>
+          <div className={styles.apiContent}>
+            <h3>Integração de API</h3>
+            <p>Use nossa API para encurtar os links de forma direta em seus projetos. O processo é simples e rápido e gratuito, basta registrar-se em nossa plataforma para obter um token de acesso.</p>
+          </div>
+          <div>
+            <button onClick={()=> {Router.push('/developer')}}>API</button>
+          </div>
+        </div>
+        
         <p>
           Você pode reduzir URLs longas e usá-las em posts, blogs, fórums, mensagens e outros. Esta plataforma é totalmente segura e permite tornar seus links pequenos e memoráveis.
         </p>
 
         <h2>Benefícios do Simplifiga</h2>
         <p>
-          Nossa plataforma foi pensada para ser leve e acessível em diversos dispositivos e navegadores. Simplicidade é nosso lema. Conseguimos fazer o redirecionamento em apenas 780ms, enquanto outros levam até 1,41 segundos para redirecionar.
+          Nossa plataforma foi pensada para ser leve e acessível em diversos dispositivos e navegadores. Simplicidade é nosso lema. Conseguimos fazer o redirecionamento em apenas <strong>780ms</strong>, enquanto outros levam até 1,41 segundos para redirecionar.
         </p>
         <p>
           Apenas exibimos anúncios durante o encurtamento com o objetivo de reduzir o tempo de redirecionamento. Sem telas, sem mensagens, rápido e direto.

@@ -97,17 +97,6 @@
   z-index: initial;
 }
 
-.processingButton {
-  animation: pulse 1s infinite alternate-reverse;
-  position: relative;
-}
-
-.processingButton::after {
-  content: ' ';
-  position: absolute;
-  animation: loading 1s infinite linear;
-}
-
 .shortMoreLink {
   text-align: right;
 }
@@ -253,6 +242,15 @@
 
 .overflow {
   overflow: visible;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.7
+  }
+  to {
+    opacity: 0.9
+  }
 }
 
 @keyframes loading {
