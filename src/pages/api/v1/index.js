@@ -13,9 +13,10 @@ const handler = async (req, res) => {
 
   switch(req.method){
   case 'POST': 
-    const token = req.query.token
+
     const params = await JSON.parse(req.body)
     const url = params.url
+    const token = params.token
     let   nick = params.nick
 
     if(!url ||  !token) {
