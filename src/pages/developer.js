@@ -10,6 +10,7 @@ export default function Developer({logged}) {
   const [currentIndex, setCurrentIndex] = useState()
 
   useEffect(()=> {
+    setCurrentIndex(indexes[0][0])
     document.addEventListener('scroll', ()=> {
       let current = indexes[0][0]
       let scrolled = document.scrollingElement.scrollTop + 60
