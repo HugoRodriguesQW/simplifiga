@@ -1,12 +1,12 @@
 .errorContainer {
-  position: absolute;
-  top: -20rem;
+  position: fixed;
+  bottom: -20rem;
   left: 0;
   right: 0;
   font-size: 1.6rem;
   text-align: center;
   background: #e32d2d;
-  color: var(--white);
+  color: #fff;
 
   animation: errorFrame 4s ease-in-out;
   
@@ -14,13 +14,13 @@
 
 @keyframes errorFrame {
   0% {
-    top: -20rem;
+    bottom: -20rem;
   }
   10%, 90% {
-    top: 0;
+     bottom: 0;
   }
 
   0% {
-    top: -20rem;
+    bottom: -10rem;
   }
 }

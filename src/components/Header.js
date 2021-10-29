@@ -2,7 +2,7 @@
 import styles from '../styles/components/Header.module.css'
 import { Logo } from './Logo'
 import Link from 'next/link'
-import { useState } from 'react'
+import {  useEffect, useState } from 'react'
 import Router from 'next/router'
 
 export function Header({routes, ...style}) {
@@ -21,9 +21,13 @@ export function Header({routes, ...style}) {
     }
   }
 
-  function handleMenuEvent() {
-    setIsOpened(!isOpened)
+  function handleMenuEvent(state) {
+    setIsOpened(state)
   }
+
+  useEffect(
+    () => {handleMenuEvent(false)}, []
+  )
 
   return (
     <div className={`
@@ -36,7 +40,9 @@ export function Header({routes, ...style}) {
         <Logo type="half" width="15rem"/>
       </div>
         
-      <div onMouseEnter={handleMenuEvent} onMouseLeave={handleMenuEvent} 
+      <div
+        onMouseLeave={() => {handleMenuEvent(false)} }
+        onMouseEnter={() => {handleMenuEvent(true) }}
         className={`${styles.menu} ${isOpened ? styles.opened: styles.closed}`}>
         {isOpened ? (
         <div className={styles.linksBox}>
