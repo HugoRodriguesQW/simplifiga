@@ -2,16 +2,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Header } from "../components/Header";
 import styles from '../styles/pages/Developer.module.css'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DeveloperHead } from "../components/Head/DeveloperHead";
 import reactStringReplace from 'react-string-replace'
 import contents from './api/docapi.json'
 import Link from 'next/link'
 import copy from "copy-to-clipboard";
 import {Footer} from '../components/Footer'
+import { userContext } from "../contexts/UserContext";
 
-export default function Developer({logged}) {
+export default function Developer() {
 
+  const {logged} = useContext(userContext)
+  
   const [version, setVersion] = useState(Object.keys(contents)[0])
   const [content, setContent] = useState(contents[version])
 

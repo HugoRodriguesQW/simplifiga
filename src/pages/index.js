@@ -8,10 +8,13 @@ import { IndexHead } from '../components/Head/IndexHead'
 import { Logo } from '../components/Logo'
 import { Header } from '../components/Header'
 import  Router  from 'next/router'
+import { useContext } from 'react'
+import { userContext } from '../contexts/UserContext'
 
-export default function Home({logged}) {
+export default function Home() {
   
-
+  const {logged} = useContext(userContext)
+  
   return (
     <>
     <IndexHead/>

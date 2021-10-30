@@ -5,29 +5,14 @@ import Head from 'next/head'
 import '../styles/globals.css'
 import { useEffect, useState } from 'react'
 import Router from 'next/router'
+import { UserContextProvider } from '../contexts/UserContext'
 
 function MyApp({ Component, pageProps }) {
 
-  const [isLogged, setIsLogged] = useState(false)
-
-  useEffect(()=> {
-    const user = localStorage.getItem('user')
-    if(user){
-      const lifetime = new Date(JSON.parse(user).lifetime)
-      if(lifetime < new Date()) return clearUser()
-      setIsLogged(true)
-    }
-  },[])
-
-  function clearUser(){
-    localStorage.removeItem('user')
-    Router.reload()
-  }
-
   return (
-  
+  <UserContextProvider>
   <ShortenerContextProvider>
-    <Component logged={isLogged} {...pageProps} />
+    <Component {...pageProps} />
     <Head>
       <link href="https://fonts.googleapis.com/css2?family=Sarala&display=swap" rel="stylesheet" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -39,6 +24,7 @@ function MyApp({ Component, pageProps }) {
       <meta httpEquiv="content-type"  content="text/html;charset=utf-8"></meta>
     </Head>
   </ShortenerContextProvider>
+  </UserContextProvider>
   )
 }
 

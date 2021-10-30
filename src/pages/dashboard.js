@@ -1,22 +1,18 @@
 import Router from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { Header } from '../components/Header'
 import styles from '../styles/pages/Dashboard.module.css'
 import {Footer} from '../components/Footer'
+import { BasicAnalytics } from '../components/BasicAnalytics'
+import { BasicUserInfo } from '../components/BasicUserInfo'
+import { userContext } from '../contexts/UserContext'
 
-export default function Dashboard({logged}) {
+export default function Dashboard() {
 
-  const [user, setUser] = useState({})
-
+  const {logged} = useContext(userContext)
+  
   useEffect(()=> {
-    const user = localStorage.getItem('user')
-    if(!user) return Router.push('/user/login')
-    const userData = JSON.parse(user)
-    if(!userData.lifetime || userData.lifetime < new Date()) {
-      localStorage.removeItem('user')
-      return Router.push('/user/login')
-    }
-    setUser(userData)
+    if(!logged) Router.push('/user/login')
   }, [])
 
   return (
@@ -25,26 +21,18 @@ export default function Dashboard({logged}) {
       { logged ? (
       <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
+      <aside className={styles.sideBar}>
+        sidebarcontent
+      </aside>
 
-      <div>
-      {user?.name}<br/>
-      {user?.email}<br/>
-      {user?.token}<br/>
-      {user?.company}
+      <div className={styles.dashboardContent}>
+        <BasicAnalytics/>
+        <BasicUserInfo/>
+        <Footer/>
       </div>
-
-      <div>
-        Página em construção...
-      </div>
-
-      <button onClick={()=> {
-        localStorage.removeItem('user')
-        Router.push('/user/login')
-      }}>Sair</button>
       </>
       ): null}
     </div>
-     <Footer/>
      </>
   )
 }

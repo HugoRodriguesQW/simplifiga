@@ -47,7 +47,7 @@ export default function Login () {
       company: login.company,
       lifetime: date
     }))
-    Router.push('/dashboard')
+    Router.reload()
     reset()
 
     } catch (error) {

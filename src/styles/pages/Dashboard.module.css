@@ -1,12 +1,59 @@
 .dashboardContainer {
+ width: 100vw;
+ min-height: 100vh;
+ background-color: #f2f2f2;
+ display: flex;
+}
+
+.dashboardContent footer {
+  position: static;
+  width: 100%;
+  background: none;
+  border: 0;
+  background: none;
+  padding: 2rem;
+}
+
+.dashboardContent footer p {
+  color: #000;
+}
+
+.dashboardContainer > div:first-child {
+  border-bottom: 1px solid var(--gray-d6);
+}
+
+.sideBar {
+  margin-top: 6rem;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  width: 20rem;
+  background-color: var(--white);
+  border-right: 1px solid var(--gray-d6);
+  overflow-x: hidden;
+}
+
+.dashboardContent {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  gap: 3rem;
+  padding: 3.5rem;
+  width: 100%;
+  margin-top: 6rem;
+  margin-left: 20rem;
+  color: #000;
+  gap: 4rem;
+}
 
-  width: 100vw;
-  height: 100vh;
+.dashboardContent > div:not(.noBackground) {
+  background: #fff;
+  border-radius: 10px;
+}
 
-  text-align: center;
+.dashboardContent span{
+  font-size: 2.4rem;
+}
+
+.dashboardContent strong {
+  font-size: 4rem;
+  font-weight: 400;
 }

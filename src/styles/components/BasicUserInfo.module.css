@@ -1,0 +1,33 @@
+.userInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.userInfoContainer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex: 1 0;
+}
+
+.tokenContainer span {
+  padding-left: 1rem;
+  padding-right: 8rem;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  color: #dfdfdf;
+  font-size: 3rem;
+  display: block;
+}
+
+.tokenContainer span button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 0 10px 10px 0;
+  padding: 0 1.5rem;
+  background: #fff;
+}

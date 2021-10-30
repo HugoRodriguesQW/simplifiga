@@ -1,0 +1,13 @@
+.analyticsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 2rem 0;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.analyticsContainer .cell {
+  display: flex;
+  flex-direction: column;
+}
