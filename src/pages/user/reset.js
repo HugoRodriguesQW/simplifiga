@@ -25,12 +25,11 @@ export default function Reset () {
       setCurrentState('reset')
     },
     reset() {
-      console.info('Reset Password')
+      alert('Em construção...')
     }
   }
 
   async function handleOnSubmit(data, {reset}) {
-    console.info("Submit")
     const currentForm = formRefs[currentState].current
     try {
     const schemas = {
@@ -72,7 +71,6 @@ export default function Reset () {
     }
   }
 
-  console.info('Inite', currentState)
   return (
     <>
     <Header routes={[]} padding/>

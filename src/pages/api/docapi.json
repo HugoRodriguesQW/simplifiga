@@ -1,0 +1,176 @@
+{
+  "v1": {
+    "version": "1.0.0",
+    "path": "/api/v1",
+    "license": "MIT License",
+    "document": [
+      {
+        "anchor": ["introduction", "Introdução"],
+        "title": "Introdução",
+        "content": "A Simplifiga é uma plataforma de gerenciamento com foco na simplicidade e eficiência. Com nossa API seus links são facilmente encurtados tornando-os curtos e memoráveis com a opção de apelido personalizável."
+      },
+      {
+        "subtitle": "Requisitos",
+        "list": [
+          {
+            "name": "Conhecimento da ferramenta:", 
+            "content": "Confira os terminais de entrada e saída de nossa API para enviar e receber os dados."
+          },
+          {
+            "name": "Crie uma conta:",
+            "content": "Crie uma @link0@ em nosso site para obter um token de acesso ao nosso serviço."
+          }
+        ]
+      },
+      {
+        "subtitle": "Exemplo",
+        "list": [
+          {
+            "content": "Obtenha seu token de acesso na página de @link1@. Ele é único para cada usuário e não deve ser compartilhado nem exposto. Veja mais detalhes na seção de @link2@."
+          },
+          {
+            "content": "Utilize o método POST para uma requisição HTTP em https://simplifi.ga/api para utilizar a versão mais recente da API passando os parâmetros no elemento BODY da requisição.",
+            "code": "httpRequest",
+            "description": "Uma responsa bem-sucedida retornará o link encurtado com o destino com código."
+          },
+          {
+            "content": "Consulte mais detalhes sobre os terminais de entrada e saída na seção de utilização da API."
+          }
+        ]
+      },
+      {
+        "anchor": ["auth", "Autenticação"],
+        "title": "Autenticação",
+        "content": "Quando um encurtamento é feito ele é adicionado ao histórico do usuário possibilitando futuras edições e exclusão do mesmo. Com o objetivo de identificar e assegurar que apenas os responsáveis tenham acesso a essa funcionalidade, utilizamos tokens de acesso únicos para cada usuário."
+      },
+      {
+        "content": "Esse token deve ser escondido e protegido para que apenas o usuário tenha a capacidade de utilizar o serviço. Sua exposição pode acarretar a utilização do serviço de encurtamento e edição por terceiros na sua conta."
+      },
+      {
+        "content": "Um método para esconder é a utilização de variáveis de ambiente. @link3@."
+      },
+      {
+        "anchor": ["parameters", "Parâmetros"],
+        "title": "Parâmetros",
+        "content": "Segue os parâmetros obrigatórios e opcionais para realizar um encurtamento de link e seus respectivos retornos."
+      },
+      {
+        "subtitle": "Entrada",
+        "table": [
+          ["url", "obrigatório", "string", "link que deve ser encurtado"],
+          ["nick", "opcional", "string", "apelido personalizado de identificação"],
+          ["token", "obrigatório", "string", "o token de acesso gerado em dashboard"]
+        ] 
+      },
+      {
+        "subtitle": "Saída",
+        "table": [
+          ["target", "string"],
+          ["shortened", "string"]
+        ] 
+      },
+      {
+        "anchor": ["methods", "Métodos"],
+        "title": "Métodos",
+        "content": "No momento apenas o método POST é utilizado. Conforme expansão da API com novas funções incluindo consultas e alterações, novos métodos serão utilizados.",
+        "table": [
+          ["POST", "aceito", "Encurtar um link"],
+          ["GET, PUT, DELETE", "negado", "Funções em construção"]
+        ]
+      },
+      {
+        "anchor": ["alias", "Alias"],
+        "title": "Apelido personalizado",
+        "content": "É possível escolher o que deve aparecer como apelido do link encurtado passando o parâmetro 'nick' na requisição. Observe os exemplos de aplicação:",
+        "table": [
+          ["nick","simples",  "https://simplifi.ga/simples"]
+        ]
+      },
+      {
+        "anchor": ["example", "Exemplo"],
+        "title": "Exemplo prático",
+        "content": "Um request padrão com os parâmetros obrigatórios utilizando o método POST e seu respectivo retorno:",
+        "multiple": {
+          "title": "Request POST", 
+          "data": [
+          {
+            "name": "JS",
+            "code": "httpRequest"
+          },
+          {
+            "name": "Axios",
+            "code": "axiosRequest"
+          },
+          {
+            "name": "cURL",
+            "code": "curlRequest"
+          },
+          {
+            "name": "Python",
+            "code": "pythonRequest"
+          },
+          {
+            "name": "Java",
+            "code": "javaRequest"
+          }
+        ]
+        }
+      },
+      {
+        "multiple": {
+          "title": "Response 200",
+          "data": [
+            {
+              "name": "JSON",
+              "code": "defaultResponse"
+            }
+          ]
+        }
+      },
+      {
+        "anchor": ["errors", "Erros"],
+        "title": "Erros conhecidos",
+        "content": "Segue abaixo uma lista de erros conhecidos e possíveis durante o processo, seus códigos e portas. Todos os errors retoram um JSON."
+      },
+      {
+        "subtitle": "400: Bad Request",
+        "content": "Algum parâmetro obrigatório não foi passado durante o request ou o tipo está incorreto. Veja os parâmetros aceitos em @link4@.",
+        "code": "erro400"
+      },
+      {
+        "subtitle": "401: Unauthorized",
+        "content": "O token informado não é válido. Verifique se o token foi passado corretamente para o request. Seu token está disponível em @link1@.",
+        "code": "erro401"
+      },
+      {
+        "subtitle": "422: Unprocessable Entity",
+        "content": "Todas as informações foram recebidas pelo servidor, mas não foi possível completar a operação por já existir no banco de dados o apelido informado.",
+        "code": "erro422"
+      },
+      {
+        "subtitle": "500: Internal Server",
+        "content": "Um erro interno ocorreu. Isso pode ter causado por vários motivos, como inúmeras tentativas de encurtamento seguidas por parte do servidor.",
+        "code": "erro500"
+      },
+      {
+        "subtitle": "405: Method Not Allowed",
+        "content": "O método utilizado não é aceito pelo servidor. No momento, apenas o método POST é aceito. Veja os @link5@ disponíveis.",
+        "code": "erro405"
+      },
+      {
+        "anchor": ["code", "Código Fonte"],
+        "title": "Código Fonte",
+        "content": "O código fonte da API e do site está disponível no repositório @link6@."
+      }
+    ],
+    "reference": [
+      ["conta gratuita", "/user/register"],
+      ["Dashboard", "/dashboard"],
+      ["autenticação", "#auth"],
+      ["Saiba mais", "https://imasters.com.br/desenvolvimento/protegendo-seus-dados-utilizando-variaveis-de-ambiente", "newtab"],
+      ["Parâmetros", "#parameters"],
+      ["Métodos", "#methods"],
+      ["https://github.com/hugorodriguesqw/simplifiga", "https://github.com/hugorodriguesqw/simplifiga", "newtab"]
+    ]
+  }
+}

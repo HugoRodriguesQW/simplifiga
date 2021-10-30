@@ -2,7 +2,7 @@ import styles from '../styles/components/Footer.module.css'
 export function Footer() {
   return (
     <footer className={styles.footerContainer}>
-        <p>© {new Date().getFullYear()} Simplifi.ga - Ferramenta para encurtar e simplificar um link longo.</p>
+        <p>© {new Date().getFullYear()} Simplifi.ga - Ferramenta para encurtar e simplificar links longos.</p>
 
       <ul className={styles.siteMap}>
         {

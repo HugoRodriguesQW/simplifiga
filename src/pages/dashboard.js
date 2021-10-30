@@ -2,6 +2,7 @@ import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import styles from '../styles/pages/Dashboard.module.css'
+import {Footer} from '../components/Footer'
 
 export default function Dashboard({logged}) {
 
@@ -19,6 +20,7 @@ export default function Dashboard({logged}) {
   }, [])
 
   return (
+    <>
     <div className={styles.dashboardContainer}>
      { logged ? (
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
@@ -42,5 +44,7 @@ export default function Dashboard({logged}) {
         Router.push('/user/login')
       }}>Sair</button>
     </div>
+     <Footer/>
+     </>
   )
 }

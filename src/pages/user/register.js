@@ -113,7 +113,7 @@ export default function Register () {
           ): (
             <button type="submit">Criar conta</button>
           )}
-          <p>Ao se cadastrar, você concorda com os Termos & Privacidade da Simplifiga.</p>
+          <p>Ao se cadastrar, você concorda com os <a href="https://simplifi.ga/privacy" target="_blank" rel="noreferrer">Termos & Privacidade</a> da Simplifiga.</p>
         </div>
       </Form>
       </>

@@ -10,9 +10,84 @@
   width: calc(100vw - 20rem);
 }
 
+.developerContent div:first-child {
+  margin: 0;
+}
+
 .developerContent h3 {
   padding-top: 6rem;
   padding-bottom: 1rem;
+}
+.developerContainer .versionControl {
+  margin: 0;
+}
+
+.developerContainer .versionControl p {
+  display: inline;
+  margin-left: 1rem;
+}
+
+.developerContainer .versionControl p span {
+  display: block;
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+.tabs {
+  background: #f2f2f2;
+  transition: .2s;
+  border-radius: 5px;
+}
+
+.tabs .buttonsBox {
+  display: flex;
+  background: #d6d6d6;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabs .buttonsBox > span {
+  font-size: 1.6rem;
+  padding: 0 1rem;
+  background: var(--blue);
+  color: var(--white);
+  flex: 0 1;
+  min-width: fit-content;
+}
+
+.tabs .buttonsBox > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tabs .buttonsBox  button {
+  padding: 0 1.5rem;
+  border-radius: 0;
+  font-size: 1.8rem;
+  background: #d6d6d6;
+  color: var(--black-36);
+  transition: .2s;
+}
+
+.developerContent .tabs  > div {
+  margin: 0;
+}
+
+.tabs .buttonsBox .activeTabLink {
+  background: #f2f2f2;
+
+}
+
+.tabsContent > div {
+ display: none;
+}
+
+.tabsContent .activeTabContent {
+  display: block;
+}
+
+.versionControl select {
+  background: #f2f2f2;
 }
 
 .developerContent h3:first-child {
@@ -44,6 +119,114 @@
   border-left: .5rem solid var(--blue);
 }
 
+.developerContent h3 span {
+  font-size: 1.5rem;
+  margin-left: .4rem;
+  color: var(--gray-6d);
+}
+
+
+.developerContent h4 {
+  padding-top: 6rem;
+  border-bottom: 2px solid #dfdfdf;
+}
+
+.developerContent h5 {
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.developerContent h5 {
+  font-size: 1.8rem;
+}
+
+.developerContent div {
+  margin: 3rem 0;
+}
+
+.developerContent li {
+  margin-bottom: 2rem
+}
+
+.developerContent li p {
+  display: inline;
+}
+
+.developerContent .description {
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+.developerContent .code {
+  margin: 2rem 0;
+  background: #f2f2f2;
+  position: relative;
+  border-radius: 5px;
+  overflow: scroll;
+  font-size: 1.5rem;
+}
+
+.developerContent .code button {
+  position: absolute;
+  top: .4rem;
+  right: .4rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.developerContent .table {
+  display: table;
+  width: 100%;
+  background: #f2f2f2;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.table .tableRow {
+  display: table-row;
+}
+
+.tableRow .tableCell {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 1rem;
+
+  border: 1px solid #d6d6d6;
+  border-radius: 1px;
+}
+
+.table .tableCell p {
+  margin: 0;
+}
+
+.table div div:first-child {
+  color: var(--blue);
+}
+
+.table.threeColors div div:nth-child(2) {
+  font-style: italic;
+}
+
+.tableCell.string {
+  color: purple;
+}
+
+.tableCell.aceito {
+  color: #1db844;
+}
+
+.tableCell.negado {
+  color: red;
+}
+
+
+.developerContent .code button img {
+  filter: invert(1);
+}
+
 @media  screen and (max-width: 780px) {
   .developerContainer aside {
     display: none;
@@ -52,7 +235,8 @@
   .developerContent {
     position: static;
     float: none;
-    padding: 2rem 6rem 0 6rem;
-    width: 100%;
+    padding: 2rem;
+    width: 100vw;
+
   }
 }

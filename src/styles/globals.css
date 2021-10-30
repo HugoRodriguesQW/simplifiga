@@ -39,7 +39,7 @@ button.active {
   animation: pulse 1s infinite alternate-reverse;
 }
 
-p, ul, li {
+p, ul, li, strong {
   font-size: clamp(1.4rem, 1.4vw, 1.7rem);
   line-height: 1.6;
   text-align: justify;
