@@ -22,12 +22,10 @@ export default function Dashboard({logged}) {
   return (
     <>
     <div className={styles.dashboardContainer}>
-     { logged ? (
+      { logged ? (
+      <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
-    ) : (
-      <Header fixed padding routes={[ '/user/register', '/user/login', '/']}/>
-    )
-    }
+
       <div>
       {user?.name}<br/>
       {user?.email}<br/>
@@ -43,6 +41,8 @@ export default function Dashboard({logged}) {
         localStorage.removeItem('user')
         Router.push('/user/login')
       }}>Sair</button>
+      </>
+      ): null}
     </div>
      <Footer/>
      </>

@@ -4,6 +4,7 @@ import { ShortenerContextProvider } from '../contexts/Shortener'
 import Head from 'next/head'
 import '../styles/globals.css'
 import { useEffect, useState } from 'react'
+import Router from 'next/router'
 
 function MyApp({ Component, pageProps }) {
 
@@ -11,8 +12,17 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(()=> {
     const user = localStorage.getItem('user')
-    if(user) setIsLogged(true)
+    if(user){
+      const lifetime = new Date(JSON.parse(user).lifetime)
+      if(lifetime < new Date()) return clearUser()
+      setIsLogged(true)
+    }
   },[])
+
+  function clearUser(){
+    localStorage.removeItem('user')
+    Router.reload()
+  }
 
   return (
   
