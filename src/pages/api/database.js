@@ -28,8 +28,6 @@ export const database = {
     if (!id) return null
     const query = {'id': id}
     const res = await cachedDb?.collection('links')?.findOne(query)
-
-    console.info("> DB: Get", res)
     return res?.link ?? null
   },
 
@@ -52,10 +50,8 @@ export const database = {
   },
 
   async login ({email, password}) {
-    console.info("Loggin", email, password)
     const  user = 
     await cachedDb?.collection('clients')?.findOne({'email': email, 'password': password})
-    console.info(user)
     return user
   },
 

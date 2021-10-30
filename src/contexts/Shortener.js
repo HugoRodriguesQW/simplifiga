@@ -38,7 +38,6 @@ export function ShortenerContextProvider ({children}) {
       const result = await res.json()
       
       if(!result.shortened) {
-        console.info(result)
         throw result.code
       }
 

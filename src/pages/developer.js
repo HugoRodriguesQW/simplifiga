@@ -33,7 +33,6 @@ export default function Developer({logged}) {
       }).forEach((ind)=> {
         if(ind.is) current = ind.id
       })
-      console.info('current', current)
       if(current === currentIndex) return
       setTimeout(()=> {
       setCurrentIndex(current)}, 200)
@@ -189,7 +188,6 @@ const Elements = {
   multiple(content, context) {
     const id = Math.round(Math.random()*999999)
     function handleTabButtonDown(name, {target}){
-      console.info("HandleButtonKey")
       const tabcontent = document.getElementsByClassName(`tab_content_${id}`);
       for (let i = 0; i < tabcontent.length; i++) {
         tabcontent[i].className = tabcontent[i].className.replace(' ' + styles.activeTabContent, "");
@@ -209,7 +207,6 @@ const Elements = {
         <div className={styles.buttonsBox}> 
           <div>
           {content.data.map((item, i)=> {
-            console.info("Running")
             return (
             <button 
             className={`${`tab_links_${id}`} ${i === 0? styles.activeTabLink : null}`}
