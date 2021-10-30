@@ -34,7 +34,7 @@ export function Shortener() {
       <section className={styles.surnameContainer}>
         <div className={styles.inputBox}><input 
             type="text" 
-            placeholder="Apelido (opicional)"
+            placeholder="Apelido (opcional)"
             onChange={(e)=> {setLinkSurname(e.target.value)}}
             >
           </input>

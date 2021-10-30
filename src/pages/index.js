@@ -34,7 +34,7 @@ export default function Home() {
     
         <h2>Encurtar links de forma simples e fácil!</h2>
         <p>
-          O Simplifiga é um encurtador de links longos tornando-os simples, curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opicional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
+          O Simplifiga é um encurtador de links longos tornando-os simples, curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opcional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
         </p>
 
         <div className={styles.apiBox}>
