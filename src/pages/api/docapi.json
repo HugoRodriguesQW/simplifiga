@@ -29,12 +29,12 @@
             "content": "Obtenha seu token de acesso na página de @link1@. Ele é único para cada usuário e não deve ser compartilhado nem exposto. Veja mais detalhes na seção de @link2@."
           },
           {
-            "content": "Utilize o método POST para uma requisição HTTP em https://simplifi.ga/api para utilizar a versão mais recente da API passando os parâmetros no elemento BODY da requisição.",
+            "content": "Utilize o método POST para uma requisição HTTP em https://simplifi.ga/api.  O endpoint /api redireciona a requisição para a versão mais recente da API. Observe os parâmetros no elemento BODY da requisição.",
             "code": "latestJsRequest",
-            "description": "Uma responsa bem-sucedida retornará o link encurtado com o destino com código."
+            "description": "Uma responsa bem-sucedida retornará o link encurtado com o destino absoluto no formato JSON."
           },
           {
-            "content": "Consulte mais detalhes sobre os terminais de entrada e saída na seção de utilização da API."
+            "content": "Consulte mais detalhes sobre os terminais de entrada e saída na seção de @link4@ da API."
           }
         ]
       },
