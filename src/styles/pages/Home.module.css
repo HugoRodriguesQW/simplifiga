@@ -96,6 +96,9 @@
   grid-column: span 3;
 }
 
+.getStarted {
+  padding: .5rem 4rem;
+}
 
 @media screen and (max-width: 560px)  {
   .apiBox {

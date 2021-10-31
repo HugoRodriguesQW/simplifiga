@@ -1,4 +1,6 @@
 import styles from '../styles/components/Footer.module.css'
+import Link from 'next/link'
+
 export function Footer() {
   return (
     <footer className={styles.footerContainer}>
@@ -14,7 +16,7 @@ export function Footer() {
             return (
             <>
             <li key={`${i}${Math.random().toFixed(100)}`}>
-              <a href={`https://simplifi.ga/${obj.loc}`}>{obj.name}</a>
+              <Link href={`/${obj.loc}`}>{obj.name}</Link>
             </li>
 
             {i === arr.length-1 ? null : (

@@ -11,6 +11,7 @@ import  Router  from 'next/router'
 import { useContext } from 'react'
 import { userContext } from '../contexts/UserContext'
 import Link from 'next/link'
+import router from 'next/router'
 
 export default function Home() {
   
@@ -35,7 +36,7 @@ export default function Home() {
     
         <h2>Encurtar links de forma simples e fácil!</h2>
         <p>
-          O Simplifiga é um encurtador de links longos tornando-os simples, curtos e memoráveis. Cole seu link completo, defina um apelido para o link (opcional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
+          A Simplifiga é uma plataforma de gerenciamento de links com foco na simplicidade. Para realizar um encurtamento rápido cole seu link no campo acima, defina um apelido (opcional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
         </p>
 
         <div className={styles.apiBox}>
@@ -91,6 +92,12 @@ export default function Home() {
             <p>Totalmente compatível com vários tamanhos de telas</p>
           </div>
         </div>
+
+        <h2>Pronto para começar?</h2>
+        <p>
+          Crie uma conta gratuita e obtenha acesso ao nosso serviço de gerenciamento de links gratuito.
+        </p>
+        <button onClick={()=> {router.push('/user/register')} }  href="/user/register" className={styles.getStarted}>Vamos lá</button>
     </div>
     <Footer/>
     </>
