@@ -1,3 +1,20 @@
+.building {
+  opacity: 0.38;
+  pointer-events: none;
+  user-select: none;
+  cursor: inherit;
+  position: relative;
+}
+
+.building::after {
+  content: "Ops! Ainda não terminamos isso aqui :/";
+  position: absolute;
+  bottom: .5rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  color: red;
+}
+
 .dashboardContainer {
  width: 100vw;
  min-height: 100vh;

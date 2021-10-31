@@ -21,12 +21,12 @@ export default function Dashboard() {
       { logged ? (
       <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
-      <aside className={styles.sideBar}>
-        sidebarcontent
+      <aside className={`${styles.sideBar}`}>
+        <span>Dashboard</span>
       </aside>
 
       <div className={styles.dashboardContent}>
-        <BasicAnalytics/>
+        <BasicAnalytics className={styles.building}/>
         <BasicUserInfo/>
         <Footer/>
       </div>
