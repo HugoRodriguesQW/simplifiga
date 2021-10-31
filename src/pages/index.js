@@ -34,7 +34,7 @@ export default function Home() {
 
     <div id="content" className={styles.contentBox}>
     
-        <h2>Encurtar links de forma simples e fácil!</h2>
+        <h1>Encurtar links de forma simples e fácil!</h1>
         <p>
           A Simplifiga é uma plataforma de gerenciamento de links com foco na simplicidade. Para realizar um encurtamento rápido cole seu link no campo acima, defina um apelido (opcional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
         </p>

@@ -76,9 +76,9 @@ export default function Developer() {
       </aside>
       <div className={styles.developerContent}>
         <div>
-        <h3 id="introduction" >A API do Simplifiga 
+        <h1>A API do Simplifiga 
           <span>{content.version}</span>
-        </h3>
+        </h1>
         <div className={styles.versionControl}>
         <select onChange={handleVersionSelect}>
           {

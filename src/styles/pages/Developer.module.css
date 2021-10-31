@@ -14,6 +14,13 @@
   margin: 0;
 }
 
+.developerContent h1 {
+  padding-bottom: 1rem;
+  padding-top: 2rem;
+  font-size: 2.9rem;
+  margin: 0;
+}
+
 .developerContent h3 {
   padding-top: 6rem;
   padding-bottom: 1rem;
@@ -119,7 +126,7 @@
   border-left: .5rem solid var(--blue);
 }
 
-.developerContent h3 span {
+.developerContent h1 span {
   font-size: 1.5rem;
   margin-left: .4rem;
   color: var(--gray-6d);
