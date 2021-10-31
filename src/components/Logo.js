@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export function Logo({type, ...custom}) {
   return (
-    <h1 className={styles[`${type}LogoImage`]}>
+    <strong className={styles[`${type}LogoImage`]}>
       <Link href="/">
        {
          type === "full" ? (
@@ -19,6 +19,6 @@ export function Logo({type, ...custom}) {
          )
        }
        </Link>
-    </h1>
+    </strong>
   )
 }
