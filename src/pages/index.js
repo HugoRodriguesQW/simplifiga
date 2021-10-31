@@ -10,6 +10,7 @@ import { Header } from '../components/Header'
 import  Router  from 'next/router'
 import { useContext } from 'react'
 import { userContext } from '../contexts/UserContext'
+import Link from 'next/link'
 
 export default function Home() {
   
@@ -40,7 +41,7 @@ export default function Home() {
         <div className={styles.apiBox}>
           <div className={styles.apiContent}>
             <h3>Integração de API</h3>
-            <p>Use nossa API para encurtar os links de forma direta em seus projetos. O processo é simples e rápido e gratuito, basta registrar-se em nossa plataforma para obter um token de acesso.</p>
+            <p>Use nossa API para encurtar os links de forma direta em seus projetos. O processo é simples, rápido e gratuito. Basta registrar-se em nossa plataforma para obter um token de acesso único.</p>
           </div>
           <div>
             <button onClick={()=> {Router.push('/developer')}}>API</button>
@@ -48,7 +49,7 @@ export default function Home() {
         </div>
         
         <p>
-          Você pode reduzir URLs longas e usá-las em posts, blogs, fórums, mensagens e outros. Esta plataforma é totalmente segura e permite tornar seus links pequenos e memoráveis.
+          Você pode reduzir URLs longas e usá-las em posts, blogs, fórums, mensagens e outros. Esta plataforma é totalmente segura e permite tornar seus links pequenos e memoráveis. Veja mais detalhes na <Link href="/developer" >documentação</Link> da API.
         </p>
 
         <h2>Benefícios do Simplifiga</h2>
