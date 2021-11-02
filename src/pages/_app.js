@@ -3,12 +3,10 @@
 import { ShortenerContextProvider } from '../contexts/Shortener'
 import Head from 'next/head'
 import '../styles/globals.css'
-import { useEffect, useState } from 'react'
-import Router from 'next/router'
 import { UserContextProvider } from '../contexts/UserContext'
 
 function MyApp({ Component, pageProps }) {
-
+ 
   return (
   <UserContextProvider>
   <ShortenerContextProvider>

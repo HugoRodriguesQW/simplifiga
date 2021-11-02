@@ -8,13 +8,35 @@ import { IndexHead } from '../components/Head/IndexHead'
 import { Logo } from '../components/Logo'
 import { Header } from '../components/Header'
 import  Router  from 'next/router'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { userContext } from '../contexts/UserContext'
 import Link from 'next/link'
 import router from 'next/router'
+import { serverCrypto, webCrypto } from '../utils/crypto'
 
-export default function Home() {
+export default function Home(props) {
   
+  useEffect(()=> {
+  const data = 'Where are you?'
+  const encoder = new webCrypto({bits: 1024})
+  const serverEncoder = new serverCrypto(props.publicAppKey)
+  console.info('Sending a message to server:', data)
+
+  fetch(`${window.location.origin}/api/crypto`, {
+    method: "POST",
+    body: JSON.stringify({
+      encrypted: serverEncoder.encrypt(data),
+      clientKey: encoder.getPublicKey()
+    })
+  })
+  .then(async (response) => {
+    const result = await response.json()
+    console.warn(">  Message encrypted with a public client key:")
+    console.log(result.encrypted)
+    console.warn('Decrypted:', encoder.decrypt(result.encrypted))
+  })
+  },[])
+
   const {logged} = useContext(userContext)
   
   return (
@@ -103,4 +125,13 @@ export default function Home() {
     </>
     
   )
+}
+
+
+export async function getServerSideProps () {
+  return {
+    props: {
+      publicAppKey: process.env.PUBLIC_KEY
+    }
+  }
 }
