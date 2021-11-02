@@ -1,25 +1,43 @@
-.userInfoContainer {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 
 .userInfoContainer > div {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  flex: 1 0;
+  flex: 1;
+  gap: 2rem;
+}
+
+.tokenContainer {
+  cursor: pointer;
+  position: relative;
+  transition: .16s;
+}
+
+.tokenContainer .ghostToken {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  background: none;
+}
+
+.tokenContainer .ghostToken.enable {
+  opacity: 1;
+  animation: ghost .5s;
+}
+
+.tokenContainer span:hover {
+  background: #fdfdfd;
 }
 
 .tokenContainer span {
   padding-left: 1rem;
-  padding-right: 8rem;
   position: relative;
   background: #fff;
   border-radius: 10px;
-  color: #dfdfdf;
+  color: var(--blue);
   font-size: 3rem;
   display: block;
+  overflow: hidden;
 }
 
 .tokenContainer span button {
@@ -30,4 +48,39 @@
   border-radius: 0 10px 10px 0;
   padding: 0 1.5rem;
   background: #fff;
+}
+
+.userInfo span {
+  opacity: 0.3;
+  color: var(--black-36);
+  font-weight: bold;
+}
+
+.userInfoContainer > div:last-child > div:first-child{
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tokenInfo span {
+  display: block;
+  text-align: right;
+}
+
+.tokenInfo span:first-child {
+  font-weight: bold;
+  color: var(--black-36);
+  opacity: 0.2;
+  font-size: 1.3rem;
+}
+
+@keyframes ghost {
+ from {
+   opacity: 1;
+ } 
+ to {
+   opacity: 0;
+   transform: translateY(-6rem);
+ }
 }

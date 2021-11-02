@@ -9,7 +9,7 @@ export function UserContextProvider ({children}) {
   const [email, setEmail] = useState("elomusk@elon.musk")
   const [token, setToken] = useState("00000000000000000000001")
   const [company, setCompany] = useState("SpaceX")
-  const [logged, setLogged] = useState(false)
+  const [logged, setLogged] = useState(null)
 
   useEffect(()=> {
     const user = localStorage.getItem('user')
@@ -21,8 +21,9 @@ export function UserContextProvider ({children}) {
       setEmail(userData.email)
       setToken(userData.token)
       setCompany(userData.company)
-      setLogged(true)
+      return setLogged(true)
     }
+    setLogged(false)
   },[])
 
   function clearUser(){

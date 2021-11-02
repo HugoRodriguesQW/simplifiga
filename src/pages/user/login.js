@@ -12,6 +12,7 @@ import Router from 'next/router'
 export default function Login () {
   const formRef = useRef(null)
   const [processing, isProcessing] = useState(false)
+  const [show, isShow] = useState(false)
 
   async function handleOnSubmit(data, {reset}) {
     isProcessing(true)
@@ -65,9 +66,12 @@ export default function Login () {
   useEffect(()=> {
     const user = localStorage.getItem('user')
     if(user) return Router.push('/dashboard')
+    isShow(true)
   }, [])
 
   return (
+    <>
+    { show ? (
     <>
     <LoginHead/>
     <Header routes={['/']}  padding />
@@ -99,6 +103,9 @@ export default function Login () {
       </Form>
       </div>
     </div>
+    </>
+    ) :  null
+    }
     </>
   )
 }

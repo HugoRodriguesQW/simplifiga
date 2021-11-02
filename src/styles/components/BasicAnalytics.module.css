@@ -2,12 +2,31 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   gap: 1.8rem;
   flex-wrap: wrap;
+  transition: .3s;
 }
 
 .analyticsContainer .cell {
   display: flex;
   flex-direction: column;
+}
+
+.analyticsContainer .cell > strong {
+  text-align: center;
+}
+
+@media screen and (max-width: 850px) {
+  .analyticsContainer {
+    display: block;
+    padding: 2rem;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  
+  .analyticsContainer .cell {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

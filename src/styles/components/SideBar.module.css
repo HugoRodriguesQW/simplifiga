@@ -1,0 +1,83 @@
+.container {
+  padding-top: 1rem;
+  margin-top: 6rem;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  width: 20rem;
+  background-color: var(--white);
+  border-right: 1px solid var(--gray-d6);
+  overflow-x: hidden;
+  z-index: 10;
+  transition: .3s;
+}
+
+.container a {
+  font-size: 1.8rem;
+  display: block;
+  line-height: 2;
+  color: var(--black-36);
+  padding-left: 1.5rem;
+  transition: .2s;
+}
+
+.container .currentIndex a {
+  background: #f2f2f2;
+  color: var(--blue) !important;
+  padding-left: 1rem;
+  border-left: .5rem solid var(--blue);
+}
+
+.container a:hover {
+  background: #f8f8f8;
+  
+}
+
+.container a:focus {
+  animation: loop 2s alternate ease-out backwards;
+  animation-play-state: running;
+}
+
+@keyframes loop {
+  0% {
+    color: var(--black-36);
+  }
+  
+  20%, 80% {
+    color: var(--blue);
+  }
+
+  100% {
+    color: var(--black-36);
+  }
+}
+
+@media  screen and (max-width:850px) {
+  .container {
+    position: fixed;
+    top: 0;
+    bottom: auto;
+    height: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    display: inline-flex;
+    border-bottom: 1px solid var(--gray-d6);
+    overflow-x: scroll;
+  }
+
+  .container a {
+    padding: 0 .5rem;
+  }
+
+  .container div:not(.currentIndex) a {
+    padding-bottom: .2rem;
+  }
+
+  
+  .container .currentIndex a {
+  background: #f2f2f2;
+  color: var(--blue) !important;
+  border-left: 0;
+  }
+}

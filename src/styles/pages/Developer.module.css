@@ -119,6 +119,10 @@
   transition: color .2s, background .2s;
 }
 
+.developerContainer aside a:hover {
+  background-color: #f8f8f8;
+}
+
 .developerContainer .currentIndex {
   background: #f2f2f2;
   color: var(--blue);

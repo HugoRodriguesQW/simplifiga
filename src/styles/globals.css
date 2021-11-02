@@ -13,6 +13,21 @@
   --black-36: #363636;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  transition: .2s;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-d6);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--black-36);
+}
+
 body, input, button {
   font: 400 2.4rem 'Sarala', sans-serif;
   border: 0;
