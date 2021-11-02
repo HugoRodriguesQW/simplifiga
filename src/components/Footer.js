@@ -12,17 +12,12 @@ export function Footer() {
             {'name': 'Início', 'loc': ''},
             {'name': 'Privacidade & Termos', 'loc': 'privacy'}
           ].map((obj, i, arr)=> {
-  
             return (
-            <>
-            <li key={`${i}${Math.random().toFixed(100)}`}>
-              <Link href={`/${obj.loc}`}>{obj.name}</Link>
-            </li>
-
-            {i === arr.length-1 ? null : (
-            <span key={`${i}${Math.random().toFixed(100)}`} className={styles.separator}>|</span>
-            )}
-            </>
+             <span key={obj.name + i}> 
+              <li>
+                <Link href={`/${obj.loc}`}>{obj.name}</Link>
+              </li>
+            </span>
             )
           })
         }

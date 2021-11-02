@@ -4,12 +4,13 @@ import {Form} from '@unform/web'
 import Input from '../../components/Form/Input'
 import * as Yup from 'yup'
 import Link from 'next/link'
+import { serverCrypto, webCrypto } from '../../utils/crypto'
 import { LoginHead } from '../../components/Head/LoginHead'
 import { Header } from '../../components/Header'
 import {Finder} from './register'
 import Router from 'next/router'
 
-export default function Login () {
+export default function Login (props) {
   const formRef = useRef(null)
   const [processing, isProcessing] = useState(false)
   const [show, isShow] = useState(false)
@@ -69,6 +70,27 @@ export default function Login () {
     isShow(true)
   }, [])
 
+  useEffect(()=> {
+    const data = 'Where are you?'
+    const encoder = new webCrypto({bits: 1024})
+    const serverEncoder = new serverCrypto(props.publicAppKey)
+    console.info('Sending a message to server:', data)
+  
+    fetch(`${window.location.origin}/api/crypto`, {
+      method: "POST",
+      body: JSON.stringify({
+        encrypted: serverEncoder.encrypt(data),
+        clientKey: encoder.getPublicKey()
+      })
+    })
+    .then(async (response) => {
+      const result = await response.json()
+      console.warn("> Receive message encrypted with a public client key:")
+      console.log(result.encrypted)
+      console.warn('Decrypted:', encoder.decrypt(result.encrypted))
+    })
+    },[])
+
   return (
     <>
     { show ? (
@@ -125,4 +147,12 @@ export async function LoginData({email, password}) {
     response = search
     }
     return response
+}
+
+export async function getServerSideProps () {
+  return {
+    props: {
+      publicAppKey: process.env.PUBLIC_KEY
+    }
+  }
 }

@@ -5,11 +5,11 @@ import Input from '../../components/Form/Input'
 import * as Yup from 'yup'
 import Link from 'next/link'
 import Router from 'next/router'
-
+import { serverCrypto, webCrypto } from '../../utils/crypto'
 import { RegisterHead } from '../../components/Head/RegisterHead'
 import { Header } from '../../components/Header'
 
-export default function Register () {
+export default function Register (props) {
   
   const formRef = useRef(null)
   const [isComplete, setIsComplete] = useState(false)
@@ -66,6 +66,27 @@ export default function Register () {
     const user = localStorage.getItem('user')
     if(user) return Router.push('/dashboard')
   }, [])
+
+  useEffect(()=> {
+    const data = 'Where are you?'
+    const encoder = new webCrypto({bits: 1024})
+    const serverEncoder = new serverCrypto(props.publicAppKey)
+    console.info('Sending a message to server:', data)
+  
+    fetch(`${window.location.origin}/api/crypto`, {
+      method: "POST",
+      body: JSON.stringify({
+        encrypted: serverEncoder.encrypt(data),
+        clientKey: encoder.getPublicKey()
+      })
+    })
+    .then(async (response) => {
+      const result = await response.json()
+      console.warn("> Receive message encrypted with a public client key:")
+      console.log(result.encrypted)
+      console.warn('Decrypted:', encoder.decrypt(result.encrypted))
+    })
+    },[])
 
   return (
     <>
@@ -140,4 +161,12 @@ export async function Finder({key, data, collection}) {
     response = Object.values(search)[0]?.[key] ?? null
     }
     return response
+}
+
+export async function getServerSideProps () {
+  return {
+    props: {
+      publicAppKey: process.env.PUBLIC_KEY
+    }
+  }
 }
