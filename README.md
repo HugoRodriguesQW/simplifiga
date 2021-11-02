@@ -35,7 +35,7 @@
 
 ##### Clone o respositório e acesse a pasta (GIT no exemplo):
  ```shell 
- git clone https://github.com/HugoRodriguesQW/simplifiga.git nlw4 && npm run dev
+ git clone https://github.com/HugoRodriguesQW/simplifiga.git simplifiga && npm run dev
  # É necessário uma chave para acessar o banco de dados
 
  ```
