@@ -7,7 +7,7 @@ export function UserContextProvider ({children}) {
 
   const [name, setName] = useState("Elon Musk")
   const [email, setEmail] = useState("elomusk@elon.musk")
-  const [token, setToken] = useState("00000000000000000000001")
+  const [token, setToken] = useState(null)
   const [company, setCompany] = useState("SpaceX")
   const [logged, setLogged] = useState(null)
 

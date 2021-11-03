@@ -37,10 +37,11 @@ export const database = {
     return hasOnDatabase
   },
 
-  async getLinkByToken({token}) {
-    const links =
-    await cachedDb?.collection('links').find({'origin': token})
-    return links ?? null
+  async allWithParameter({name ,data, collection}) {
+    const res =
+    await cachedDb?.collection(collection).find({[name]: data})
+    if(res) return res.toArray()
+    return null
   },
 
   async validate({token}){

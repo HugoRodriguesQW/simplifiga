@@ -16,8 +16,11 @@ const handler = async (req, res) => {
     email,
     company,
     password,
-    token:`${Math.random().toString(32).substring(2)}${Math.random().toString(19).substring(2)}`,
+    deleted: 0,
+    locations: [],
+    references: [],
     createdAt: new Date(),
+    token:`${Math.random().toString(32).substring(2)}${Math.random().toString(19).substring(2)}`,
   })
   res.end()
   })

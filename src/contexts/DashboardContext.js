@@ -1,8 +1,12 @@
 import { createContext, useEffect, useState } from "react"
+import { useContext } from 'react'
+import { userContext } from '../contexts/UserContext'
 
 export const dashboardContext = createContext({})
 
 export function DashboardContextProvider ({children}) {
+
+  const {token}  = useContext(userContext)
 
   const [linkCount, setlinkCount] = useState(0)
   const [clickCount, setclickCount] = useState(0)
@@ -10,67 +14,57 @@ export function DashboardContextProvider ({children}) {
   const [locationsCount, setlocationsCount] = useState(0)
   const [deletedCount, setdeletedCount] = useState(0)
 
-  const [links, setLinks] = useState([
-    {
-      id:"creator",
-      link:"https://github.com/HugoRodriguesQW/?1",
-      clicks:"120"
-    },
-    {
-      id:"creator2",
-      link:"https://github.com/HugoRodriguesQW/?2",
-      clicks:"20"
-    },
-    {
-      id:"creator3",
-      link:"https://github.com/HugoRodriguesQW/?3",
-      clicks:"60"
-    }
-  ])
+  const [links, setLinks] = useState([])
+  const [references, setReferences] = useState([])
+  const [locations, setLocations] = useState([])
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(()=> {
+    const clickCounter = links && links.length === 0 ? 0 : ( 
+    links.reduce((b, c)=> {
+      return {clicks: parseInt(b.clicks) + parseInt(c.clicks)}
+    })?.clicks )
 
-  const [references, setReferences] = useState([
-    {
-      ref: "https://example.of.reference/ww",
-      clicks: 120
-    },
-    {
-      ref: "https://example.of.reference/zz",
-      clicks: 20
-    },
-    {
-      ref: "https://example.of.reference/yy",
-      clicks: 60
-    }
-  ])
-
-  const [locations, setLocations] = useState([
-    {
-      country: "Brasil",
-      clicks: 150
-    },
-    {
-      country: "Portugal",
-      clicks: 20
-    },
-    {
-      country: "Autrália",
-      clicks: 10
-    }
-  ])
+    setlinkCount(links.length)
+    setclickCount(clickCounter)
+  }, [links])
 
   useEffect(()=> {
-    setlinkCount(links.length)
-    setclickCount(links.reduce((b, c)=> {
-      return {clicks: parseInt(b.clicks) + parseInt(c.clicks)}
-    }).clicks)
     setreferenceCount(references.length)
-    setlocationsCount(locations.length)
-    setdeletedCount(2)
-  }, [links, locations, references])
+  },[references])
 
+  useEffect(()=> {
+    setlocationsCount(locations.length)
+  }, [locations])
+
+  useEffect(()=> {
+    importFromDatabase(token)
+  }, [token])
+
+  async function importFromDatabase(token) {
+    if(!token) return
+    setLoading(true)
+    const res = await fetch(`${window.location.origin}/api/v2`, {
+      method: "GET",
+      headers: {
+        authorization: token
+      }
+    })
+
+    const data = await res.json()
+    if(data.links && data.references && data.locations && data.deleted) {
+      setLinks(data.links)
+      setReferences(data.references)
+      setLocations(data.locations)
+      setdeletedCount(data.deleted)
+    }
+
+    setLoading(false)
+  }
 
   return (
     <dashboardContext.Provider value={{
+      loading,
       linkCount,
       clickCount,
       referenceCount,

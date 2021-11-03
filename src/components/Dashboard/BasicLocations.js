@@ -4,9 +4,11 @@ import {building} from '../../styles/components/global.module.css'
 import {Color} from '../../utils/randomColor'
 import { useContext } from 'react';
 import { dashboardContext } from '../../contexts/DashboardContext';
+import { Loading } from '../Effects/Loading';
  
 export function BasicLocations() {
 
+  const loading = useContext(dashboardContext).loading
   const locations = useContext(dashboardContext).locations.slice(0, 5).sort((a,b)=> b.clicks - a.clicks)
   const data = locations.map((local)=> { return local.clicks})
 
@@ -24,6 +26,17 @@ export function BasicLocations() {
 
   return (
     <div className={`${gstyles.basicFlexBox} ${gstyles.withGraphs} ${building}`}>
+      {
+        loading && <Loading/>
+      }
+
+      { 
+        !loading && (
+      <>
+      {locations.length === 0 ? (
+        <Loading/>
+      ) : (
+      <>
       <div>
         <div className={gstyles.basicInfoBox}>
           <span>
@@ -48,6 +61,10 @@ export function BasicLocations() {
           )
         })}
       </div>
+      </>
+      )}
+      </>
+      )}
     </div>
   )
 }

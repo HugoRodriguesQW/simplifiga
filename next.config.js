@@ -4,7 +4,7 @@ module.exports = {
     return [
       {
         source: '/api',
-        destination: '/api/v1',
+        destination: '/api/v2',
         permanent: true,
       },
     ]
