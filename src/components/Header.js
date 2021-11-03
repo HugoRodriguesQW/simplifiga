@@ -2,12 +2,14 @@
 import styles from '../styles/components/Header.module.css'
 import { Logo } from './Logo'
 import Link from 'next/link'
-import {  useEffect, useState } from 'react'
-import Router from 'next/router'
+import {  useContext, useEffect, useState } from 'react'
+import { userContext } from '../contexts/UserContext'
 
 export function Header({routes, ...style}) {
 
-  const [isOpened, setIsOpened] = useState(false)
+  const [isOpened, setIsOpened] = useState(true)
+  const {clearUser} = useContext(userContext)
+  const [closeTimer, setCloseTimer] = useState(null)
 
   const paths = {
     "/": "Encurtador",
@@ -16,18 +18,30 @@ export function Header({routes, ...style}) {
     "/user/login": "Entrar",
     "/user/register": "Criar conta",
     "Sair": ()=> {
-      localStorage.removeItem('user')
-      Router.reload()
+      clearUser()
     }
   }
 
-  function handleMenuEvent(state) {
-    setIsOpened(state)
+  function handleMenuEvent(state, delay) {
+    console.info('handleMenuEvent')
+    if(state === true) return setIsOpened(state)
+    if(!delay) setIsOpened(state)
+    if(closeTimer) return
+    setCloseTimer(setTimeout (()=> {
+      setIsOpened(state)
+      setCloseTimer(null)
+    }, delay))
   }
 
-  useEffect(
-    () => {handleMenuEvent(false)}, []
-  )
+  useEffect(() => {
+    window.innerWidth > 550 ?
+      handleMenuEvent(false, 1500) : handleMenuEvent(false, 500)
+
+    window.addEventListener('scroll', ()=> {
+      if(closeTimer) return
+      handleMenuEvent(false, 100)
+    })
+    }, [])
 
   return (
     <div className={`
@@ -41,8 +55,10 @@ export function Header({routes, ...style}) {
       </div>
         
       <div
-        onMouseLeave={() => {handleMenuEvent(false)} }
-        onMouseEnter={() => {handleMenuEvent(true) }}
+        onMouseEnter={() => {handleMenuEvent(true)} }
+        onMouseLeave={() => {handleMenuEvent(false)}}
+        onClick={()=> {handleMenuEvent(true)}}
+
         className={`${styles.menu} ${isOpened ? styles.opened: styles.closed}`}>
         {isOpened ? (
         <div className={styles.linksBox}>
