@@ -5,20 +5,18 @@ import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { userContext } from "../../contexts/UserContext";
 import {dashboardContent, dashboardContainer} from '../../styles/pages/Dashboard.module.css'
+import { dashboardContext } from '../../contexts/DashboardContext'
 import {graphContainer, detailsList, building} from '../../styles/components/global.module.css'
 import { Color } from "../../utils/randomColor";
 
 export default function Locations () {
   const {logged} = useContext(userContext)
 
-  const data = [2345, 1098, 123, 432, 552, 1236, 121, 433, 123, 1232, 1232, 12].sort((a,b) => b - a)
-  const locations = data.map((d, i) => { 
-      if(i === data.length - 1) return 'outros'
-      return `Local ${i+1}`
-  })
-
+  const locations = useContext(dashboardContext).locations.sort((a,b) => b.clicks - a.clicks)
+  const data = locations.map((local) => local.clicks)
+ 
   const graphData = {
-    labels: locations,
+    labels: locations.map((local)=> local.country),
     datasets: [
       {
         label: 'Número de cliques',
@@ -50,12 +48,12 @@ export default function Locations () {
           </div>
 
           <div className={`${detailsList} ${building}`}>
-            {locations.map((l, index)=> {
+            {locations.map(({country}, index)=> {
             const currentData = data[index]
             const percent = ((currentData/data.reduce((p, c)=> { return p + c})) * 100).toFixed(2)
             return (
-              <div key={l+index}>
-                <span>{l}</span>
+              <div key={country+index}>
+                <span>{country}</span>
                 <div>
                 <p>{currentData} cliques</p>
                 <p>{percent}%</p>

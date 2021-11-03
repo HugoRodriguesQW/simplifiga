@@ -4,11 +4,13 @@ import { ShortenerContextProvider } from '../contexts/Shortener'
 import Head from 'next/head'
 import '../styles/globals.css'
 import { UserContextProvider } from '../contexts/UserContext'
+import { DashboardContextProvider } from '../contexts/DashboardContext'
 
 function MyApp({ Component, pageProps }) {
  
   return (
   <UserContextProvider>
+  <DashboardContextProvider>
   <ShortenerContextProvider>
     <Component {...pageProps} />
     <Head>
@@ -22,6 +24,7 @@ function MyApp({ Component, pageProps }) {
       <meta httpEquiv="content-type"  content="text/html;charset=utf-8"></meta>
     </Head>
   </ShortenerContextProvider>
+  </DashboardContextProvider>
   </UserContextProvider>
   )
 }

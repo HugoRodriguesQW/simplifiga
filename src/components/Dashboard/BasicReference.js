@@ -2,18 +2,16 @@ import gstyles from '../../styles/components/global.module.css'
 import { Pie } from 'react-chartjs-2';
 import {building} from '../../styles/components/global.module.css'
 import {Color} from '../../utils/randomColor'
+import { useContext } from 'react';
+import { dashboardContext } from '../../contexts/DashboardContext';
 
 export function BasicReference() {
 
-  const data = [1234, 2456, 542, 123, 123, 12, 1, 2, 3].slice(0, 5).sort((a,b) => b - a)
-  
-  const references = data.map((d, i) => { 
-      if(i === data.length - 1) return 'outros'
-      return `reference${i+1}.com`
-  })
+  const references = useContext(dashboardContext).references.slice(0, 5).sort((a,b)=> b.clicks - a.clicks)
+  const data = references.map((reference)=> reference.clicks)
 
   const pieDatas = {
-    labels: references,
+    labels: references.map(({ref}) => `${new URL(ref).host}${new URL(ref).pathname}`),
     datasets: [
       {
         data,
@@ -30,19 +28,20 @@ export function BasicReference() {
           <span>
             Principais Referências
           </span>
-          <strong>{data.length + 1}</strong>
+          <strong>{data.length}</strong>
         </div>
         <div className={gstyles.basicGraphBox}>
           <Pie data={pieDatas} options={{plugins: {legend: false}}}/>
         </div>
       </div>
       <div className={gstyles.basicInfoDetails}>
-        {references.map((l, index)=> {
+        {references.map(({ref}, index)=> {
+           const name = `${new URL(ref).host}${new URL(ref).pathname}`
           const currentData = data[index]
           const percent = ((currentData/data.reduce((p, c)=> { return p + c})) * 100).toFixed(2)
           return (
-            <div key={l+index}>
-              <span>{l}</span>
+            <div key={ref+index} onClick>
+              <span>{name}</span>
               <p>{currentData} cliques</p>
               <p>{percent}%</p>
             </div>

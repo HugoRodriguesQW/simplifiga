@@ -1,29 +1,38 @@
+import { useContext } from 'react'
+import { dashboardContext } from '../../contexts/DashboardContext'
 import styles from '../../styles/components/BasicAnalytics.module.css'
 import {building} from '../../styles/components/global.module.css'
 
 export function BasicAnalytics() {
 
+  const {
+      linkCount,
+      clickCount,
+      referenceCount,
+      locationsCount,
+      deletedCount } = useContext(dashboardContext)
+
   return (
     <div className={`${styles.analyticsContainer}  ${building}`}>
         <div className={styles.cell}>
           <span>Links</span>
-          <strong>210</strong>
+          <strong>{linkCount}</strong>
         </div>
         <div className={styles.cell}>
           <span>Cliques</span>
-          <strong>3434</strong>
+          <strong>{clickCount}</strong>
         </div>
         <div className={styles.cell}>
           <span>Referências</span>
-          <strong>9</strong>
+          <strong>{referenceCount}</strong>
         </div>
         <div className={styles.cell}>
           <span>Locais</span>
-          <strong>12</strong>
+          <strong>{locationsCount}</strong>
         </div>
         <div className={styles.cell}>
           <span>Excluídos</span>
-          <strong>7</strong>
+          <strong>{deletedCount}</strong>
         </div>
     </div>
   )

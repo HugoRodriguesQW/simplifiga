@@ -21,7 +21,6 @@ export function Header({routes, ...style}) {
   }
 
   function handleMenuEvent(state, delay) {
-    console.info('handleMenuEvent')
     if(state === true) return setIsOpened(state)
     if(!delay) setIsOpened(state)
     if(closeTimer) return

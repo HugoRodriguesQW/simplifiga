@@ -108,8 +108,10 @@
   padding: 0.5rem 0;
 }
 
-.detailsList > div > span {
+.detailsList > div > span,
+.detailsList > div > a {
   font-size: 2.2rem;
+  color: #000;
 }
 
 .detailsList > div > div {

@@ -14,7 +14,6 @@ export function UserContextProvider ({children}) {
   useEffect(()=> {
     const user = localStorage.getItem('user')
     if(user){
-      console.info("userHere!", user)
       const lifetime = new Date(JSON.parse(user).lifetime)
       if(lifetime < new Date()) return clearUser()
       const userData = JSON.parse(user)
@@ -28,7 +27,6 @@ export function UserContextProvider ({children}) {
   },[])
 
   function clearUser(){
-    console.info("Reloading")
     localStorage.removeItem('user')
     Router.reload()
   }

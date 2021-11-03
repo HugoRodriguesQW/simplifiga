@@ -2,17 +2,17 @@ import gstyles from '../../styles/components/global.module.css'
 import { Pie } from 'react-chartjs-2';
 import {building} from '../../styles/components/global.module.css'
 import {Color} from '../../utils/randomColor'
+import { useContext } from 'react';
+import { dashboardContext } from '../../contexts/DashboardContext';
  
 export function BasicLocations() {
 
-  const data = [2345, 1098, 123, 432, 552, 1236, 121, 433, 123, 1232, 1232, 12].slice(0, 5)
-  const locations = data.map((d, i) => {
-      if(i === data.length - 1) return 'outros'
-      return `Local ${i+1}`
-  })
+  const locations = useContext(dashboardContext).locations.slice(0, 5).sort((a,b)=> b.clicks - a.clicks)
+  const data = locations.map((local)=> { return local.clicks})
+
 
   const pieDatas = {
-    labels: locations,
+    labels: locations.map((local)=> { return local.country}),
     datasets: [
       {
         data,
@@ -29,19 +29,19 @@ export function BasicLocations() {
           <span>
             Principais locais
           </span>
-          <strong>{data.length + 1}</strong>
+          <strong>{data.length}</strong>
         </div>
         <div className={gstyles.basicGraphBox}>
           <Pie data={pieDatas} options={{plugins: {legend: false}}}/>
         </div>
       </div>
       <div className={gstyles.basicInfoDetails}>
-        {locations.map((l, index)=> {
+        {locations.map(({country}, index)=> {
           const currentData = data[index]
           const percent = ((currentData/data.reduce((p, c)=> { return p + c})) * 100).toFixed(2)
           return (
-            <div key={l+index}>
-              <span>{l}</span>
+            <div key={country+index}>
+              <span>{country}</span>
               <p>{currentData} cliques</p>
               <p>{percent}%</p>
             </div>
