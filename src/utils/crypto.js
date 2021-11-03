@@ -3,7 +3,7 @@ import NodeRSA from 'node-rsa'
 const nodeCrypto  = {
   encrypt(message) {
     try {
-    const encoder = new NodeRSA(process.env.PUBLIC_KEY);
+    const encoder = new NodeRSA(toUTF(process.env.PUBLIC_KEY))
     return encoder.encrypt(message, 'base64')  
     } catch {
       return null
@@ -12,7 +12,7 @@ const nodeCrypto  = {
 
   decrypt(message) {
     try {
-    const decoder = new NodeRSA(process.env.PRIVATE_KEY);
+    const decoder = new NodeRSA(toUTF(process.env.PRIVATE_KEY));
     return decoder.decrypt(message, 'utf8')
     } catch {
       return null
@@ -21,7 +21,7 @@ const nodeCrypto  = {
 
   encryptWithCustomKey(message, key) {
     try {
-      const encoder = new NodeRSA(key)
+      const encoder = new NodeRSA(toUTF(key))
       return encoder.encrypt(message, 'base64')
     } catch {
       return null
@@ -36,11 +36,11 @@ export class webCrypto  {
   }
 
   getPublicKey() {
-    return this.RSA.exportKey('public')
+    return toBase(this.RSA.exportKey('public'))
   }
 
   getPrivateKey() {
-    return this.RSA.exportKey('private')
+    return toBase(this.RSA.exportKey('private'))
   }
 
   encrypt (message) {
@@ -62,8 +62,8 @@ export class webCrypto  {
 
 export class serverCrypto {
   constructor(publicKey) {
-    this.RSA = new NodeRSA(publicKey)
-    this.key = publicKey
+    this.RSA = new NodeRSA(toUTF(publicKey))
+    this.key = toUTF(publicKey)
   }
 
   encrypt(message) {
@@ -73,6 +73,14 @@ export class serverCrypto {
       return null
     }
   }
+}
+
+export function toUTF(str) {
+  return Buffer.from(str, 'base64').toString('utf8')
+}
+
+export function toBase(str) {
+  return Buffer.from(str).toString('base64')
 }
 
 export default nodeCrypto
