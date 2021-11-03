@@ -17,9 +17,7 @@ export function Header({routes, ...style}) {
     "/dashboard": "Dashboard",
     "/user/login": "Entrar",
     "/user/register": "Criar conta",
-    "Sair": ()=> {
-      clearUser()
-    }
+    "Sair": clearUser
   }
 
   function handleMenuEvent(state, delay) {

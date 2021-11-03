@@ -39,7 +39,8 @@ export function UserContextProvider ({children}) {
       email,
       token,
       company,
-      logged
+      logged,
+      clearUser
     }}>
       {children}
     </userContext.Provider>
