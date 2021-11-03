@@ -4,41 +4,60 @@ import {Form} from '@unform/web'
 import Input from '../../components/Form/Input'
 import * as Yup from 'yup'
 import Link from 'next/link'
-import { serverCrypto, webCrypto } from '../../utils/crypto'
 import { LoginHead } from '../../components/Head/LoginHead'
 import { Header } from '../../components/Header'
-import {Finder} from './register'
 import Router from 'next/router'
+import { clientEncoder } from '../../utils/crypto'
+import {Finder} from './register'
 
-export default function Login (props) {
+export default function Login ({serverKey}) {
   const formRef = useRef(null)
   const [processing, isProcessing] = useState(false)
   const [show, isShow] = useState(false)
 
   async function handleOnSubmit(data, {reset}) {
+    if(processing) return
     isProcessing(true)
-    try {
-    let foundAccount = data.email ?? Math.random().toString()
-    if(data.email) foundAccount = await Finder({key: 'email', data: data.email, collection: 'clients'})
-    
-    const schema = Yup.object().shape({
-      email: Yup.string()
-      .email('Insira um endereço de e-mail válido')
-      .oneOf([foundAccount], 'Esta conta não existe.')
-      .required('Insira seu endereço de e-mail'),
-      password: Yup.string()
-        .required('Insira uma senha de acesso')
-    })
+    if(data.email) {
+    clientEncoder(serverKey, async (client, server)=> {
+      try {
+        const emailSearch = await Finder({key: 'email', data: data.email, collection: 'clients'}, client, server)
 
-    await schema.validate(data, {abortEarly: false})
-    
-    const login = await LoginData(data)
-    const passwordSchema = Yup.object().shape({
-      password: Yup.string()
-      .oneOf([login.password], 'A senha está incorreta')
-    })
+        const fields = Yup.object().shape({
+          email: Yup.string()
+          .email('Insira um endereço de e-mail válido')
+          .oneOf([emailSearch], 'Esta conta não existe')
+          .required('Insira seu endereço de e-mail'),
+          password: Yup.string()
+            .required('Insira uma senha de acesso')
+        })
+        await fields.validate(data, {abortEarly: false})
+        
+        const login = await GetLogin({email: data.email, password: data.password}, client, server)
 
-    await passwordSchema.validate(data, {abortEarly: false})
+        const passwordSchema = Yup.object().shape({
+          password: Yup.string()
+          .oneOf([login?.password], 'A senha está incorreta')
+        })
+
+        await passwordSchema.validate(data, {abortEarly: false})
+        saveLogin(login)
+        reset()
+      } catch (error) {
+        isProcessing(false)
+        if(error instanceof Yup.ValidationError) {
+          const errorMessages = {}
+          error.inner.forEach(err => {
+            errorMessages[err.path] = err.message
+          })
+          formRef.current.setErrors(errorMessages)
+        }
+      }
+    })
+    }
+  }
+
+  function saveLogin(login) {
     isProcessing(false)
     const date = new Date()
     date.setHours(date.getHours()+24)
@@ -50,18 +69,6 @@ export default function Login (props) {
       lifetime: date
     }))
     Router.reload()
-    reset()
-
-    } catch (error) {
-      isProcessing(false)
-      if(error instanceof Yup.ValidationError) {
-        const errorMessages = {}
-        error.inner.forEach(err => {
-          errorMessages[err.path] = err.message
-        })
-        formRef.current.setErrors(errorMessages)
-      }
-    }
   }
 
   useEffect(()=> {
@@ -69,27 +76,6 @@ export default function Login (props) {
     if(user) return Router.push('/dashboard')
     isShow(true)
   }, [])
-
-  useEffect(()=> {
-    const data = 'Where are you?'
-    const encoder = new webCrypto({bits: 1024})
-    const serverEncoder = new serverCrypto(props.publicAppKey)
-    console.info('Sending a message to server:', data)
-  
-    fetch(`${window.location.origin}/api/crypto`, {
-      method: "POST",
-      body: JSON.stringify({
-        encrypted: serverEncoder.encrypt(data),
-        clientKey: encoder.getPublicKey()
-      })
-    })
-    .then(async (response) => {
-      const result = await response.json()
-      console.warn("> Receive message encrypted with a public client key:")
-      console.log(result.encrypted)
-      console.warn('Decrypted:', encoder.decrypt(result.encrypted))
-    })
-    },[])
 
   return (
     <>
@@ -132,27 +118,34 @@ export default function Login (props) {
   )
 }
 
-export async function LoginData({email, password}) {
-  let response = null
-    if(email && password) {
-      const f =
-      await fetch(`${window.location.origin}/api/login`, {
+async function GetLogin({email, password}, client, server) {
+  let login = null
+  if(email && password) {
+    const response = await fetch(`${window.location.origin}/api/login`, {
       method: "POST",
-      body: JSON.stringify({
+      body: server.encrypt(JSON.stringify({
         email,
         password, 
-        appToken: process.env.NEXT_PUBLIC_APP_TOKEN})
+        appToken: process.env.NEXT_PUBLIC_APP_TOKEN,
+        clientKey: client.export()
+      }))
     })
-    const search = await f.json()
-    response = search
+
+    try {
+      const search = await response.json()
+      if(search?.found === false) return
+      login = JSON.parse(client.decrypt(search.encrypted))
+    } catch {
+      login = null
     }
-    return response
+  }
+  return login
 }
 
 export async function getServerSideProps () {
   return {
     props: {
-      publicAppKey: process.env.PUBLIC_KEY
+      serverKey: process.env.PUBLIC_KEY
     }
   }
 }

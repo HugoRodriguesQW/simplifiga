@@ -5,39 +5,40 @@ import Input from '../../components/Form/Input'
 import * as Yup from 'yup'
 import Link from 'next/link'
 import Router from 'next/router'
-import { serverCrypto, webCrypto } from '../../utils/crypto'
+import { clientEncoder } from '../../utils/crypto'
 import { RegisterHead } from '../../components/Head/RegisterHead'
 import { Header } from '../../components/Header'
 
-export default function Register (props) {
-  
+export default function Register ({serverKey}) {
   const formRef = useRef(null)
   const [isComplete, setIsComplete] = useState(false)
   const [processing, isProcessing] = useState(false)
 
   async function handleOnSubmit(data, {reset}) {
     if(processing) return
-    try {
     isProcessing(true)
-    let mailSearch = Math.random().toString()
     if(data.email) {
-      mailSearch = await Finder({key: 'email', data: data.email, collection: 'clients'})
-    }
+    clientEncoder(serverKey, async (client, server)=> {
+    try {
+      const search = await Finder({key: 'email', data: data.email, collection: 'clients'}, client, server)
     
-    const schema = Yup.object().shape({
-      name: Yup.string().required('Insira seu nome completo'),
-      company: Yup.string().required('Insira o nome da sua empresa'),
-      email: Yup.string()
-        .email('Insira um endereço de e-mail válido')
-        .notOneOf([mailSearch], 'Já existe uma conta com este endereço de e-mail')
-        .required('Insira seu endereço de e-mail'),
-      password: Yup.string()
-        .min(8, 'A senha deve conter no mínimo 8 caracteres')
-        .required('Insira uma senha de acesso')
-    })
-    await schema.validate(data, {abortEarly: false})
-    await onValidate(data)
-    reset()
+      const mailSearch = search ?? Math.round(Math.random()*999).toString()
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Insira seu nome completo'),
+        company: Yup.string().required('Insira o nome da sua empresa'),
+        email: Yup.string()
+          .email('Insira um endereço de e-mail válido')
+          .notOneOf([mailSearch], 'Já existe uma conta com este endereço de e-mail')
+          .required('Insira seu endereço de e-mail'),
+        password: Yup.string()
+          .min(8, 'A senha deve conter no mínimo 8 caracteres')
+          .required('Insira uma senha de acesso')
+      })
+
+      await schema.validate(data, {abortEarly: false})
+      await onValidate(data, server)
+      reset()
     } catch (error) {
       isProcessing(false)
       if(error instanceof Yup.ValidationError) {
@@ -48,13 +49,17 @@ export default function Register (props) {
         formRef.current.setErrors(errorMessages)
       }
     }
+    })}
   }
 
-  async function onValidate(data) {
-
+  async function onValidate(data, server) {
+   
     await fetch(`${window.location.origin}/api/register`, {
       method: "POST",
-      body: JSON.stringify({...data, appToken: process.env.NEXT_PUBLIC_APP_TOKEN})
+      body: server.encrypt(JSON.stringify({
+        ...data, 
+        appToken: process.env.NEXT_PUBLIC_APP_TOKEN
+      }))
     })
 
     isProcessing(false)
@@ -66,27 +71,6 @@ export default function Register (props) {
     const user = localStorage.getItem('user')
     if(user) return Router.push('/dashboard')
   }, [])
-
-  useEffect(()=> {
-    const data = 'Where are you?'
-    const encoder = new webCrypto({bits: 1024})
-    const serverEncoder = new serverCrypto(props.publicAppKey)
-    console.info('Sending a message to server:', data)
-  
-    fetch(`${window.location.origin}/api/crypto`, {
-      method: "POST",
-      body: JSON.stringify({
-        encrypted: serverEncoder.encrypt(data),
-        clientKey: encoder.getPublicKey()
-      })
-    })
-    .then(async (response) => {
-      const result = await response.json()
-      console.warn("> Receive message encrypted with a public client key:")
-      console.log(result.encrypted)
-      console.warn('Decrypted:', encoder.decrypt(result.encrypted))
-    })
-    },[])
 
   return (
     <>
@@ -145,28 +129,31 @@ export default function Register (props) {
   )
 }
 
-export async function Finder({key, data, collection}) {
-  let response = null
-    if(data) {
-      const f =
-      await fetch(`${window.location.origin}/api/find`, {
+export async function Finder({key, data, collection}, client, server) {
+  let has = null
+  if(data) {
+    const hasEmailOnDbResponse = await fetch(`${window.location.origin}/api/find`, {
       method: "POST",
-      body: JSON.stringify({
-        key,
+      body:  server.encrypt(JSON.stringify({
+        key, 
         data, 
         collection,
-        appToken: process.env.NEXT_PUBLIC_APP_TOKEN})
+        clientKey: client.export(),
+        appToken: process.env.NEXT_PUBLIC_APP_TOKEN
+      }))
     })
-    const search = await f.json()
-    response = Object.values(search)[0]?.[key] ?? null
-    }
-    return response
+
+    const search = await hasEmailOnDbResponse.json()
+    if(search?.found === false) return
+    has = client.decrypt(search.encrypted)
+  }
+  return has
 }
 
 export async function getServerSideProps () {
   return {
     props: {
-      publicAppKey: process.env.PUBLIC_KEY
+      serverKey: process.env.PUBLIC_KEY
     }
   }
 }

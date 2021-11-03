@@ -76,6 +76,6 @@ export const database = {
   async find({collection, key, data}) {
     const has = 
     await cachedDb?.collection(collection)?.findOne({[key] : data})
-    return has
+    return has ?? null
   }
 }

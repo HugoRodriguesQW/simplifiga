@@ -17,7 +17,7 @@ export default function Dashboard() {
   
   useEffect(()=> {
     if(logged === false) Router.push('/user/login')
-  }, [])
+  }, [logged])
 
   return (
     <div className={styles.dashboardContainer}>
