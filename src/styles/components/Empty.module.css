@@ -1,0 +1,20 @@
+.emptyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.emptyContainer img {
+  width: 3rem;
+}
+
+.emptyContainer p {
+  font-size: 1.6rem;
+  margin: 0;
+}
+.emptyContainer span {
+  font-size: 1.3rem;
+  color: var(--black-36);
+}

@@ -26,12 +26,14 @@ export function ShortenerContextProvider ({children}) {
     }
 
     try {
-      const res = await fetch(`${base}/api/v1`, {
+      const res = await fetch(`${base}/api/v2`, {
         method: "POST",
+        headers: {
+          authorization: process.env.NEXT_PUBLIC_API_TOKEN
+        },
         body: JSON.stringify({
           url: link,
-          nick: linkSurname,
-          token: process.env.NEXT_PUBLIC_API_TOKEN
+          nick: linkSurname
         })
       })
 

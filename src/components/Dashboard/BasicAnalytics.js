@@ -1,11 +1,12 @@
 import { useContext } from 'react'
 import { dashboardContext } from '../../contexts/DashboardContext'
 import styles from '../../styles/components/BasicAnalytics.module.css'
-import {building} from '../../styles/components/global.module.css'
+import { Loading } from '../Effects/Loading'
 
 export function BasicAnalytics() {
 
   const {
+      loading,
       linkCount,
       clickCount,
       referenceCount,
@@ -13,7 +14,15 @@ export function BasicAnalytics() {
       deletedCount } = useContext(dashboardContext)
 
   return (
-    <div className={`${styles.analyticsContainer}  ${building}`}>
+    <>
+    {
+      loading && <div><Loading height="14rem"/></div>
+    }
+
+    {
+    !loading && (
+    <div className={styles.analyticsContainer}>
+  
         <div className={styles.cell}>
           <span>Links</span>
           <strong>{linkCount}</strong>
@@ -35,5 +44,7 @@ export function BasicAnalytics() {
           <strong>{deletedCount}</strong>
         </div>
     </div>
+    )}
+    </>
   )
 }

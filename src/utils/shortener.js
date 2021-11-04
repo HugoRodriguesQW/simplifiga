@@ -27,7 +27,7 @@ export async function validateToken(token) {
   return isTokenValid
 }
 
-export async function insertOnDatabase({nick, url}) {
-  const res = await database.create({id: nick, link: url})
+export async function insertOnDatabase({nick, url}, token) {
+  const res = await database.create({id: nick, link: url, origin: token, clicks: 0})
   return res
 }

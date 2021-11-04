@@ -8,9 +8,12 @@ import {dashboardContent, dashboardContainer} from '../../styles/pages/Dashboard
 import { dashboardContext } from '../../contexts/DashboardContext'
 import {graphContainer, detailsList, building} from '../../styles/components/global.module.css'
 import { Color } from "../../utils/randomColor";
+import { Loading } from '../../components/Effects/Loading'
+import { Empty } from '../../components/Effects/Empty'
 
 export default function Locations () {
   const {logged} = useContext(userContext)
+  const {loading} = useContext(dashboardContext)
 
   const locations = useContext(dashboardContext).locations.sort((a,b) => b.clicks - a.clicks)
   const data = locations.map((local) => local.clicks)
@@ -41,12 +44,21 @@ export default function Locations () {
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
       <SideBar current="/dashboard/locations" />
 
-      <div className={dashboardContent}>
+      <div className={`${dashboardContent} ${building}`}>
           <span>Locais de origem</span>
-          <div className={`${graphContainer} ${building}`}>
+          { loading && <div><Loading height="20rem" /></div>}
+          { !loading && (
+            <div className={graphContainer}>
             <Bar data={graphData} options={options} />
-          </div>
+            </div>
+          )}
 
+          { loading && <div><Loading height="20rem" /></div>}
+          { !loading && (
+          <>
+          {locations.length === 0 ? (
+            <Empty height="20rem"/>
+          ): (
           <div className={`${detailsList} ${building}`}>
             {locations.map(({country}, index)=> {
             const currentData = data[index]
@@ -62,6 +74,9 @@ export default function Locations () {
             )
           })}
           </div>
+           )}
+           </>
+           )}
           <Footer/>
       </div>
       </>

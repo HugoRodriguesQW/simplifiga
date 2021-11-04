@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb"
+import { isValidUrl } from "../../utils/url"
 
 let cachedDb = null
 let databaseClient = null
@@ -84,5 +85,42 @@ export const database = {
     const has = 
     await cachedDb?.collection(collection)?.findOne({[key] : data})
     return has ?? null
+  },
+
+  async addClick(id) {
+    console.info("Add click +1")
+    await cachedDb?.collection('links').updateOne(
+      {'id': id},
+      {$inc: {'clicks': 1}}
+    )
+  },
+
+  async updateReferrer(id, referer) {
+    referer = isValidUrl(referer) ? new URL(referer).host : referer
+    
+    const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
+    const {references} = await cachedDb?.collection('clients').findOne({'token': origin})
+    const refExist = references.filter(({ref}) => {
+      return ref === referer
+    })
+
+    if(!refExist[0]) {
+      console.info("Inserting a new reference", refExist)
+      const res = await cachedDb?.collection('clients')?.updateOne(
+      {'token': origin},
+      {$push: {
+          references: {ref: referer, clicks: 1},
+        }
+      })
+      return console.info(res)
+    }
+
+    console.info("Update a reference", refExist)
+    return await cachedDb?.collection('clients').updateOne(
+      { "token": origin,
+         "references.ref": referer
+      },
+      { $inc: { "references.$.clicks" : 1 } }
+   )
   }
 }

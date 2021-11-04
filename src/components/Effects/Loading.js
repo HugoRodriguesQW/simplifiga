@@ -1,20 +1,20 @@
 import styles from '../../styles/components/Loading.module.css'
-export function Loading () {
+export function Loading ({height}) {
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{minHeight: height}}>
       <div>
+        <div className={styles.box}>
+          l
+        </div>
         <div className={styles.box}>
           o
         </div>
         <div className={styles.box}>
-          x
+          a
         </div>
         <div className={styles.box}>
-          t
-        </div>
-        <div className={styles.box}>
-          v
+          d
         </div>
       </div>
     </div>

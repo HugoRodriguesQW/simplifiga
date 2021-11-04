@@ -1,9 +1,11 @@
 .container {
+  margin: 0;
   width: 100%;
-  min-height: 20rem;
   height: 100%;
   user-select: none;
   pointer-events: none;
+  animation: fade 2s infinite ease-in-out;
+  position: absolute;
 }
 
 .container,
@@ -15,13 +17,16 @@
 }
 
 .container .box {
-  width: 2rem;
-  height: 2rem;
-  background: #f2f2f2;
-  color: #dfdfdf;
-  font-size: 1.3rem;
+  width: 1.2rem;
+  height: 1.2em;
+  background: #d6d6d6;
+  color: #363636;
+  font-size: 1.2rem;
   text-align: center;
   margin: 0 .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container .box {
@@ -54,26 +59,50 @@
 
 @keyframes move {
   0% {
-    height: 3rem;
+    height: 2rem;
     opacity: .4;
-    left: -6rem;
+    left: -4rem;
     box-shadow: -5px 0 4px 4px rgba(0,0,0,.06);
   }
 
-  25%, 75% {
+  20%, 50% {
     opacity: 0.4;
-    color: #a3a3a3;
+    color: #363636;
   }
 
-  50% {
-    height: 2rem;
-    left: -1rem;
+  35% {
+    height: 1.2rem;
+    left: -.6rem;
     opacity: 1;
+    color: var(--blue);
+    border: 1px solid var(--blue);
   }
   
-  100% {
-    height: 3rem;
+  75% {
+    height: 2rem;
     opacity: .4;
-    left: 3rem;
+    left: 2rem;
+  }
+}
+
+@keyframes fade {
+  0% , 40% {
+    background: none;
+  }
+
+  45% {
+    clip-path: inset(0 45% 0 45%);
+  }
+
+  60% {
+    background: #f1f1f1;
+  }
+
+  70% {
+    clip-path: inset(0 0 0 0);
+  }
+
+  80% {
+    background: none;
   }
 }

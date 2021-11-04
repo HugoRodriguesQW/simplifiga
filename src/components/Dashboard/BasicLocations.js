@@ -1,10 +1,10 @@
 import gstyles from '../../styles/components/global.module.css'
 import { Pie } from 'react-chartjs-2';
-import {building} from '../../styles/components/global.module.css'
 import {Color} from '../../utils/randomColor'
 import { useContext } from 'react';
 import { dashboardContext } from '../../contexts/DashboardContext';
 import { Loading } from '../Effects/Loading';
+import { Empty } from '../Effects/Empty';
  
 export function BasicLocations() {
 
@@ -25,16 +25,15 @@ export function BasicLocations() {
   }
 
   return (
-    <div className={`${gstyles.basicFlexBox} ${gstyles.withGraphs} ${building}`}>
-      {
-        loading && <Loading/>
-      }
-
-      { 
-        !loading && (
-      <>
+    <>
+    {
+      loading && <div><Loading height="20rem"/></div>
+    }
+    { 
+    !loading && (
+    <div className={`${gstyles.basicFlexBox} ${gstyles.withGraphs}`}>
       {locations.length === 0 ? (
-        <Loading/>
+        <Empty height="20rem"/>
       ) : (
       <>
       <div>
@@ -63,8 +62,7 @@ export function BasicLocations() {
       </div>
       </>
       )}
-      </>
-      )}
     </div>
+    )}</>
   )
 }

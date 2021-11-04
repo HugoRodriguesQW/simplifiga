@@ -13,7 +13,7 @@ const handler = async (req, res) => {
   })
 
   const params = req.body ? await JSON.parse(req.body) : {}
-  const token = req.headers['authorization'] ?? params.token
+  const token = req.headers['authorization']
   const url = params.url
   let   nick = params.nick
 
@@ -48,8 +48,8 @@ const handler = async (req, res) => {
         return onError(res, 500)
       }
     }
-
-    await insertOnDatabase({nick, url})
+    
+    await insertOnDatabase({nick, url}, token)
 
     res.json({
       url,
