@@ -1,8 +1,6 @@
 import { MongoClient } from "mongodb"
 import { isValidUrl } from "../../utils/url"
-
 let cachedDb = null
-let databaseClient = null
 
 
 export const database = {
@@ -12,9 +10,17 @@ export const database = {
     if(cachedDb) {
       return cachedDb
     }
-    databaseClient = await MongoClient.connect(secret, {
+
+    const databaseClient = await MongoClient.connect(secret, {
     useNewUrlParser: true, useUnifiedTopology: true})
     cachedDb = databaseClient.db('simplifiga')
+
+    setTimeout(() => {
+        cachedDb = null
+        databaseClient.close()
+
+    }, 5000)
+
     return cachedDb
   },
 
