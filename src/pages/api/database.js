@@ -1,29 +1,34 @@
 import { MongoClient } from "mongodb"
 import { isValidUrl } from "../../utils/url"
-let cachedDb = null
 
+let cachedDb = null
+let clientDb = null
+let timeout = null
 
 export const database = {
   async connect() {
     const secret = process.env.MONGO_URI
 
     if(cachedDb) {
+      clearTimeout(timeout)
+      timeout = setTimeout(this.disconnect, 5000)
       return cachedDb
     }
 
-    const databaseClient = await MongoClient.connect(secret, {
+    clientDb = await MongoClient.connect(secret, {
     useNewUrlParser: true, useUnifiedTopology: true})
-    cachedDb = databaseClient.db('simplifiga')
+    cachedDb = clientDb.db('simplifiga')
 
-    setTimeout(() => {
-        cachedDb = null
-        databaseClient.close()
-
-    }, 5000)
+    timeout = setTimeout(this.disconnect, 5000)
 
     return cachedDb
   },
 
+  async disconnect() {
+    clientDb.close()
+    cachedDb = null
+    clientDb = null
+  },
   async create (data){
     if(!data.link || !data.id)   return null
 
