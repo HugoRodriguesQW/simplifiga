@@ -52,7 +52,7 @@ export function DashboardContextProvider ({children}) {
     })
 
     const data = await res.json()
-    if(data.links && data.references && data.locations && data.deleted) {
+    if(data.links && data.references && data.locations && data.deleted != null) {
       setLinks(data.links)
       setReferences(data.references)
       setLocations(data.locations)

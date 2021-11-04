@@ -1,8 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { userContext } from "./UserContext";
 
 export const ShortenerContext = createContext({})
 
 export function ShortenerContextProvider ({children}) {
+
+  const {token} = useContext(userContext)
 
   const [link, setLink] = useState(null)
   const [linkSurname, setLinkSurname] = useState(null)
@@ -14,6 +17,7 @@ export function ShortenerContextProvider ({children}) {
   const [isProcessing, setProcessState] = useState(false)
 
   const [error, setError] = useState(null)
+  
 
   async function handleShortLink() {
     setProcessState(true)
@@ -29,7 +33,7 @@ export function ShortenerContextProvider ({children}) {
       const res = await fetch(`${base}/api/v2`, {
         method: "POST",
         headers: {
-          authorization: process.env.NEXT_PUBLIC_API_TOKEN
+          authorization: token ?? process.env.NEXT_PUBLIC_API_TOKEN
         },
         body: JSON.stringify({
           url: link,
