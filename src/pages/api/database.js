@@ -107,8 +107,8 @@ export const database = {
   },
 
   async updateReferrer(id, referer) {
+    try {
     referer = isValidUrl(referer) ? new URL(referer).host : referer
-    
     const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
     const {references} = await cachedDb?.collection('clients').findOne({'token': origin})
     const refExist = references.filter(({ref}) => {
@@ -116,7 +116,6 @@ export const database = {
     })
 
     if(!refExist[0]) {
-      console.info("Inserting a new reference", refExist)
       const res = await cachedDb?.collection('clients')?.updateOne(
       {'token': origin},
       {$push: {
@@ -126,12 +125,14 @@ export const database = {
       return console.info(res)
     }
 
-    console.info("Update a reference", refExist)
     return await cachedDb?.collection('clients').updateOne(
       { "token": origin,
          "references.ref": referer
       },
       { $inc: { "references.$.clicks" : 1 } }
    )
+  } catch {
+    return null
+  }
   }
 }
