@@ -100,10 +100,12 @@ export const database = {
 
   async addClick(id) {
     console.info("addClick +1")
-    return await cachedDb?.collection('links').updateOne(
+    const res =  await cachedDb?.collection('links').updateOne(
       {'id': id},
       {$inc: {'clicks': 1}}
     )
+    console.info("Problem solved?")
+    return res
   },
 
   async updateLocation(id, local) {
