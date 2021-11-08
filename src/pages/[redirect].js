@@ -22,11 +22,11 @@ async function generateAnalytics({redirectId, req}) {
     referer = req.headers.referer 
   }
 
-  const db = await database.connect()
+  await database.connect()
   console.info("Database connected")
-  await db.addClick(redirectId)
+  await database.addClick(redirectId)
   console.info("Add click finished...")
-  await db.updateReferrer(redirectId, referer)
+  await database.updateReferrer(redirectId, referer)
   console.info("Update referrer complete. ok")
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
