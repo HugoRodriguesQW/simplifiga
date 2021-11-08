@@ -54,7 +54,6 @@ async function generateAnalytics({redirectId, req}) {
   await db.updateReferrer(redirectId, referer)
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
-    console.log(`IP: ${ip}`)
     return ipapi.location((res)=> {
       const country = res.country
       const region = res.region
@@ -62,7 +61,7 @@ async function generateAnalytics({redirectId, req}) {
       if(country && region) return db.updateLocation(redirectId, {country, region}) 
       console.log(`new request: ${country} ${region}`)
       db.updateLocation(redirectId, {country: "???", region: "Incerto"})       
-    }, ip)
+    }, ip, process.env.IPAPI_KEY)
   } 
     
   console.log(`Invalid IP: ${ip}`)
