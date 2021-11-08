@@ -6,7 +6,7 @@ export function SideBar({current}) {
   const links = [
     {name: 'Dashboard', target: "/dashboard"},
     {name: 'Referências', target: "/dashboard/references"},
-    {name: 'Locais', target: "/dashboard/locations"},
+    {name: 'Localização', target: "/dashboard/locations"},
     {name: 'API', target: "/developer", blank: true},
   ]
   return (

@@ -2,10 +2,10 @@
 import styles from '../styles/components/Header.module.css'
 import { Logo } from './Logo'
 import Link from 'next/link'
-import {  useContext, useEffect, useState } from 'react'
+import {  memo, useContext, useEffect, useState } from 'react'
 import { userContext } from '../contexts/UserContext'
 
-export function Header({routes, ...style}) {
+const HeaderComponent = ({routes, ...style}) => {
 
   const [isOpened, setIsOpened] = useState(true)
   const {clearUser} = useContext(userContext)
@@ -79,3 +79,5 @@ export function Header({routes, ...style}) {
     </div>
   )
 }
+
+export const Header = memo(HeaderComponent)

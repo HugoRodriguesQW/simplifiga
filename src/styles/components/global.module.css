@@ -92,20 +92,38 @@
   width: 100%;
 }
 
+.graphContainer > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+  color: var(--black-36);
+}
+
 .graphContainer canvas {
   max-height: calc(52vh - 1rem);
 }
 
 .detailsList {
   padding: 2rem;
+
 }
 
 .detailsList > div {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #d6d6d6;
-  padding: 0.5rem 0;
+  padding: 1rem;
+  transition: .2s;
+}
+
+.detailsList > div:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.detailsList:not(.without) > div:hover {
+  background: #f9f9f9;
+  border-radius: 5px;
 }
 
 .detailsList > div > span,
@@ -125,4 +143,102 @@
 }
 .detailsList > div > div > p:last-child{
   color: var(--black-36);
+}
+
+.detailsList .droplist {
+  display: block;
+}
+
+.detailsList .droplist:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.droplistContent {
+  color: var(--black-36);
+  border-radius: 0 5px 5px 0;
+  transition: .2s;
+}
+
+
+.droplistMain {
+  cursor: pointer;
+  transition: .2s;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.droplist .droplistMain:hover {
+  background: #f1f1f1;
+}
+
+.droplist .droplistContent:hover {
+  background: #f9f9f9;
+}
+
+.detailsList .droplist .droplistMain button {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  margin-left: .5rem;
+}
+
+.detailsList .droplist .droplistMain,
+.droplist .droplistContent > div {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.droplist .droplistContent {
+  display: block;
+  padding-right: 1rem;
+}
+
+.droplist .droplistMain > div {
+  display: flex;
+  align-items: center;
+}
+
+.droplist .droplistMain > div p {
+  margin: 0;
+}
+
+.droplist .droplistMain > div img {
+  margin-left: 1rem;
+  transition: .2s;
+  transform: rotateZ(0deg);
+}
+
+.droplist.active .droplistMain > div img {
+  transform: rotateZ(-90deg);
+}
+
+.droplist:not(.active) .droplistContent {
+  display: none;
+}
+
+.detailsList .droplist .droplistContent span{
+  font-size: 1.8rem;
+}
+
+.droplistContent > div:not(:last-child) {
+  border-bottom: 1px solid #d6d6d6;
+}
+
+
+.droplistContent {
+  border-left: 3px solid #d6d6d6;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detailsList .droplist p{
+  display: inline;
+}
+
+.detailsList .droplist p:first-child::after {
+  content: '-';
+  padding: 0 .5rem 0 .5rem;
 }

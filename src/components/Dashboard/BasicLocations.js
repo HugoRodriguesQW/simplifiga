@@ -9,12 +9,24 @@ import { Empty } from '../Effects/Empty';
 export function BasicLocations() {
 
   const loading = useContext(dashboardContext).loading
-  const locations = useContext(dashboardContext).locations.slice(0, 5).sort((a,b)=> b.clicks - a.clicks)
-  const data = locations.map((local)=> { return local.clicks})
+  const locations = useContext(dashboardContext).locations
+  .map((local)=> {
+    return local.regions.map((region)=> {
+      return {...region, country: local.country}
+    })
+  })
+  .flat()
+  .sort((a, b) => {
+    return  b.clicks - a.clicks 
+  })
+  .slice(0, 5)
 
+  const data = locations.map((local)=> { 
+    return local.clicks
+  })
 
   const pieDatas = {
-    labels: locations.map((local)=> { return local.country}),
+    labels: locations.map((local)=> { return local.name}),
     datasets: [
       {
         data,
@@ -48,12 +60,13 @@ export function BasicLocations() {
         </div>
       </div>
       <div className={gstyles.basicInfoDetails}>
-        {locations.map(({country}, index)=> {
+        {locations.map(({name, country}, index)=> {
           const currentData = data[index]
           const percent = ((currentData/data.reduce((p, c)=> { return p + c})) * 100).toFixed(2)
           return (
-            <div key={country+index}>
-              <span>{country}</span>
+            <div key={name+country+index}>
+              <span>{name}</span>
+              <p>{country}</p>
               <p>{currentData} cliques</p>
               <p>{percent}%</p>
             </div>
