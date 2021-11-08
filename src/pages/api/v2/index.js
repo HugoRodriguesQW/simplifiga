@@ -41,7 +41,7 @@ const handler = async (req, res) => {
 
     if(nick) {
       const isValid = await validateNick(nick)
-      if(!isValid) {
+      if(!isValid || blocked.includes(nick)) {
         return onError(res, 422)
       }
     }

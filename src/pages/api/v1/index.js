@@ -2,6 +2,7 @@ import { ShortenerTools } from '../../../utils/shortener'
 import errors from '../../../errors.json'
 import NextCors from "nextjs-cors";
 import { Database } from '../database';
+import {blocked} from '../../../pages.json'
 
 const handler = async (req, res) => {
 
@@ -36,7 +37,7 @@ const handler = async (req, res) => {
 
     if(nick) {
       const isValid = await validateNick(nick)
-      if(!isValid) {
+      if(!isValid || blocked.includes(nick)) {
         return onError(res, 422)
       }
     }
