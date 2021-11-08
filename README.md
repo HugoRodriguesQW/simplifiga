@@ -35,7 +35,14 @@
 
 ##### Clone o respositório e acesse a pasta (GIT no exemplo):
  ```shell 
- git clone https://github.com/HugoRodriguesQW/simplifiga.git simplifiga && npm run dev
- # É necessário uma chave para acessar o banco de dados
+ git clone https://github.com/HugoRodriguesQW/simplifiga.git simplifiga
+ cd simplifiga
+
+ ```
+ 
+ ##### Instale as dependências e inicie o projeto (NPM no exemplo):
+ ```shell 
+ npm install && npm run dev
+ # É necessário algumas chaves privadas para que a aplicação funcione corretamente.
 
  ```
