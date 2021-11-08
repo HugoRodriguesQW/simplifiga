@@ -41,7 +41,7 @@ async function generateAnalytics({redirectId, req}) {
   const db =  new Database()
   await db.connect()
 
-  const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
+  const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1', '']
   const ip = requestIp.getClientIp(req)
 
   let referer = 'direto'
@@ -54,16 +54,19 @@ async function generateAnalytics({redirectId, req}) {
   await db.updateReferrer(redirectId, referer)
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
+    console.log(`IP: ${ip}`)
     return ipapi.location((res)=> {
       const country = res.country
       const region = res.region
       
       if(country && region) return db.updateLocation(redirectId, {country, region}) 
+      console.log(`new request: ${country} ${region}`)
       db.updateLocation(redirectId, {country: "???", region: "Incerto"})       
     }, ip)
   } 
     
+  console.log(`Invalid IP: ${ip}`)
   if(localhostIp.includes(ip)) db.updateLocation(redirectId, {country: "???", region: "Incerto"})
 
-  console.info("Generated analytics... ok")
+  console.log("Generated analytics... ok")
 }
