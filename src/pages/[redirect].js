@@ -19,12 +19,13 @@ export async function getServerSideProps({query, req, res}) {
   await database.connect()
   const redirectUrl = await database.getLink({id: redirectId})
   if(redirectUrl) {
-    redirect(res, redirectUrl)
 
     generateAnalytics({
       req,
       redirectId
     })
+
+    redirect(res, redirectUrl)
   }
 
 
@@ -37,7 +38,7 @@ export async function getServerSideProps({query, req, res}) {
 
 async function generateAnalytics({redirectId, req}) {
   
-
+  console.info("Generating analytics...")
   const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
   const ip = requestIp.getClientIp(req)
 
