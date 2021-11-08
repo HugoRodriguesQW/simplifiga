@@ -1,8 +1,8 @@
-import { insertOnDatabase, randomNickname, validateNick, validateToken } from '../../../utils/shortener'
-import { getAllLinksWithToken, getUserData } from '../../../utils/dashboard';
+import { ShortenerTools } from '../../../utils/shortener'
+import { DashboardTools } from '../../../utils/dashboard';
+import { Database } from '../database';
 import errors from '../../../errors.json'
 import NextCors from "nextjs-cors";
-import { database } from '../database';
 
 const handler = async (req, res) => {
 
@@ -19,7 +19,10 @@ const handler = async (req, res) => {
 
   if(!token) return onError(res, 400)
 
-  await database.connect()
+  const db = new Database()
+  await db.connect()
+
+  const {validateToken, insertOnDatabase, randomNickname, validateNick } = await ShortenerTools(db)
 
   if( await validateToken(token) === false) {
     return onError(res, 401)
@@ -27,11 +30,12 @@ const handler = async (req, res) => {
 
   switch(req.method){
   case 'GET':
-    // Pegar os links, referências e localização do usuário. Todos os dados
+    const {getAllLinksWithToken, getUserData} = await DashboardTools(db)
     const links = await getAllLinksWithToken(token)
     const datas = await getUserData(token)
     res.json({links, ...datas})
     break
+
   case 'POST': 
     if(!url) return onError(res, 400)
 

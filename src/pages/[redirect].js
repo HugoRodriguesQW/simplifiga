@@ -1,14 +1,15 @@
 import { redirect } from 'next/dist/server/api-utils'
-import { database } from './api/database'
+import { Database } from './api/database'
 import requestIp from 'request-ip'
 import ipapi from 'ipapi.co'
 
 export default function RedirectPage (props) {
 
   return (
-    <div>Destino não encontrado</div>
+    <div>Destino não encontrado :(</div>
   )
 }
+
 
 export async function getServerSideProps({query, req, res}) {
 
@@ -16,18 +17,17 @@ export async function getServerSideProps({query, req, res}) {
 
   if(redirectId === "favicon.ico") return {props:{}}
 
-  await database.connect()
-  const redirectUrl = await database.getLink({id: redirectId})
+  const db =  new Database()
+  await db.connect()
+  
+  const redirectUrl = await db.getLink({id: redirectId})
   if(redirectUrl) {
-
-    generateAnalytics({
+    await generateAnalytics({
       req,
       redirectId
     })
-
     redirect(res, redirectUrl)
   }
-
 
   return {
     props: {
@@ -38,8 +38,10 @@ export async function getServerSideProps({query, req, res}) {
 
 async function generateAnalytics({redirectId, req}) {
   
-  console.info("Generating analytics...")
-  const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
+  const db =  new Database()
+  await db.connect()
+
+  const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1', '']
   const ip = requestIp.getClientIp(req)
 
   let referer = 'direto'
@@ -48,18 +50,23 @@ async function generateAnalytics({redirectId, req}) {
     referer = req.headers.referer 
   }
 
-  await database.addClick(redirectId)
-  await database.updateReferrer(redirectId, referer)
+  await db.addClick(redirectId)
+  await db.updateReferrer(redirectId, referer)
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
+    console.log(`IP: ${ip}`)
     return ipapi.location((res)=> {
       const country = res.country
       const region = res.region
       
-      if(country && region) return database.updateLocation(redirectId, {country, region}) 
-      database.updateLocation(redirectId, {country: "???", region: "Incerto"})       
+      if(country && region) return db.updateLocation(redirectId, {country, region}) 
+      console.log(`new request: ${country} ${region}`)
+      db.updateLocation(redirectId, {country: "???", region: "Incerto"})       
     }, ip)
   } 
     
-  if(localhostIp.includes(ip)) database.updateLocation(redirectId, {country: "???", region: "Incerto"})
+  console.log(`Invalid IP: ${ip}`)
+  if(localhostIp.includes(ip)) db.updateLocation(redirectId, {country: "???", region: "Incerto"})
+
+  console.log("Generated analytics... ok")
 }

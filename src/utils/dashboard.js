@@ -1,24 +1,38 @@
-import { database } from "../pages/api/database";
+import { Database } from "../pages/api/database";
 
-export async function getAllLinksWithToken(token) {
-  const links = await database.allWithParameter({name: 'origin', data: token, collection: 'links'})
-  if(!links) return null
-  return links.map((e)=> {
-    const {_id, origin, ...filter} = e
-    return filter
-  })
-}
+export async function DashboardTools (db) {
 
-export async function getAllReferencesWithToken(token) {
-  const res = await database.find({collection: 'clients', key: 'token', data: token})
-  return res ? res.references : null
-}
+  if(!db) {
+    db = new Database()
+    await db.connect()
+  }
 
-export async function getUserData(token) {
-  const res = await database.find({collection: 'clients', key: 'token', data: token})
-  return res ? {
-    references: res.references,
-    locations: res.locations,
-    deleted: res.deleted
-  } : null
+    async function getAllLinksWithToken(token) {
+      const links = await db.allWithParameter({name: 'origin', data: token, collection: 'links'})
+      if(!links) return null
+      return links.map((e)=> {
+        const {_id, origin, ...filter} = e
+        return filter
+      })
+    }
+
+    async function getAllReferencesWithToken(token) {
+      const res = await db.find({collection: 'clients', key: 'token', data: token})
+      return res ? res.references : null
+    }
+
+    async function getUserData(token) {
+      const res = await db.find({collection: 'clients', key: 'token', data: token})
+      return res ? {
+        references: res.references,
+        locations: res.locations,
+        deleted: res.deleted
+      } : null
+    }
+
+  return {
+    getAllLinksWithToken,
+    getAllReferencesWithToken,
+    getUserData
+  }
 }

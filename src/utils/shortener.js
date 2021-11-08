@@ -1,33 +1,48 @@
-import { database } from "../pages/api/database"
+import { Database } from "../pages/api/database"
 
-export async function randomNickname() {
-  let validNick = null
-    const tries = new Array(5).fill(0)
+export async function ShortenerTools(db) {
 
-    await Promise.all(tries.map(async () => {
-      const nick = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 4)
-      const isValid = await validateNick(nick)
-      if(isValid) {
-        validNick = nick
-        return false
-      }
-      return true
-    }))
+  if(!db) {
+    db = new Database()
+    await db.connect()
+  }
 
-    if(validNick) return validNick
-}
+  async function randomNickname() {
+    let validNick = null
+      const tries = new Array(5).fill(0)
 
-export async function validateNick(nick) {
-  const hasOnDatabase = await database.has({id: nick})
-  return !hasOnDatabase
-}
+      await Promise.all(tries.map(async () => {
+        const nick = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 4)
+        const isValid = await validateNick(nick)
+        if(isValid) {
+          validNick = nick
+          return false
+        }
+        return true
+      }))
 
-export async function validateToken(token) {
-  const isTokenValid = await database.validate({token})
-  return isTokenValid
-}
+      if(validNick) return validNick
+  }
 
-export async function insertOnDatabase({nick, url}, token) {
-  const res = await database.create({id: nick, link: url, origin: token, clicks: 0})
-  return res
+  async function validateNick(nick) {
+    const hasOnDatabase = await db.has({id: nick})
+    return !hasOnDatabase
+  }
+
+  async function validateToken(token) {
+    const isTokenValid = await db.validate({token})
+    return isTokenValid
+  }
+
+  async function insertOnDatabase({nick, url}, token) {
+    const res = await db.create({id: nick, link: url, origin: token, clicks: 0})
+    return res
+  }
+
+  return {
+    randomNickname,
+    validateNick,
+    validateToken,
+    insertOnDatabase
+  }
 }
