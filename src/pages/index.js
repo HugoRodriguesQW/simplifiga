@@ -19,7 +19,6 @@ export default function Home() {
   
   return (
     <>
-    <IndexHead/>
     { logged ? (
       <Header fixed padding routes={['/dashboard', '/developer','Sair']}/>
     ) : (
@@ -27,6 +26,7 @@ export default function Home() {
     )
     }
     <div className={styles.container}>
+      <IndexHead/>
       <Logo type="full" />
       <MainComponent/>
       <Error/>

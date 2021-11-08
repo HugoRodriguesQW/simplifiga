@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/next-script-for-ga */
 
 import Head from 'next/head'
+import { DefaultHeadProps } from './Default'
 
 export function DeveloperHead() {
   return (
+    <>
     <Head>
       <title>API | Simplifiga</title>
 
@@ -13,5 +15,7 @@ export function DeveloperHead() {
       <meta name="description" content="Documentação da API da Simplifiga e métodos de utilização." />
       <meta name="robots" content="index, follow"/>
     </Head>
+    <DefaultHeadProps/>
+    </>
   )
 }

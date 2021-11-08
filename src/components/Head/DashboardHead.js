@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/next-script-for-ga */
 
 import Head from 'next/head'
+import { DefaultHeadProps } from './Default'
 
 export function DashboardHead({subpage, index}) {
   return (
@@ -11,7 +12,6 @@ export function DashboardHead({subpage, index}) {
       <script async type="text/javascript" src="/google.js"></script> 
 
       {/* SEO - ROBOTS */}
-      <link rel="canonical" href="https://simplifi.ga/" />
       <meta name="title" content="Simplifiga | Dashboard" />
       <meta name="description" content="Acesso e controle da sua conta na Simplifiga. Dashboard e analytics" />
       {
@@ -42,6 +42,7 @@ export function DashboardHead({subpage, index}) {
       <meta property="twitter:description" content="Acesso e controle da sua conta na Simplifiga. Dashboard e analytics"/>
       <meta property="twitter:image" content="https://simplifi.ga/banner.png"/>
     </Head>
+    <DefaultHeadProps/>
     </>
   )
 }

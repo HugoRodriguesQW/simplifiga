@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/next-script-for-ga */
 
 import Head from 'next/head'
+import { DefaultHeadProps } from './Default'
 
 export function IndexHead() {
   return (
@@ -39,6 +40,7 @@ export function IndexHead() {
       <meta property="twitter:description" content="Encurtador de URL gratuito com nossa plataforma de gerenciamento de links. Crie, simplifique e compartilhe."/>
       <meta property="twitter:image" content="https://simplifi.ga/banner.png"/>
     </Head>
+    <DefaultHeadProps/>
     </>
   )
 }
