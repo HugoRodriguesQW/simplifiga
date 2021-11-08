@@ -3,7 +3,6 @@ import { isValidUrl } from "../../utils/url"
 
 let cachedDb = null
 let clientDb = null
-let timeout = null
 
 export const database = {
   async connect() {
@@ -22,11 +21,6 @@ export const database = {
     return cachedDb
   },
 
-  async disconnect() {
-    clientDb?.close()
-    cachedDb = null
-    clientDb = null
-  },
   async create (data){
     if(!data.link || !data.id)   return null
 

@@ -22,9 +22,12 @@ async function generateAnalytics({redirectId, req}) {
     referer = req.headers.referer 
   }
 
-  await database.connect()
-  await database.addClick(redirectId)
-  await database.updateReferrer(redirectId, referer)
+  const db = await database.connect()
+  console.info("Database connected")
+  await db.addClick(redirectId)
+  console.info("Add click finished...")
+  await db.updateReferrer(redirectId, referer)
+  console.info("Update referrer complete. ok")
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
     return ipapi.location((res)=> {
@@ -38,7 +41,7 @@ async function generateAnalytics({redirectId, req}) {
     
   if(localhostIp.includes(ip)) database.updateLocation(redirectId, {country: "???", region: "Incerto"})
 
-  console.info("Generated analytics...")
+  console.info("Generated analytics... ok")
 }
 
 export async function getServerSideProps({query, req, res}) {
@@ -52,12 +55,13 @@ export async function getServerSideProps({query, req, res}) {
   if(redirectUrl) {
     redirect(res, redirectUrl)
 
-    generateAnalytics({
+    await generateAnalytics({
       req,
       redirectId
     })
   }
 
+  console.info("Process completed. Please.")
 
   return {
     props: {
