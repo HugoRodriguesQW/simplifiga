@@ -10,8 +10,6 @@ export const database = {
     const secret = process.env.MONGO_URI
 
     if(cachedDb) {
-      clearTimeout(timeout)
-      timeout = setTimeout(this.disconnect, 5000)
       return cachedDb
     }
 
