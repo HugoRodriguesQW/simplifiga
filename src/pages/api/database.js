@@ -25,7 +25,7 @@ export const database = {
   },
 
   async disconnect() {
-    clientDb.close()
+    clientDb?.close()
     cachedDb = null
     clientDb = null
   },
@@ -106,33 +106,73 @@ export const database = {
     )
   },
 
-  async updateReferrer(id, referer) {
+  async updateLocation(id, local) {
     try {
-    referer = isValidUrl(referer) ? new URL(referer).host : referer
-    const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
-    const {references} = await cachedDb?.collection('clients').findOne({'token': origin})
-    const refExist = references.filter(({ref}) => {
-      return ref === referer
-    })
+      const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
+      const {locations} = await cachedDb?.collection('clients').findOne({'token': origin})
+      const locExist = locations.filter(({country, regions}) => {
+        const regExist = regions.filter(({name})=> {
+          return name === local.region
+        })[0] != null
 
-    if(!refExist[0]) {
-      const res = await cachedDb?.collection('clients')?.updateOne(
-      {'token': origin},
-      {$push: {
-          references: {ref: referer, clicks: 1},
-        }
-      })
-      return console.info(res)
+        return local.country === country && regExist
+      })[0] != null
+
+      if(!locExist) {
+        return await cachedDb?.collection('clients')?.updateOne(
+        {'token': origin},
+        {$push: {
+            locations: {
+              'country': local.country,  
+              'regions': [
+                {'name': local.region, clicks: 1}
+              ]
+            }
+          }
+        })
+      }
+      
+      return await cachedDb?.collection('clients').updateOne(
+        { "token": origin,
+          "locations.country": local.country
+        },
+        { $inc: { "locations.$[].regions.$[region].clicks" : 1 } },
+        {arrayFilters: [{
+          "region.name": local.region
+        }]}
+      )
+    } catch (err) {
+      console.info("Ocorreu um erro:", err)
     }
 
-    return await cachedDb?.collection('clients').updateOne(
-      { "token": origin,
-         "references.ref": referer
-      },
-      { $inc: { "references.$.clicks" : 1 } }
-   )
-  } catch {
-    return null
-  }
+  },
+
+  async updateReferrer(id, referer) {
+    try {
+      referer = isValidUrl(referer) ? new URL(referer).host : referer
+      const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
+      const {references} = await cachedDb?.collection('clients').findOne({'token': origin})
+      const refExist = references.filter(({ref}) => {
+        return ref === referer
+      })[0] != null
+
+      if(!refExist) {
+        return await cachedDb?.collection('clients')?.updateOne(
+        {'token': origin},
+        {$push: {
+            references: {ref: referer, clicks: 1},
+          }
+        })
+      }
+
+      return await cachedDb?.collection('clients').updateOne(
+        { "token": origin,
+            "references.ref": referer
+        },
+        { $inc: { "references.$.clicks" : 1 } }
+      )
+    } catch (err) {
+      console.info("Um erro ocorreu:", err)
+    }
   }
 }
