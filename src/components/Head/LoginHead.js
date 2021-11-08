@@ -10,7 +10,7 @@ export function LoginHead() {
       {/* SEO - ROBOTS */}
       <link rel="canonical" href="https://simplifi.ga/user/login/" />
       <meta name="title" content="Login | Simplifiga" />
-      <meta name="description" content="Entre para acessar nosso serviços" />
+      <meta name="description" content="Entre para acessar nosso serviços de gerenciamento de links gratuito." />
       <meta name="robots" content="index, follow"/>
     </Head>
   )

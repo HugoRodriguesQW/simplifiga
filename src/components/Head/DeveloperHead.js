@@ -10,7 +10,7 @@ export function DeveloperHead() {
       {/* SEO - ROBOTS */}
       <link rel="canonical" href="https://simplifi.ga/developer/" />
       <meta name="title" content="API | Simplifiga" />
-      <meta name="description" content="Funcionamento da API da Simplifiga e métodos de utilização" />
+      <meta name="description" content="Documentação da API da Simplifiga e métodos de utilização." />
       <meta name="robots" content="index, follow"/>
     </Head>
   )

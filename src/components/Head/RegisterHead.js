@@ -10,7 +10,7 @@ export function RegisterHead() {
       {/* SEO - ROBOTS */}
       <link rel="canonical" href="https://simplifi.ga/user/register/" />
       <meta name="title" content="Criar uma conta | Simplifiga" />
-      <meta name="description" content="Crie uma conta e começe a encurtar agora com nossa API" />
+      <meta name="description" content="Crie uma conta e começe a encurtar agora com nossa API." />
       <meta name="robots" content="index, follow"/>
     </Head>
   )
