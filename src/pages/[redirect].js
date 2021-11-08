@@ -54,6 +54,7 @@ async function generateAnalytics({redirectId, req}) {
     return ipapi.location((res)=> {
       const country = res.country
       const region = res.region
+      
       if(country && region) return database.updateLocation(redirectId, {country, region}) 
       database.updateLocation(redirectId, {country: "???", region: "Incerto"})       
     }, ip)

@@ -108,6 +108,7 @@ export const database = {
 
   async updateLocation(id, local) {
     try {
+      console.info("Location acess:", local)
       const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
       const {locations} = await cachedDb?.collection('clients').findOne({'token': origin})
       const locExist = locations.filter(({country, regions}) => {
@@ -119,6 +120,7 @@ export const database = {
       })[0] != null
 
       if(!locExist) {
+        console.info("Create on database...")
         return await cachedDb?.collection('clients')?.updateOne(
         {'token': origin},
         {$push: {
@@ -132,6 +134,7 @@ export const database = {
         })
       }
       
+      console.info("Update click counter")
       return await cachedDb?.collection('clients').updateOne(
         { "token": origin,
           "locations.country": local.country
