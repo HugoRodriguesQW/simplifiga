@@ -1,7 +1,7 @@
-import { insertOnDatabase, randomNickname, validateNick, validateToken } from '../../../utils/shortener'
+import { ShortenerTools } from '../../../utils/shortener'
 import errors from '../../../errors.json'
 import NextCors from "nextjs-cors";
-import { database } from '../database';
+import { Database } from '../database';
 
 const handler = async (req, res) => {
 
@@ -23,7 +23,12 @@ const handler = async (req, res) => {
       return onError(res, 400)
     }
 
-    await database.connect()
+    const db = new Database()
+    await db.connect()
+
+    const {
+      validateNick, validateToken, insertOnDatabase,
+      randomNickname  } = await ShortenerTools(db)
 
     if( await validateToken(token) === false) {
       return onError(res, 401)

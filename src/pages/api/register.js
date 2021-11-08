@@ -1,6 +1,6 @@
 import errors from '../../errors.json'
 import { serverEncoder } from '../../utils/crypto'
-import { database } from './database'
+import { Database } from './database'
 
 const handler = async (req, res) => {
 
@@ -10,8 +10,11 @@ const handler = async (req, res) => {
   if(appToken !== process.env.NEXT_PUBLIC_APP_TOKEN) return res.status(401).json(errors[401])
 
   console.info(name, password, email, company, 'Registered')
-  await database.connect()
-  database.addClient({
+
+  const db =  new Database()
+  await db.connect()
+
+  db.addClient({
     name,
     email,
     company,

@@ -1,6 +1,6 @@
 import errors from '../../errors.json'
 import { serverEncoder } from '../../utils/crypto'
-import { database } from './database'
+import { Database } from './database'
 
 const handler = async (req, res) => {
 
@@ -9,8 +9,10 @@ const handler = async (req, res) => {
     if(!key || !data || !appToken || !collection || !clientKey) return res.status(400).json(errors[400])
     if(appToken !== process.env.NEXT_PUBLIC_APP_TOKEN) return res.status(401).json(errors[401])
   
-    await database.connect()
-    const search = await database.find({collection, key, data})
+    const db =  new Database()
+    await db.connect()
+
+    const search = await db.find({collection, key, data})
     if(search?.[key]) {
       return res.status(200).json({encrypted: server.encryptWithCustomKey(search[key], clientKey)})
     }
