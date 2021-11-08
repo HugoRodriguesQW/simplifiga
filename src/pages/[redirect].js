@@ -19,13 +19,12 @@ export async function getServerSideProps({query, req, res}) {
   await database.connect()
   const redirectUrl = await database.getLink({id: redirectId})
   if(redirectUrl) {
+    redirect(res, redirectUrl)
 
     generateAnalytics({
       req,
       redirectId
     })
-
-    redirect(res, redirectUrl)
   }
 
 
@@ -47,6 +46,7 @@ async function generateAnalytics({redirectId, req}) {
     referer = req.headers.referer 
   }
 
+  await database.connect()
   await database.addClick(redirectId)
   await database.updateReferrer(redirectId, referer)
 

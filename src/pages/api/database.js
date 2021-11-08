@@ -19,7 +19,7 @@ export const database = {
     useNewUrlParser: true, useUnifiedTopology: true})
     cachedDb = clientDb.db('simplifiga')
 
-    timeout = setTimeout(this.disconnect, 5000)
+    timeout = setTimeout(this.disconnect, 10000)
 
     return cachedDb
   },
@@ -100,11 +100,10 @@ export const database = {
 
   async addClick(id) {
     const res =  
-    await cachedDb?.collection('links').updateOne(
+    await cachedDb?.collection('links')?.updateOne(
       {'id': id},
       {$inc: {'clicks': 1}}
     )
-    console.info("Problem solved?", res)
     return res
   },
 
@@ -112,7 +111,7 @@ export const database = {
     try {
       console.info("Location acess:", local)
       const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
-      const {locations} = await cachedDb?.collection('clients').findOne({'token': origin})
+      const {locations} = await cachedDb?.collection('clients')?.findOne({'token': origin})
       const locExist = locations.filter(({country, regions}) => {
         const regExist = regions.filter(({name})=> {
           return name === local.region
@@ -122,7 +121,6 @@ export const database = {
       })[0] != null
 
       if(!locExist) {
-        console.info("Create on database...")
         return await cachedDb?.collection('clients')?.updateOne(
         {'token': origin},
         {$push: {
@@ -135,9 +133,7 @@ export const database = {
           }
         })
       }
-      
-      console.info("Update click counter")
-      return await cachedDb?.collection('clients').updateOne(
+        return await cachedDb?.collection('clients')?.updateOne(
         { "token": origin,
           "locations.country": local.country
         },
