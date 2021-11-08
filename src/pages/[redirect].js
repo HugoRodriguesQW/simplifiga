@@ -10,30 +10,6 @@ export default function RedirectPage (props) {
   )
 }
 
-export async function getServerSideProps({query, req, res}) {
-
-  const redirectId = query?.redirect
-
-  if(redirectId === "favicon.ico") return {props:{}}
-
-  await database.connect()
-  const redirectUrl = await database.getLink({id: redirectId})
-  if(redirectUrl) {
-    redirect(res, redirectUrl)
-
-    generateAnalytics({
-      req,
-      redirectId
-    })
-  }
-
-
-  return {
-    props: {
-      id: redirectId
-    },
-  }
-}
 
 async function generateAnalytics({redirectId, req}) {
   
@@ -63,4 +39,29 @@ async function generateAnalytics({redirectId, req}) {
   if(localhostIp.includes(ip)) database.updateLocation(redirectId, {country: "???", region: "Incerto"})
 
   console.info("Generated analytics...")
+}
+
+export async function getServerSideProps({query, req, res}) {
+
+  const redirectId = query?.redirect
+
+  if(redirectId === "favicon.ico") return {props:{}}
+
+  await database.connect()
+  const redirectUrl = await database.getLink({id: redirectId})
+  if(redirectUrl) {
+    redirect(res, redirectUrl)
+
+    generateAnalytics({
+      req,
+      redirectId
+    })
+  }
+
+
+  return {
+    props: {
+      id: redirectId
+    },
+  }
 }

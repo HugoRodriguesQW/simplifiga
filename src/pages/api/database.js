@@ -150,6 +150,7 @@ export const database = {
 
   async updateReferrer(id, referer) {
     try {
+      console.info("Referer Update", cachedDb, id, referer)
       referer = isValidUrl(referer) ? new URL(referer).host : referer
       const {origin} = await cachedDb?.collection('links')?.findOne({'id': id})
       const {references} = await cachedDb?.collection('clients').findOne({'token': origin})
