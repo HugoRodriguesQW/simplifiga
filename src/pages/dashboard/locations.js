@@ -1,15 +1,14 @@
-import { memo, useContext, useEffect, useRef, useState } from "react";
-import { Bar } from "react-chartjs-2";
+import { useContext } from "react";
 import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { userContext } from "../../contexts/UserContext";
 import {dashboardContent, dashboardContainer} from '../../styles/pages/Dashboard.module.css'
 import { dashboardContext } from '../../contexts/DashboardContext'
-import {graphContainer, detailsList, building, droplist, droplistMain, droplistContent, active} from '../../styles/components/global.module.css'
-import { Color } from "../../utils/randomColor";
+import {graphContainer, detailsList, droplist, droplistMain, droplistContent, active, without} from '../../styles/components/global.module.css'
 import { Loading } from '../../components/Effects/Loading'
 import { Empty } from '../../components/Effects/Empty'
+import { Graphs } from "../../components/Dashboard/Graphs";
 
 const Locations =  ()  => {
   const logged = useContext(userContext).logged
@@ -25,51 +24,6 @@ const Locations =  ()  => {
   const datas = countries.map((country) => {
     return country.regions.map((region) => region.clicks)
   })
-
-  const graphCountryData = {
-    level: 0,
-    labels: countries.map(({country}) => country),
-    datasets: [
-      {
-        label: 'Cliques',
-        data: datas.map((region) => region.reduce((p,c)=> p + c)),
-        backgroundColor: datas.map(() => Color()),
-        hoverOffset: 12,
-      },
-    ]
-  };
-
-  const options = {
-    plugins: {legend: false}
-  }
-
-  const levelSelect = useRef(null)
-  const [graphLevel, setGraphLevel] = useState(graphCountryData)
-  
-  function handleLevelSelect(elem) {
-    setGraphLevel(detailsGraphLevel(elem[0].index))
-  }
-
-  function detailsGraphLevel(index) {
-    return {
-      level: 1,
-      labels: countries[index].regions.map(({name}) => name),
-      datasets: [
-      {
-        label: 'Cliques',
-        data: datas[index],
-        backgroundColor: datas[index].map(() => Color())
-
-      },
-    ]
-    }
-  }
-
-  function handleCountrySelector({target}) {
-    const level = parseInt(target.value)
-    if(level === -1) return setGraphLevel(graphCountryData)
-    setGraphLevel(detailsGraphLevel(level))
-  }
 
   function handleDropListClick(index) {
     const droplist = document.getElementById(`droplist${index}`) 
@@ -89,23 +43,11 @@ const Locations =  ()  => {
       <SideBar current="/dashboard/locations" />
 
       <div className={dashboardContent}>
-          <span>Locais de origem</span>
+          <span>Origem de tráfego</span>
           { loading && <div><Loading height="20rem" /></div>}
-          { !loading && (
+          { !loading && countries.length !== 0 &&  (
             <div className={graphContainer}>
-
-            <select ref={levelSelect} onChange={handleCountrySelector}>
-              <option value={-1}>Padrão</option>
-              {
-                countries.map(({country}, i) => {
-                  return <option key={country+i} value={i}>{country}</option>
-                })
-              }
-            </select>
-
-            <Bar data={graphLevel} options={options} 
-              getElementAtEvent={graphLevel.level === 0 ? handleLevelSelect : null} 
-            />
+              <Graphs countries={countries} datas={datas}/>
             </div>
           )}
 
@@ -115,7 +57,7 @@ const Locations =  ()  => {
           {countries.length === 0 ? (
             <Empty height="20rem"/>
           ): (
-          <div className={detailsList}>
+          <div className={`${detailsList} ${without}`}>
             {countries.map(({country, regions}, index)=> {
             const total = datas[index].reduce((p, c) => p + c)
             const regionsTotal = datas.map((e) => e.reduce((p,c)=> p + c))
