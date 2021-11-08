@@ -99,8 +99,8 @@ export const database = {
   },
 
   async addClick(id) {
-    console.info("Add click +1")
-    await cachedDb?.collection('links').updateOne(
+    console.info("addClick +1")
+    return await cachedDb?.collection('links').updateOne(
       {'id': id},
       {$inc: {'clicks': 1}}
     )
@@ -145,7 +145,7 @@ export const database = {
         }]}
       )
     } catch (err) {
-      console.info("Ocorreu um erro:", err)
+      return console.info("Ocorreu um erro:", err)
     }
 
   },
@@ -175,7 +175,7 @@ export const database = {
         { $inc: { "references.$.clicks" : 1 } }
       )
     } catch (err) {
-      console.info("Um erro ocorreu:", err)
+      return console.info("Um erro ocorreu:", err)
     }
   }
 }
