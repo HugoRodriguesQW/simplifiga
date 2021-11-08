@@ -22,12 +22,11 @@ export async function getServerSideProps({query, req, res}) {
   
   const redirectUrl = await db.getLink({id: redirectId})
   if(redirectUrl) {
-    redirect(res, redirectUrl)
-
     await generateAnalytics({
       req,
       redirectId
     })
+    redirect(res, redirectUrl)
   }
 
   return {
