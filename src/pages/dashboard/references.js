@@ -11,6 +11,7 @@ import { dashboardContext } from "../../contexts/DashboardContext";
 import { Loading } from "../../components/Effects/Loading";
 import { Empty } from "../../components/Effects/Empty";
 import { isValidUrl } from "../../utils/url";
+import { DashboardHead } from "../../components/Head/DashboardHead";
 
 export default function References () {
   const {logged} = useContext(userContext)
@@ -40,6 +41,7 @@ export default function References () {
 
   return (
     <div className={dashboardContainer}>
+      <DashboardHead subpage="Referências"/>
       { logged ? (
       <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>

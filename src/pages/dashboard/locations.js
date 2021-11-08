@@ -9,6 +9,7 @@ import {graphContainer, detailsList, droplist, droplistMain, droplistContent, ac
 import { Loading } from '../../components/Effects/Loading'
 import { Empty } from '../../components/Effects/Empty'
 import { Graphs } from "../../components/Dashboard/Graphs";
+import {DashboardHead} from '../../components/Head/DashboardHead'
 
 const Locations =  ()  => {
   const logged = useContext(userContext).logged
@@ -28,7 +29,7 @@ const Locations =  ()  => {
   function handleDropListClick(index) {
     const droplist = document.getElementById(`droplist${index}`) 
     if(droplist.classList.contains(active)) {
-      return console.info(droplist.classList.remove(active))
+      return droplist.classList.remove(active)
     }
 
     droplist.className += ' ' + active
@@ -37,6 +38,7 @@ const Locations =  ()  => {
 
   return (
     <div className={dashboardContainer}>
+      <DashboardHead subpage="Localização" />
       { logged ? (
       <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>

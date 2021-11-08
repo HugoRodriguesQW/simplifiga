@@ -34,7 +34,6 @@ export function DashboardContextProvider ({children}) {
   },[references])
 
   useEffect(()=> {
-    console.info(locations)
     setlocationsCount(locations.length)
   }, [locations])
 

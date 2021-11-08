@@ -10,6 +10,7 @@ import { userContext } from '../../contexts/UserContext'
 import { BasicLocations } from '../../components/Dashboard/BasicLocations'
 import { BasicReference } from '../../components/Dashboard/BasicReference'
 import { SideBar } from '../../components/Dashboard/SideBar'
+import { DashboardHead } from '../../components/Head/DashboardHead'
 
 export default function Dashboard() {
 
@@ -21,6 +22,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.dashboardContainer}>
+    <DashboardHead index/>
     { logged ? (
     <>
     <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
