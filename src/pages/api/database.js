@@ -15,9 +15,6 @@ export const database = {
     clientDb = await MongoClient.connect(secret, {
     useNewUrlParser: true, useUnifiedTopology: true})
     cachedDb = clientDb.db('simplifiga')
-
-    timeout = setTimeout(this.disconnect, 10000)
-
     return cachedDb
   },
 
