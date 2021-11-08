@@ -98,6 +98,7 @@
 
 .detailsList {
   padding: 2rem;
+
 }
 
 .detailsList > div {
@@ -125,4 +126,83 @@
 }
 .detailsList > div > div > p:last-child{
   color: var(--black-36);
+}
+
+.detailsList .droplist {
+  display: block;
+}
+
+.detailsList .droplist:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.droplistContent {
+  color: var(--black-36);
+}
+
+.detailsList .droplist .droplistMain button {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  margin-left: .5rem;
+}
+
+.detailsList .droplist .droplistMain,
+.droplist .droplistContent > div {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.droplist .droplistContent {
+  display: block;
+}
+
+.droplist .droplistMain > div {
+  display: flex;
+  align-items: center;
+}
+
+.droplist .droplistMain > div p {
+  margin: 0;
+}
+
+.droplist .droplistMain > div img {
+  margin-left: 1rem;
+  transition: .2s;
+  transform: rotateZ(0deg);
+}
+
+.droplist.active .droplistMain > div img {
+  transform: rotateZ(-90deg);
+}
+
+.droplist:not(.active) .droplistContent {
+  display: none;
+}
+
+.detailsList .droplist .droplistContent span{
+  font-size: 1.8rem;
+}
+
+.droplistContent > div:not(:last-child) {
+  border-bottom: 1px solid #d6d6d6;
+}
+
+
+.droplistContent {
+  border-left: 3px solid #d6d6d6;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detailsList .droplist p{
+  display: inline;
+}
+
+.detailsList .droplist p:first-child::after {
+  content: '-';
+  padding: 0 .5rem 0 .5rem;
 }
