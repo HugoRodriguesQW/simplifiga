@@ -97,11 +97,16 @@
   z-index: initial;
 }
 
-.shortMoreLink {
+.shortenedShare {
+  display: flex;
   text-align: right;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  flex-flow: wrap;
 }
 
-.shortMoreLink button {
+.shortMoreButton {
   background: none;
   border: none;
   color: #000;
@@ -112,7 +117,7 @@
   outline: none;
 }
 
-.shortMoreLink button::after {
+.shortMoreButton::after {
   content: ' ';
   display: inline-block;
   margin-left: .6rem;
@@ -199,24 +204,16 @@
     display: none;
   }
 
-  .copyPopRect {
-    display: block;
-  }
-
-  .mobileButtonContainer {
-    display: block;
-  }
-
-  .linkInputContainer {
+  .copyPopRect,
+  .mobileButtonContainer,
+  .linkInputContainer,
+  .shortedLinkContainer,
+  .shortedLinkContainer button strong  {
     display: block;
   }
 
   .linkInputContainer button {
     display: none;
-  }
-
-  .shortedLinkContainer {
-    display: block;
   }
 
   .shortedLinkContainer button {
@@ -233,10 +230,6 @@
 
   .shortedLinkContainer button.enable .copyPopRect {
     margin-top: -2.5rem;
-  }
-
-  .shortedLinkContainer button strong {
-    display: block;
   }
 }
 

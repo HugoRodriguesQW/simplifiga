@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { DefaultHeadProps } from './Default'
 
 export function PrivacyHead() {
   return (
@@ -7,11 +8,11 @@ export function PrivacyHead() {
       <title>Privacidade & Termos – Simplifiga</title>
 
       {/* SEO - ROBOTS */}
-      <link rel="canonical" href="https://simplifi.ga/privacy" />
       <meta name="title" content="Privacidade & Termos – Simplifiga" />
-      <meta name="description" content="Entenda a política de privacidade & termos de uso do Simplifiga"/>
+      <meta name="description" content="Entenda a política de privacidade & termos de uso da Simplifiga"/>
       <meta name="robots" content="index, follow"/>
     </Head>
+    <DefaultHeadProps/>
     </>
   )
 }

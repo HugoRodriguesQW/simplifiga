@@ -1,0 +1,49 @@
+.shareContainer svg,
+.shareContainer img {
+  max-width: 3rem;
+  max-height: 3rem;
+  border-radius: 5px;
+}
+
+.shareContainer.active button:first-child {
+  background: var(--black-36);
+}
+
+.shareContainer.active button:first-child img{
+  filter: invert(1);
+}
+
+.shareContainer.active button:not(:first-child) {
+  opacity: 1;
+}
+
+.shareContainer img {
+  padding: .5rem;
+}
+
+.shareContainer button:first-child {
+  font-size: 0;
+  line-height: 0;
+  background: none;
+}
+
+.shareContainer button {
+  transition: .5s;
+  height: 3rem;
+  overflow: hidden;
+}
+
+
+.shareContainer:not(.active) button:not(:first-child) {
+  opacity: 0;
+  width: 0;
+}
+.shareContainer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .1rem;
+}
+
+.shareContainer button:not(:first-child):hover {
+  transform: translateY(-.5rem);
+}

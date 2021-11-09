@@ -11,6 +11,32 @@
   align-items: center;
 }
 
+.contentBox .scroll {
+  animation: moveup 1s ease-in-out forwards;
+  transition: .2s;
+  padding: 2rem;
+}
+
+.contentBox .scroll:hover {
+  opacity: 1;
+}
+
+.contentBox .scroll::after {
+  content: ' ';
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  width: 100vw;
+  background-image: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.3), rgba(0,0,0,0.1), rgba(0,0,0,0));
+  transition: .2s;
+}
+
+.contentBox .scroll:hover::after {
+  height: 4rem;
+}
+
 .container {
   padding-top: 6rem;
 }
@@ -108,5 +134,30 @@
   .apiBox button {
     min-height: 2rem;
     width: 100%;
+  }
+
+  .contentBox .scroll {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 512px)  {
+  .contentBox .scroll {
+    display: none;
+  }
+} 
+
+@keyframes moveup {
+  0% {
+    opacity: 0;
+    margin-top: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+    margin-top: -10rem;
   }
 }

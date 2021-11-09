@@ -19,7 +19,6 @@ export default function Home() {
   
   return (
     <>
-    <IndexHead/>
     { logged ? (
       <Header fixed padding routes={['/dashboard', '/developer','Sair']}/>
     ) : (
@@ -27,16 +26,19 @@ export default function Home() {
     )
     }
     <div className={styles.container}>
+      <IndexHead/>
       <Logo type="full" />
       <MainComponent/>
       <Error/>
     </div>
 
     <div id="content" className={styles.contentBox}>
+
+        <a href="#content" className={styles.scroll}><img src="/icons/bx-mouse.svg"  alt="mais"/></a>
     
         <h1>Encurtar links de forma simples e fácil!</h1>
         <p>
-          A Simplifiga é uma plataforma de gerenciamento de links com foco na simplicidade. Para realizar um encurtamento rápido cole seu link no campo acima, defina um apelido (opcional) e clique em encurtar. Agora é só copiar o link simplificado e deixar o resto com o Simplifiga.
+          A Simplifiga é uma plataforma de gerenciamento de links com foco na simplicidade. Para realizar um encurtamento rápido cole seu link no campo acima, defina um apelido (opcional) e clique em encurtar. Copie o link e deixe o resto com a Simplifiga.
         </p>
 
         <div className={styles.apiBox}>
@@ -57,9 +59,6 @@ export default function Home() {
         <p>
           Nossa plataforma foi pensada para ser leve e acessível em diversos dispositivos e navegadores. Simplicidade é nosso lema. Conseguimos fazer o redirecionamento em apenas <strong>780ms</strong>, enquanto outros levam até 1,41 segundos para redirecionar.
         </p>
-        <p>
-          Apenas exibimos anúncios durante o encurtamento com o objetivo de reduzir o tempo de redirecionamento. Sem telas, sem mensagens, rápido e direto.
-        </p>
 
         <div className={styles.benefitBox}>
           <div className={styles.benefit}>
@@ -75,13 +74,13 @@ export default function Home() {
           </div>
 
           <div className={styles.benefit}>
-            <img src="/icons/bxs-badge-dollar.svg" loading="lazy" alt="Dollar" title="Dollar"/>
-            <h3>Grátis</h3>
-            <p>Quando quiser e sempre que quiser</p>
+            <img src="/icons/analytics.svg" loading="lazy" alt="Analytics" title="Analytics"/>
+            <h3>Analytics</h3>
+            <p>Entenda o acesso ao seu conteúdo</p>
           </div>
 
           <div className={styles.benefit}>
-            <img src="/icons/bx-block.svg" loading="lazy" alt="Simplifi.ga" title="Simplifiga"/>
+            <img src="/icons/bx-block.svg" loading="lazy" alt="Block" title="Block"/>
             <h3>5 segundos</h3>
             <p>Sem telas de espera para exibir anúncios</p>
           </div>
