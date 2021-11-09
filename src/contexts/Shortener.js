@@ -5,7 +5,7 @@ export const ShortenerContext = createContext({})
 
 export function ShortenerContextProvider ({children}) {
 
-  const {token} = useContext(userContext)
+  const {token, logged} = useContext(userContext)
 
   const [link, setLink] = useState(null)
   const [linkSurname, setLinkSurname] = useState(null)
@@ -20,6 +20,7 @@ export function ShortenerContextProvider ({children}) {
   
 
   async function handleShortLink() {
+    if(typeof(logged) !== 'boolean') return setError(101)
     setProcessState(true)
 
     const inputLink = link
@@ -33,7 +34,7 @@ export function ShortenerContextProvider ({children}) {
       const res = await fetch(`${base}/api/v2`, {
         method: "POST",
         headers: {
-          authorization: token ?? process.env.NEXT_PUBLIC_API_TOKEN
+          authorization: logged === true ? token : process.env.NEXT_PUBLIC_API_TOKEN
         },
         body: JSON.stringify({
           url: link,
