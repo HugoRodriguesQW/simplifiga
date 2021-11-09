@@ -135,8 +135,17 @@
     min-height: 2rem;
     width: 100%;
   }
+
+  .contentBox .scroll {
+    display: none;
+  }
 }
 
+@media screen and (max-height: 700px) {
+  .contentBox .scroll {
+    display: none;
+  }
+} 
 @keyframes moveup {
   0% {
     opacity: 0;

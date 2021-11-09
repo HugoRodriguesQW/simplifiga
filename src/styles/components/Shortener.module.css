@@ -199,24 +199,16 @@
     display: none;
   }
 
-  .copyPopRect {
-    display: block;
-  }
-
-  .mobileButtonContainer {
-    display: block;
-  }
-
-  .linkInputContainer {
+  .copyPopRect,
+  .mobileButtonContainer,
+  .linkInputContainer,
+  .shortedLinkContainer,
+  .shortedLinkContainer button strong  {
     display: block;
   }
 
   .linkInputContainer button {
     display: none;
-  }
-
-  .shortedLinkContainer {
-    display: block;
   }
 
   .shortedLinkContainer button {
@@ -233,10 +225,6 @@
 
   .shortedLinkContainer button.enable .copyPopRect {
     margin-top: -2.5rem;
-  }
-
-  .shortedLinkContainer button strong {
-    display: block;
   }
 }
 
