@@ -141,11 +141,12 @@
   }
 }
 
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 512px)  {
   .contentBox .scroll {
     display: none;
   }
 } 
+
 @keyframes moveup {
   0% {
     opacity: 0;
@@ -156,7 +157,7 @@
     opacity: 1;
   }
   100% {
-    opacity: 0.7;
+    opacity: 0.5;
     margin-top: -10rem;
   }
 }
