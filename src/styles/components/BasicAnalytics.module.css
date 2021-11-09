@@ -19,14 +19,18 @@
 
 @media screen and (max-width: 850px) {
   .analyticsContainer {
-    display: block;
-    padding: 2rem;
-    overflow: hidden;
-    overflow-y: scroll;
+   background: #f1f1f1;
   }
   
   .analyticsContainer .cell {
-    flex-direction: row;
     justify-content: space-between;
+  }
+
+  .analyticsContainer .cell span {
+    font-size: 1.8rem;
+  }
+
+  .analyticsContainer .cell strong {
+    font-size: 2.1rem;
   }
 }
