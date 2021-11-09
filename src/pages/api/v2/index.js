@@ -1,6 +1,7 @@
 import { ShortenerTools } from '../../../utils/shortener'
 import { DashboardTools } from '../../../utils/dashboard';
 import { Database } from '../database';
+import {blocked} from '../../../pages.json'
 import errors from '../../../errors.json'
 import NextCors from "nextjs-cors";
 
