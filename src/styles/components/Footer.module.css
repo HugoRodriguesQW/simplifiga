@@ -16,6 +16,11 @@
   font-size: 1.6rem;
   opacity: 0.9;
   line-height: 1.5;
+  padding: 0;
+}
+
+.footerContainer li {
+  margin: 0;
 }
 
 .footerContainer p {
@@ -29,4 +34,17 @@
   gap: 2rem;
   list-style-type: none;
   margin: 0;
+}
+
+.social {
+  padding: 1rem;
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+}
+
+.social svg,
+.social img {
+  width: 3rem;
+  height: 3rem;
 }
