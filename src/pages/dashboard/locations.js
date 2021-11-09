@@ -3,13 +3,14 @@ import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { userContext } from "../../contexts/UserContext";
-import {dashboardContent, dashboardContainer} from '../../styles/pages/Dashboard.module.css'
+import {dashboardContent, dashboardContainer, noBackground, contentTitle} from '../../styles/pages/Dashboard.module.css'
 import { dashboardContext } from '../../contexts/DashboardContext'
-import {graphContainer, detailsList, droplist, droplistMain, droplistContent, active, without} from '../../styles/components/global.module.css'
+import {graphContainer, detailsList, droplist, droplistMain, droplistContent, active, without, exportCsv} from '../../styles/components/global.module.css'
 import { Loading } from '../../components/Effects/Loading'
 import { Empty } from '../../components/Effects/Empty'
 import { Graphs } from "../../components/Dashboard/Graphs";
 import {DashboardHead} from '../../components/Head/DashboardHead'
+import {CSVLink} from 'react-csv'
 
 const Locations =  ()  => {
   const logged = useContext(userContext).logged
@@ -35,6 +36,19 @@ const Locations =  ()  => {
     droplist.className += ' ' + active
   }
 
+  const headers = [
+    { label: 'País', key: 'country' },
+    { label: 'Estado', key: 'region' },
+    { label: 'Cliques', key: 'clicks' },
+  ]
+
+  const csvCountries = countries.map(({country, regions})=> {
+    return regions.map((region) => {
+      return {...region, country}
+    })
+  })
+  .flat()
+  
 
   return (
     <div className={dashboardContainer}>
@@ -45,7 +59,17 @@ const Locations =  ()  => {
       <SideBar current="/dashboard/locations" />
 
       <div className={dashboardContent}>
-          <span>Origem de tráfego</span>
+          <div className={`${contentTitle} ${noBackground}`}>
+            <span>Origem de tráfego</span>
+            { loading && <a href="#">Carregando</a>}
+            { !loading && (
+            <CSVLink  
+            className={exportCsv} headers={headers} data={csvCountries} 
+            target="_blank" filename={`local_simplifiga`} separator={";"}>
+            Exportar
+            </CSVLink>
+            )}
+          </div>
           { loading && <div><Loading height="20rem" /></div>}
           { !loading && countries.length !== 0 &&  (
             <div className={graphContainer}>

@@ -3,8 +3,8 @@ import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { userContext } from "../../contexts/UserContext";
-import {dashboardContent, dashboardContainer} from '../../styles/pages/Dashboard.module.css'
-import {graphContainer, detailsList} from '../../styles/components/global.module.css'
+import {dashboardContent, dashboardContainer, noBackground, contentTitle} from '../../styles/pages/Dashboard.module.css'
+import {graphContainer, detailsList, without, exportCsv} from '../../styles/components/global.module.css'
 import {Bar} from 'react-chartjs-2'
 import { Color } from "../../utils/randomColor";
 import { dashboardContext } from "../../contexts/DashboardContext";
@@ -12,6 +12,7 @@ import { Loading } from "../../components/Effects/Loading";
 import { Empty } from "../../components/Effects/Empty";
 import { isValidUrl } from "../../utils/url";
 import { DashboardHead } from "../../components/Head/DashboardHead";
+import {CSVLink} from 'react-csv'
 
 export default function References () {
   const {logged} = useContext(userContext)
@@ -39,6 +40,11 @@ export default function References () {
     }
   };
 
+  const headers = [
+    { label: 'Origem', key: 'ref' },
+    { label: 'Cliques', key: 'clicks' }
+  ]
+
   return (
     <div className={dashboardContainer}>
       <DashboardHead subpage="Referências"/>
@@ -48,7 +54,18 @@ export default function References () {
       <SideBar current="/dashboard/references" />
 
       <div className={dashboardContent}>
-          <span>Referências encontradas</span>
+          <div className={`${contentTitle} ${noBackground}`}>
+            <span>Referências encontradas</span>
+            { loading && <a href="#">Carregando</a>}
+            { !loading && (
+            <CSVLink  
+            className={exportCsv} headers={headers} data={references} 
+            target="_blank" filename={`ref_simplifiga`} separator={";"}>
+            Exportar
+            </CSVLink>
+            )}
+          </div>
+
           { loading && <div><Loading height="20rem" /></div>}
           { !loading && (
             <div className={graphContainer}>
