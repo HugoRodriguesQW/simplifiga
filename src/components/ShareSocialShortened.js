@@ -43,12 +43,10 @@ export function ShareSocialShortened({shareUrl}) {
       <EmailShareButton url={shareUrl}><EmailIcon/></EmailShareButton>
       <FacebookShareButton url={shareUrl}><FacebookIcon/></FacebookShareButton>
       <LinkedinShareButton url={shareUrl}><LinkedinIcon/></LinkedinShareButton>
-      <PinterestShareButton url={shareUrl}><PinterestIcon/></PinterestShareButton>
       <RedditShareButton url={shareUrl}><RedditIcon/></RedditShareButton>
       <TelegramShareButton url={shareUrl}><TelegramIcon/></TelegramShareButton>
       <TumblrShareButton url={shareUrl}><TumblrIcon/></TumblrShareButton>
       <TwitterShareButton url={shareUrl}><TwitterIcon/></TwitterShareButton>
-      <VKShareButton url={shareUrl}><VKIcon/></VKShareButton>
       <WhatsappShareButton url={shareUrl}><WhatsappIcon/></WhatsappShareButton>
       <WorkplaceShareButton url={shareUrl}><WorkplaceIcon/></WorkplaceShareButton>
     </div>
