@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { ShortenerContext } from '../contexts/Shortener'
 import styles from '../styles/components/Shortener.module.css'
 import copy from 'copy-to-clipboard'
+import { ShareSocialShortened } from './ShareSocialShortened'
 
 export function Shortened() {
 
@@ -27,11 +28,12 @@ export function Shortened() {
           <span className={styles.copyPopBubble}>URL Copiada</span>
           <span className={styles.copyPopRect}>URL Copiada para transferência</span>
           <strong>Copiar para transferir</strong>
-        </button> 
+        </button>
     </div>
 
-    <div className={styles.shortMoreLink}>
-      <button onClick={()=>{handleShortOtherLink()}}> Encurtar mais <span/></button>
+    <div className={styles.shortenedShare} onMouseOut={()=> { console.info("A") && setShowSocial(false)}}>
+      <ShareSocialShortened shareUrl={shortednedLink}/>
+      <button  className={styles.shortMoreButton} onClick={()=>{handleShortOtherLink()}}> Encurtar mais <span/></button>
     </div>
     </>
   )
