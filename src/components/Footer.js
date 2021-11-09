@@ -11,12 +11,19 @@ export function Footer() {
         {
           [
             {'name': 'Início', 'loc': ''},
-            {'name': 'Privacidade & Termos', 'loc': 'privacy'}
+            {'name': 'Privacidade & Termos', 'loc': 'privacy'},
+            {'name': 'Suporte', 'loc': 'https://simplifi.ga/support', 'newtab': true}
           ].map((obj, i)=> {
             return (
              <span key={obj.name + i}> 
               <li>
-                <Link href={`/${obj.loc}`}>{obj.name}</Link>
+                {
+                  obj.newtab? (
+                    <a href={obj.loc} rel="noreferrer" target="_blank">{obj.name}</a>
+                  ) : (
+                    <Link href={`/${obj.loc}`}>{obj.name}</Link>
+                  )
+                }
               </li>
             </span>
             )
