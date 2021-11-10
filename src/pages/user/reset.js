@@ -52,7 +52,7 @@ export default function Reset () {
       const res = await fetch(`${window.location.origin}/api/reset`, {
         method: "POST",
         body: JSON.stringify({
-          'email': 'mailvitorhugosr@gmail.com',
+          'email': targetEmail,
           'password': password
         })
       })
