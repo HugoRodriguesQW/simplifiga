@@ -111,7 +111,7 @@ export class Database {
     )
     return res.modifiedCount === 1
   }
-
+  
   async find({collection, key, data}) {
     const has = 
     await this.db?.collection(collection)?.findOne({[key] : data})

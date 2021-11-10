@@ -42,6 +42,7 @@
 .contentTitle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .contentTitle a {
@@ -50,6 +51,10 @@
   border-radius: 5px;
   padding: 0 .5rem;
   font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 4rem;
 }
 
 .dashboardContent > div:not(.noBackground) {
