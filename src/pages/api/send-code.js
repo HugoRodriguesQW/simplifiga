@@ -36,14 +36,19 @@ const handler = async (req, res) => {
     });
 
   const mailOptions = {
-    from: 'noreply@simplifi.ga',
+    from: 'mailvitorhugosr@gmail.com',
     to: email,
     subject: '[Simplifiga] Recuperação de conta',
     text: `Se não foi você que requisitou verifique sua conta. Este é o código de recuperação de senha: ${code}. Atenção: este código expira em 10 minutos.`
   };
   
+  console.log("Log: send-code:", email)
+
   transporter.sendMail(mailOptions, (err, info) => {
-    if(err) return res.status(200).json({sucess: false}) 
+    if(err) {
+      console.log("Error: send-code:", err)
+      return res.status(200).json({sucess: false})
+    } 
 
     if(info?.accepted?.includes(email)){
       return res.status(200).json({sucess: true})
