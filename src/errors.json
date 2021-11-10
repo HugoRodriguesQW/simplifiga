@@ -3,6 +3,10 @@
     "code": 100,
     "message": "Não foi possível encurtar o link digitado. Tente novamente."
   },
+  "101": {
+    "code": 101,
+    "message": "Ainda estamos carregando algumas coisas. Tente novamente."
+  },
   "400": {
     "code": 1000,
     "message": "Parameters were not passed correctly."

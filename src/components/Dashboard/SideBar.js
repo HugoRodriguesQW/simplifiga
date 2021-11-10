@@ -7,6 +7,7 @@ export function SideBar({current}) {
     {name: 'Dashboard', target: "/dashboard"},
     {name: 'Referências', target: "/dashboard/references"},
     {name: 'Localização', target: "/dashboard/locations"},
+    {name: "Links", target: "/dashboard/links"},
     {name: 'API', target: "/developer", blank: true},
   ]
   return (

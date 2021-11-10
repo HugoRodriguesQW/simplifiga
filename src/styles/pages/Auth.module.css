@@ -10,6 +10,11 @@
   max-width: 870px;
 }
 
+.contentBox .error {
+  color: red !important;
+  font-size: 1.4rem;
+}
+
 .contentBox p,
 .contentBox label {
   max-width: 470px;

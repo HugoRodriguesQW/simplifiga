@@ -39,6 +39,19 @@
   overflow-x: hidden;
 }
 
+.contentTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentTitle a {
+  color: var(--white);
+  background: var(--blue);
+  border-radius: 5px;
+  padding: 0 .5rem;
+  font-size: 2rem;
+}
+
 .dashboardContent > div:not(.noBackground) {
   background: #fff;
   border-radius: 10px;
