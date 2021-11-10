@@ -5,7 +5,7 @@ export default function Email(code, type) {
       Simplifi.ga
       ---
       Solicitação de Redefinição de senha.
-      Utilize o código abaixo na mesma página em que foi solicidato para prosseguir com a redefinição de senha. Este código é exclusivo, expira em 10 minutos e não deve ser compartilhado com ninguém.
+      Utilize o código abaixo na mesma página em que foi solicitado para prosseguir com a redefinição de senha. Este código é exclusivo, expira em 10 minutos e não deve ser compartilhado com ninguém.
       ---
       Código: ${code}
       ---
@@ -48,7 +48,7 @@ export default function Email(code, type) {
                                         <span
                                             style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            Utilize o código abaixo na mesma página em que foi solicidato para prosseguir com a redefinição de senha. Este código é exclusivo, <strong>expira em 10 minutos</strong> e não deve ser compartilhado com ninguém.
+                                            Utilize o código abaixo na mesma página em que foi solicitado para prosseguir com a redefinição de senha. Este código é exclusivo, <strong>expira em 10 minutos</strong> e não deve ser compartilhado com ninguém.
                                         </p>
 
                                         <span href="javascript:void(0);"
