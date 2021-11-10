@@ -11,6 +11,7 @@ import { Empty } from '../../components/Effects/Empty'
 import {DashboardHead} from '../../components/Head/DashboardHead'
 import {MainComponent} from '../../components/MainComponent'
 import {CSVLink} from 'react-csv'
+import  Router  from "next/router";
 
 const Links =  ()  => {
   const logged = useContext(userContext).logged
@@ -33,6 +34,10 @@ const Links =  ()  => {
     { label: 'Cliques', key: 'clicks' },
     { label: 'Destino', key: 'link' },
   ]
+
+  useEffect(()=> {
+    if(logged === false) Router.push('/user/login')
+  }, [logged])
 
   return (
     <div className={dashboardContainer}>

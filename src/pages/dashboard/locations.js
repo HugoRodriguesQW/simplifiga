@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
@@ -11,6 +11,7 @@ import { Empty } from '../../components/Effects/Empty'
 import { Graphs } from "../../components/Dashboard/Graphs";
 import {DashboardHead} from '../../components/Head/DashboardHead'
 import {CSVLink} from 'react-csv'
+import  Router  from "next/router";
 
 const Locations =  ()  => {
   const logged = useContext(userContext).logged
@@ -49,6 +50,10 @@ const Locations =  ()  => {
   })
   .flat()
   
+
+  useEffect(()=> {
+    if(logged === false) Router.push('/user/login')
+  }, [logged])
 
   return (
     <div className={dashboardContainer}>
