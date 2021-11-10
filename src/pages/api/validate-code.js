@@ -22,6 +22,7 @@ const handler = async (req, res) => {
   const {isCodeValid} = await ResetTools(db)
 
   if(! await isCodeValid(code, email)) return res.status(200).json({valid: false})
+  await db.deleteCode({code, email})
   return res.status(200).json({valid: true})
 }
 

@@ -42,8 +42,6 @@ const handler = async (req, res) => {
     text: `Se não foi você que requisitou verifique sua conta. Este é o código de recuperação de senha: ${code}. Atenção: este código expira em 10 minutos.`
   };
   
-
-
   transporter.sendMail(mailOptions, (err, info) => {
     if(err) return res.status(200).json({sucess: false}) 
 

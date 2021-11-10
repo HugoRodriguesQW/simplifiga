@@ -98,6 +98,12 @@ export class Database {
     return isValid
   }
 
+  async deleteCode({code, email}) {
+    const res =
+    await this.db.collection('reset').deleteOne( {code, email})
+    return res
+  }
+
   async updateUserData({data, filter}) {
     const res = 
     await this.db.collection('clients').updateOne({...filter},
