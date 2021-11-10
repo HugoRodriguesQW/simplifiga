@@ -76,7 +76,7 @@ const Locations =  ()  => {
             )}
           </div>
           { loading && <div><Loading height="20rem" /></div>}
-          { !loading && countries.length !== 0 &&  (
+          { !loading  &&  (
             <div className={graphContainer}>
               <Graphs countries={countries} datas={datas}/>
             </div>
