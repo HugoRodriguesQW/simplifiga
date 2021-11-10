@@ -25,7 +25,7 @@ export default function Reset () {
 
   const functions = {
     async request({email}) {
-      const res = await fetch('http://localhost:3000/api/send-code', {
+      const res = await fetch(`${window.location.origin}/api/send-code`, {
         method: 'POST',
         body: JSON.stringify({
           'email': email
@@ -36,7 +36,7 @@ export default function Reset () {
     },
 
     async confirm({code}) {
-      const res = await fetch('http://localhost:3000/api/validate-code', {
+      const res = await fetch(`${window.location.origin}/api/validate-code`, {
         method: "POST",
         body: JSON.stringify({
           'email': targetEmail,
@@ -49,7 +49,7 @@ export default function Reset () {
     },
     async reset({password}) {
 
-      const res = await fetch('http://localhost:3000/api/reset', {
+      const res = await fetch(`${window.location.origin}/api/reset`, {
         method: "POST",
         body: JSON.stringify({
           'email': 'mailvitorhugosr@gmail.com',
