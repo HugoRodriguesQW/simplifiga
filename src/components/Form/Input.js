@@ -16,7 +16,7 @@ export default function Input({name,  autoComplete}) {
 
   return (
     <div className={styles.inputBox}>
-      <input ref={InputRef} name={name} type={name} autoComplete={autoComplete}/>
+      <input ref={InputRef} name={name} type={name === 'confirmpass' ? 'password' : name} autoComplete={autoComplete}/>
       {error && <span>{error}</span>}
     </div>
   )

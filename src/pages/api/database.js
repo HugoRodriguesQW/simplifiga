@@ -77,9 +77,15 @@ export class Database {
   async createCode({email}) {
     const code = (Math.floor(100000 + Math.random() * 900000)).toString()
 
-    cachedDb.collection('reset').createIndex( { "createdAt": 2 }, { expireAfterSeconds: 60*10 } )
+    const date = new Date()
+
+    date.setMinutes(date.getMinutes()+10)
+
+    await this.db.collection('reset').createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
     const res = await this.db.collection('reset').insertOne( {
-      "createdAt": new Date(),
+      "expireAt": date,
+      "logEvent": 1,
+      "logMessage": "Success!",
       'email': email,
       'code': code
    } )
@@ -90,6 +96,14 @@ export class Database {
     const isValid = 
     await this.db?.collection('reset')?.findOne({'email': email, 'code': code}) != null
     return isValid
+  }
+
+  async updateUserData({data, filter}) {
+    const res = 
+    await this.db.collection('clients').updateOne({...filter},
+      {$set: {...data}}
+    )
+    return res.modifiedCount === 1
   }
 
   async find({collection, key, data}) {
