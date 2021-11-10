@@ -3,6 +3,7 @@ import { ResetTools } from "../../utils/reset"
 import {Database} from './database'
 import nodemailer from 'nodemailer'
 import {google} from 'googleapis'
+import Email from "../../utils/email"
 
 
 const handler = async (req, res) => {
@@ -23,7 +24,7 @@ const handler = async (req, res) => {
 
   const {isEmailValid, generateCode} = await ResetTools(db)
 
-  if(! await isEmailValid(email)) return res.status(200).json({sucess: false})
+  if(! await isEmailValid(email)) return res.status(200).json({sucess: true}) // false
 
   const code = await generateCode(email)
  
@@ -50,8 +51,8 @@ const handler = async (req, res) => {
     from: 'SIMPLIFIGA <mailvitorhugosr@gmail.com>',
     to: email,
     subject: '[Simplifiga] Recuperação de conta',
-    text: `Se não foi você que requisitou verifique sua conta. Este é o código de recuperação de senha: ${code}. Atenção: este código expira em 10 minutos.`,
-    html: `<h1>Se não foi você que requisitou verifique sua conta. Este é o código de recuperação de senha: ${code}. Atenção: este código expira em 10 minutos.</h1>`
+    text: Email(code, 'text'),
+    html: Email(code, 'html')
   };
   
   

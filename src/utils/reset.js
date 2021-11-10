@@ -23,7 +23,8 @@ export async function ResetTools(db) {
   }
 
   async function isEmailValid(email) {
-    return true
+    const res = await db.find({collection: 'clients', key: 'email', data: email})
+    return res != null
   }
 
   async function generateCode(email) {
