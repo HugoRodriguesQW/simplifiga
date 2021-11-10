@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
