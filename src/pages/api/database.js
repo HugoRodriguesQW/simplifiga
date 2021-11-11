@@ -40,7 +40,10 @@ export class Database {
     if (!id) return null
     const query = {'id': id}
     const res = await this.db?.collection('links')?.findOne(query)
-    return res?.link ?? null
+    return {
+      redirectUrl: res?.link ?? null,
+      origin: res?.origin ?? null
+    }
   }
 
   async has ({id}){
@@ -127,9 +130,10 @@ export class Database {
     return res
   }
 
-  async updateLocation(id, local) { // {country, code, region}
+  async updateLocation(id, local, origin) { // {country, code, region}
     try {
-      const origin = await this.db?.collection('links')?.findOne({'id': id})?.origin
+      console.log(`<<< LOCATION >>> origin: ${origin}, local: ${local.country}, id: ${id} <<<`)
+      if(!origin) return
       const locations = await this.db?.collection('clients')?.findOne({'token': origin})?.locations
       const locExist = locations.filter(({country, regions}) => {
         const regExist = regions.filter(({name})=> {
@@ -169,10 +173,10 @@ export class Database {
 
   }
 
-  async updateReferrer(id, referer) {
+  async updateReferrer(id, referer, origin) {
     try {
-      referer = isValidUrl(referer) ? new URL(referer).host : referer
-      const origin = await this.db?.collection('links')?.findOne({'id': id})?.origin
+      console.log(`<<< REFERRER >>> origin: ${origin}, referer: ${referer}, id: ${id} <<<`)
+      if(!origin) return
       const references = await this.db?.collection('clients').findOne({'token': origin})?.references
       const refExist = references.filter(({ref}) => {
         return ref === referer

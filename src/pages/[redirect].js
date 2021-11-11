@@ -20,11 +20,12 @@ export async function getServerSideProps({query, req, res}) {
   const db =  new Database()
   await db.connect()
   
-  const redirectUrl = await db.getLink({id: redirectId})
+  const {redirectUrl, origin} = await db.getLink({id: redirectId})
   if(redirectUrl) {
     await generateAnalytics({
       req,
-      redirectId
+      redirectId,
+      origin
     })
     redirect(res, redirectUrl)
   }
@@ -36,7 +37,7 @@ export async function getServerSideProps({query, req, res}) {
   }
 }
 
-async function generateAnalytics({redirectId, req}) {
+async function generateAnalytics({redirectId, req, origin}) {
   
   const db =  new Database()
   await db.connect()
@@ -46,10 +47,10 @@ async function generateAnalytics({redirectId, req}) {
   const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
   const ip = requestIp.getClientIp(req)
 
-  let referer = req.headers?.referer
+  let referer = req.headers?.referer ?? 'noreferrer'
 
   if(referer) {
-    await db.updateReferrer(redirectId, referer)
+    await db.updateReferrer(redirectId, referer, origin)
   }
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
@@ -61,7 +62,7 @@ async function generateAnalytics({redirectId, req}) {
         results.subdivision
       ]
       
-      if(country && code) return db.updateLocation(redirectId, {country, region, code})       
+      if(country && code) return db.updateLocation(redirectId, {country, region, code}, origin)       
     })
   }
 }
