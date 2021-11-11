@@ -61,6 +61,7 @@ const handler = async (req, res) => {
     await insertOnDatabase({nick, url}, token)
 
     res.json({
+      id: nick,
       url,
       shortened: `https://simplifi.ga/${nick}`
     })

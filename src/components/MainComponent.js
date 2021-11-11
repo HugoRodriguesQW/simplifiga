@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { ShortenerContext } from "../contexts/Shortener";
 import styles from '../styles/components/Shortener.module.css'
 
-export function MainComponent () {
+export function MainComponent ({updateDashboard}) {
 
   const {isShortened} = useContext(ShortenerContext)
 
@@ -13,7 +13,7 @@ export function MainComponent () {
         {isShortened ? (
           <Shortened/>
         ): (
-          <Shortener/>
+          <Shortener updateDashboard={updateDashboard}/>
         )}
       </main>
   )

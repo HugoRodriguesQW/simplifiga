@@ -31,7 +31,7 @@ export function Shortened() {
         </button>
     </div>
 
-    <div className={styles.shortenedShare} onMouseOut={()=> { console.info("A") && setShowSocial(false)}}>
+    <div className={styles.shortenedShare}>
       <ShareSocialShortened shareUrl={shortednedLink}/>
       <button  className={styles.shortMoreButton} onClick={()=>{handleShortOtherLink()}}> Encurtar mais <span/></button>
     </div>

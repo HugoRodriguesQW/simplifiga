@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { dashboardContext } from "./DashboardContext";
 import { userContext } from "./UserContext";
 
 export const ShortenerContext = createContext({})
@@ -6,6 +7,7 @@ export const ShortenerContext = createContext({})
 export function ShortenerContextProvider ({children}) {
 
   const {token, logged} = useContext(userContext)
+  const {links, updateLinks} = useContext(dashboardContext)
 
   const [link, setLink] = useState(null)
   const [linkSurname, setLinkSurname] = useState(null)
@@ -19,7 +21,7 @@ export function ShortenerContextProvider ({children}) {
   const [error, setError] = useState(null)
   
 
-  async function handleShortLink() {
+  async function handleShortLink({updateDashboard}) {
     if(typeof(logged) !== 'boolean') return setError(101)
     setProcessState(true)
 
@@ -46,6 +48,10 @@ export function ShortenerContextProvider ({children}) {
       
       if(!result.shortened) {
         throw result.code
+      }
+
+      if(updateDashboard) {
+        updateLinks([...links, {id: result.id, link: result.url, clicks: 0}])
       }
 
       setShortenedLink(result.shortened)

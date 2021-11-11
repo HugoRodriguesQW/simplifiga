@@ -1,0 +1,62 @@
+.overlay {
+  position: fixed;
+  z-index: 999999999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.1) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay .container {
+  max-width: 400px;
+  background: #fff;
+  padding: 2rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.container > div {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.container > div > button {
+  font-size: 1.8rem;
+  padding: .3rem 1rem;
+}
+
+.container .confirmButton:hover {
+  background: #42f557;
+}
+
+.container .cancelButton:hover {
+  background: #363636;
+}
+
+.container .processingButton {
+  background: #d6d6d6;
+  pointer-events: none;
+  cursor: inherit;
+}
+
+.container .code {
+  color: red;
+  display: inline;
+}
+
+.container .error {
+  color: red;
+  font-size: 1.5rem;
+  font-style: oblique;
+}

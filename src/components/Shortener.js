@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { ShortenerContext } from '../contexts/Shortener'
 import styles from '../styles/components/Shortener.module.css'
 
-export function Shortener() {
+export function Shortener({updateDashboard}) {
 
   const {handleShortLink, setLink, setLinkSurname, isProcessing,
   isSurnameValid, isLinkInputValid} = useContext(ShortenerContext)
@@ -23,7 +23,7 @@ export function Shortener() {
         { isProcessing ? (
           <button className='active_button'>Encurtando</button>
         ) : (
-          <button onClick={()=>{handleShortLink()}}>Encurtar</button>
+          <button onClick={()=>{handleShortLink({updateDashboard})}}>Encurtar</button>
         )}
 
         {isLinkInputValid === false ? (
@@ -54,7 +54,7 @@ export function Shortener() {
       { isProcessing ? (
           <button className='active_button'>Encurtando</button>
         ) : (
-          <button onClick={()=>{handleShortLink()}}>Encurtar</button>
+          <button onClick={()=>{handleShortLink({updateDashboard})}}>Encurtar</button>
         )}
       </div>
     </>
