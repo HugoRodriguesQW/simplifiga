@@ -15,6 +15,7 @@ const handler = async (req, res) => {
 
   const params = req.body ? await JSON.parse(req.body) : {}
   const token = req.headers['authorization']
+  const id = params.id
   const url = params.url
   let   nick = params.nick
 
@@ -34,9 +35,12 @@ const handler = async (req, res) => {
     const {getAllLinksWithToken, getUserData} = await DashboardTools(db)
     const links = await getAllLinksWithToken(token)
     const datas = await getUserData(token)
-    res.json({links, ...datas})
+    res.status(200).json({links, ...datas})
     break
-
+  case 'DELETE':
+    const isDeleted = await db.deleteLink({id})
+    res.status(200).json({id: id, deleted: isDeleted})
+    break
   case 'POST': 
     if(!url) return onError(res, 400)
 

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useContext, useEffect } from "react";
 import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";

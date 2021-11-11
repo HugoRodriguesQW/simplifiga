@@ -45,6 +45,12 @@ export class Database {
     }
   }
 
+  async deleteLink({id}) {
+    const res = await this.db?.collection('links')?.deleteOne( {'id': id})
+    console.info(res)
+    return true
+  }
+
   async has ({id}){
     const hasOnDatabase = 
     await this.db?.collection('links')?.findOne({'id': id}) != null
