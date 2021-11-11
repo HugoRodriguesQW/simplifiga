@@ -127,7 +127,7 @@ export class Database {
     return res
   }
 
-  async updateLocation(id, local) {
+  async updateLocation(id, local) { // {country, code, region}
     try {
       const {origin} = await this.db?.collection('links')?.findOne({'id': id})
       const {locations} = await this.db?.collection('clients')?.findOne({'token': origin})
@@ -144,7 +144,8 @@ export class Database {
         {'token': origin},
         {$push: {
             locations: {
-              'country': local.country,  
+              'country': local.country,
+              'code': local.code,
               'regions': [
                 {'name': local.region, clicks: 1}
               ]
@@ -154,7 +155,8 @@ export class Database {
       }
         return await this.db?.collection('clients')?.updateOne(
         { "token": origin,
-          "locations.country": local.country
+          "locations.country": local.country,
+          'locations.code': local.code
         },
         { $inc: { "locations.$[].regions.$[region].clicks" : 1 } },
         {arrayFilters: [{
