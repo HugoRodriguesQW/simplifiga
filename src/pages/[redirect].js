@@ -46,15 +46,11 @@ async function generateAnalytics({redirectId, req}) {
   const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
   const ip = requestIp.getClientIp(req)
 
-  console.log("Test: ip:", ip)
-
   let referer = req.headers?.referer
 
   if(referer) {
     await db.updateReferrer(redirectId, referer)
   }
-
-  console.log("Test: referer:", referer)
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
     return iplocate(ip).then((results)=> {
@@ -64,9 +60,7 @@ async function generateAnalytics({redirectId, req}) {
         results.country_code,
         results.subdivision
       ]
-
-      console.log("Test: iplocate:", country, code, region)
-
+      
       if(country && code) return db.updateLocation(redirectId, {country, region, code})       
     })
   }
