@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SideBar } from "../../components/Dashboard/SideBar";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
@@ -12,13 +12,17 @@ import {DashboardHead} from '../../components/Head/DashboardHead'
 import {MainComponent} from '../../components/MainComponent'
 import {CSVLink} from 'react-csv'
 import  Router  from "next/router";
+import {DeleteBox} from '../../components/Dashboard/DeleteBox'
 
-const Links =  ()  => {
+export default function Links () {
   const logged = useContext(userContext).logged
   const loading = useContext(dashboardContext).loading
 
-  const links = useContext(dashboardContext).links.sort((a,b) => b.clicks - a.clicks)
+  const links = useContext(dashboardContext).links.sort((a,b) => a.clicks - b.clicks)
+
   const data = links.map(({clicks}) => clicks)
+
+  const [deleteItem, setDeleteItem] = useState(null)
 
   function handleDropListClick() {
     const droplist = document.getElementById(`droplist-1`) 
@@ -41,7 +45,7 @@ const Links =  ()  => {
 
   return (
     <div className={dashboardContainer}>
-      <DashboardHead subpage="Referências"/>
+      <DashboardHead subpage="Links"/>
       { logged ? (
       <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
@@ -72,7 +76,7 @@ const Links =  ()  => {
             </div>
 
             <div className={`${droplistContent} ${nostyle}`}>
-              <MainComponent/>
+              <MainComponent updateDashboard/>
             </div>
           </div>
           </div>
@@ -87,7 +91,8 @@ const Links =  ()  => {
           <div className={detailsList}>
             {links.map(({id, link}, index)=> {
             const currentData = data[index]
-            const percent = ((currentData/data.reduce((p, c)=> { return p + c})) * 100).toFixed(2)
+            const divider = data.reduce((p, c)=> { return p + c})
+            const percent = ((currentData/divider) * 100).toFixed(2)
             return (
               <div key={id+index}>
                 {
@@ -100,8 +105,9 @@ const Links =  ()  => {
                 </a>
                 }
                 <div>
+                <button onClick={()=> {setDeleteItem(id)}}><img src="/icons/bxs-x-circle.svg" alt="delete"></img></button>
                 <p>{currentData} cliques</p>
-                <p>{percent}%</p>
+                <p>{divider !== 0 && `${percent}%`}</p>
                 </div>
               </div>
             )
@@ -114,8 +120,7 @@ const Links =  ()  => {
       </div>
       </>
       ): null}
+       <DeleteBox id={deleteItem} reset={setDeleteItem} />
     </div>
   )
 }
-
-export default Links

@@ -47,8 +47,7 @@ export class Database {
 
   async deleteLink({id}) {
     const res = await this.db?.collection('links')?.deleteOne( {'id': id})
-    console.info(res)
-    return true
+    return res.deletedCount === 1
   }
 
   async has ({id}){
@@ -201,7 +200,7 @@ export class Database {
         { $inc: { "references.$.clicks" : 1 } }
       )
     } catch (err) {
-      return console.info("Um erro ocorreu:", err)
+      return console.info("Ocorreu um erro:", err)
     }
   }
 }

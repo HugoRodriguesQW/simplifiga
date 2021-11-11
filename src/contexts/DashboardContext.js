@@ -62,6 +62,10 @@ export function DashboardContextProvider ({children}) {
     setLoading(false)
   }
 
+  function updateLinks(newLinks) {
+    setLinks(newLinks)
+  }
+
   return (
     <dashboardContext.Provider value={{
       loading,
@@ -72,7 +76,8 @@ export function DashboardContextProvider ({children}) {
       deletedCount,
       links,
       references,
-      locations
+      locations,
+      updateLinks
     }}>
       {children}
     </dashboardContext.Provider>
