@@ -39,7 +39,7 @@ const Locations =  ()  => {
 
   const headers = [
     { label: 'País', key: 'country' },
-    { label: 'Estado', key: 'region' },
+    { label: 'Região', key: 'region' },
     { label: 'Cliques', key: 'clicks' },
   ]
 

@@ -1,5 +1,4 @@
 import { MongoClient } from "mongodb"
-import { isValidUrl } from "../../utils/url"
 
 let cachedDb = null
 let cachedCl = null
@@ -40,7 +39,10 @@ export class Database {
     if (!id) return null
     const query = {'id': id}
     const res = await this.db?.collection('links')?.findOne(query)
-    return res?.link ?? null
+    return {
+      redirectUrl: res?.link ?? null,
+      origin: res?.origin ?? null
+    }
   }
 
   async has ({id}){
@@ -127,11 +129,11 @@ export class Database {
     return res
   }
 
-  async updateLocation(id, local) {
+  async updateLocation(local, origin) { // {country, code, region}
     try {
-      const {origin} = await this.db?.collection('links')?.findOne({'id': id})
-      const {locations} = await this.db?.collection('clients')?.findOne({'token': origin})
-      const locExist = locations.filter(({country, regions}) => {
+      if(!origin) return
+      const user = await this.db?.collection('clients')?.findOne({'token': origin})
+      const locExist = user.locations.filter(({country, regions}) => {
         const regExist = regions.filter(({name})=> {
           return name === local.region
         })[0] != null
@@ -144,7 +146,8 @@ export class Database {
         {'token': origin},
         {$push: {
             locations: {
-              'country': local.country,  
+              'country': local.country,
+              'code': local.code,
               'regions': [
                 {'name': local.region, clicks: 1}
               ]
@@ -154,7 +157,8 @@ export class Database {
       }
         return await this.db?.collection('clients')?.updateOne(
         { "token": origin,
-          "locations.country": local.country
+          "locations.country": local.country,
+          'locations.code': local.code
         },
         { $inc: { "locations.$[].regions.$[region].clicks" : 1 } },
         {arrayFilters: [{
@@ -167,12 +171,11 @@ export class Database {
 
   }
 
-  async updateReferrer(id, referer) {
+  async updateReferrer(referer, origin) {
     try {
-      referer = isValidUrl(referer) ? new URL(referer).host : referer
-      const {origin} = await this.db?.collection('links')?.findOne({'id': id})
-      const {references} = await this.db?.collection('clients').findOne({'token': origin})
-      const refExist = references.filter(({ref}) => {
+      if(!origin) return
+      const user = await this.db?.collection('clients').findOne({'token': origin})
+      const refExist = user.references.filter(({ref}) => {
         return ref === referer
       })[0] != null
 

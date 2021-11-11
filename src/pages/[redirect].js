@@ -1,7 +1,7 @@
 import { redirect } from 'next/dist/server/api-utils'
 import { Database } from './api/database'
 import requestIp from 'request-ip'
-import ipapi from 'ipapi.co'
+import  iplocate from 'node-iplocate'
 
 export default function RedirectPage (props) {
 
@@ -20,11 +20,12 @@ export async function getServerSideProps({query, req, res}) {
   const db =  new Database()
   await db.connect()
   
-  const redirectUrl = await db.getLink({id: redirectId})
+  const {redirectUrl, origin} = await db.getLink({id: redirectId})
   if(redirectUrl) {
     await generateAnalytics({
       req,
-      redirectId
+      redirectId,
+      origin
     })
     redirect(res, redirectUrl)
   }
@@ -36,36 +37,32 @@ export async function getServerSideProps({query, req, res}) {
   }
 }
 
-async function generateAnalytics({redirectId, req}) {
+async function generateAnalytics({redirectId, req, origin}) {
   
   const db =  new Database()
   await db.connect()
 
-  const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1', '']
+  await db.addClick(redirectId)
+
+  const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
   const ip = requestIp.getClientIp(req)
 
-  let referer = 'direto'
+  let referer = req.headers?.referer
 
-  if(req.headers?.referer) {
-    referer = req.headers.referer 
+  if(referer) {
+    await db.updateReferrer(referer, origin)
   }
 
-  await db.addClick(redirectId)
-  await db.updateReferrer(redirectId, referer)
-
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
-    return ipapi.location((res)=> {
-      const country = res.country
-      const region = res.region
+    return iplocate(ip).then((results)=> {
+      const [country, code , region] = 
+      [
+        results.country,
+        results.country_code,
+        results.subdivision
+      ]
       
-      if(country && region) return db.updateLocation(redirectId, {country, region}) 
-      console.log(`new request: ${country} ${region}`)
-      db.updateLocation(redirectId, {country: "???", region: "Incerto"})       
-    }, ip, process.env.IPAPI_KEY)
-  } 
-    
-  console.log(`Invalid IP: ${ip}`)
-  if(localhostIp.includes(ip)) db.updateLocation(redirectId, {country: "???", region: "Incerto"})
-
-  console.log("Generated analytics... ok")
+      if(country && code) return db.updateLocation({country, region, code}, origin)       
+    })
+  }
 }

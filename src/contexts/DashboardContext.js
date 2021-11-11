@@ -42,7 +42,7 @@ export function DashboardContextProvider ({children}) {
   }, [token])
 
   async function importFromDatabase(token) {
-    if(token) return
+    if(!token) return
     setLoading(true)
     const res = await fetch(`${window.location.origin}/api/v2`, {
       method: "GET",
