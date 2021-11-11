@@ -47,10 +47,10 @@ async function generateAnalytics({redirectId, req, origin}) {
   const localhostIp = ['127.0.0.1', '::1', '127.0.0.1', '::ffff:127.0.0.1']
   const ip = requestIp.getClientIp(req)
 
-  let referer = req.headers?.referer ?? 'noreferrer'
+  let referer = req.headers?.referer
 
   if(referer) {
-    await db.updateReferrer(redirectId, referer, origin)
+    await db.updateReferrer(referer, origin)
   }
 
   if(ip  && ip !== "" && !localhostIp.includes(ip)) {
@@ -62,7 +62,7 @@ async function generateAnalytics({redirectId, req, origin}) {
         results.subdivision
       ]
       
-      if(country && code) return db.updateLocation(redirectId, {country, region, code}, origin)       
+      if(country && code) return db.updateLocation({country, region, code}, origin)       
     })
   }
 }
