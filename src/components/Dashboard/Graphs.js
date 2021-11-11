@@ -66,7 +66,7 @@ export function Graphs ({countries, datas}) {
   <div>
     {graphLevel.level === 0 && 'Cliques por país'}
     {graphLevel.level === 1 && labels[graphLevel.index]}
-    {labels[graphLevel.index] !== '???' && graphLevel.level === 1 && ': Cliques por estado'}
+    {labels[graphLevel.index] !== '???' && graphLevel.level === 1 && ': Cliques por região'}
   <select ref={levelSelect} onChange={handleCountrySelector}>
     <option value={-1}>Padrão</option>
     {

@@ -1,5 +1,4 @@
 import { MongoClient } from "mongodb"
-import { isValidUrl } from "../../utils/url"
 
 let cachedDb = null
 let cachedCl = null
