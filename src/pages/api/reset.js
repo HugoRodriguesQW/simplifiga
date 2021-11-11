@@ -13,7 +13,6 @@ const handler = async (req, res) => {
   // Receive email to send
   const {password, email} = JSON.parse(req.body)
 
-  console.info(password, email)
   if(!password || !email) return res.json({missing: true})
   
   const db = new Database()

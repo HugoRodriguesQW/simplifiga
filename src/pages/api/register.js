@@ -8,9 +8,7 @@ const handler = async (req, res) => {
   const {name, password, email, company, appToken} = await JSON.parse(server.decrypt(req.body))
   if(!name || !password || !email || !company || !appToken) return res.status(400).json(errors[400])
   if(appToken !== process.env.NEXT_PUBLIC_APP_TOKEN) return res.status(401).json(errors[401])
-
-  console.info(name, password, email, company, 'Registered')
-
+  
   const db =  new Database()
   await db.connect()
 

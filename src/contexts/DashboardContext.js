@@ -63,7 +63,6 @@ export function DashboardContextProvider ({children}) {
   }
 
   function updateLinks(newLinks) {
-    console.info("Updating links", newLinks)
     setLinks(newLinks)
   }
 

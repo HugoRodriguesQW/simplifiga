@@ -20,8 +20,6 @@ export default function Links () {
 
   const links = useContext(dashboardContext).links.sort((a,b) => a.clicks - b.clicks)
 
-  console.info(links)
-
   const data = links.map(({clicks}) => clicks)
 
   const [deleteItem, setDeleteItem] = useState(null)
@@ -47,7 +45,7 @@ export default function Links () {
 
   return (
     <div className={dashboardContainer}>
-      <DashboardHead subpage="Referências"/>
+      <DashboardHead subpage="Links"/>
       { logged ? (
       <>
       <Header fixed padding routes={['/dashboard', '/developer', '/','Sair']}/>
