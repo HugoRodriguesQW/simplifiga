@@ -22,7 +22,6 @@ export function ShortenerContextProvider({ children }) {
     setProcessState(true);
 
     const inputLink = link;
-    const base = document.location.origin.replace("wwww.", "");
 
     if (!validateLinkInput(inputLink)) {
       return setProcessState(false);

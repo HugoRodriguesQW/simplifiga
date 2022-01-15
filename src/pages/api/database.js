@@ -117,15 +117,15 @@ export class Database {
     return res;
   }
 
-  async updateLocation(local, origin) {
+  async updateLocation(local, id) {
     // {country, code, region}
     try {
       if (!origin) return;
-      const user = await this.db
-        ?.collection(`${node}clients`)
+      const doc = await this.db
+        ?.collection(`${node}links`)
         ?.findOne({ token: origin });
       const locExist =
-        user.locations.filter(({ country, regions }) => {
+        doc.locations.filter(({ country, regions }) => {
           const regExist =
             regions.filter(({ name }) => {
               return name === local.region;
@@ -135,8 +135,8 @@ export class Database {
         })[0] != null;
 
       if (!locExist) {
-        return await this.db?.collection(`${node}clients`)?.updateOne(
-          { token: origin },
+        return await this.db?.collection(`${node}links`)?.updateOne(
+          { id },
           {
             $push: {
               locations: {
@@ -148,9 +148,9 @@ export class Database {
           }
         );
       }
-      return await this.db?.collection(`${node}clients`)?.updateOne(
+      return await this.db?.collection(`${node}links`)?.updateOne(
         {
-          token: origin,
+          id,
           "locations.country": local.country,
           "locations.code": local.code,
         },
@@ -168,20 +168,18 @@ export class Database {
     }
   }
 
-  async updateReferrer(referer, origin) {
+  async updateReferrer(referer, id) {
     try {
       if (!origin) return;
-      const user = await this.db
-        ?.collection(`${node}clients`)
-        .findOne({ token: origin });
+      const doc = await this.db?.collection(`${node}links`).findOne({ id });
       const refExist =
-        user.references.filter(({ ref }) => {
+        doc.references.filter(({ ref }) => {
           return ref === referer;
         })[0] != null;
 
       if (!refExist) {
-        return await this.db?.collection(`${node}clients`)?.updateOne(
-          { token: origin },
+        return await this.db?.collection(`${node}links`)?.updateOne(
+          { id },
           {
             $push: {
               references: { ref: referer, clicks: 1 },
@@ -191,9 +189,9 @@ export class Database {
       }
 
       return await this.db
-        ?.collection(`${node}clients`)
+        ?.collection(`${node}links`)
         .updateOne(
-          { token: origin, "references.ref": referer },
+          { id, "references.ref": referer },
           { $inc: { "references.$.clicks": 1 } }
         );
     } catch (err) {

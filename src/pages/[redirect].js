@@ -15,12 +15,11 @@ export async function getServerSideProps({ query, req, res }) {
   const db = new Database();
   await db.connect();
 
-  const { target, origin } = await db.getLink({ id: redirectId });
+  const { target } = await db.getLink({ id: redirectId });
   if (target) {
     await generateAnalytics({
       req,
       redirectId,
-      origin,
     });
     redirect(res, target);
   }
@@ -32,7 +31,7 @@ export async function getServerSideProps({ query, req, res }) {
   };
 }
 
-async function generateAnalytics({ redirectId, req, origin }) {
+async function generateAnalytics({ redirectId, req }) {
   const db = new Database();
   await db.connect();
 
@@ -44,7 +43,7 @@ async function generateAnalytics({ redirectId, req, origin }) {
   let referer = req.headers?.referer;
 
   if (referer) {
-    await db.updateReferrer(referer, origin);
+    await db.updateReferrer(referer, redirectId);
   }
 
   if (ip && ip !== "" && !localhostIp.includes(ip)) {
@@ -54,9 +53,7 @@ async function generateAnalytics({ redirectId, req, origin }) {
         results.country_code,
         results.subdivision,
       ];
-
-      if (country && code)
-        return db.updateLocation({ country, region, code }, origin);
+      return db.updateLocation({ country, region, code }, redirectId);
     });
   }
 }
