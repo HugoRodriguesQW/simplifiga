@@ -1,80 +1,68 @@
-import { createContext, useEffect, useState } from "react"
-import { useContext } from 'react'
-import { userContext } from '../contexts/UserContext'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { createContext, useEffect, useState } from "react";
+import { useContext } from "react";
+import { userContext } from "../contexts/UserContext";
 
-export const dashboardContext = createContext({})
+import {
+  countLinkClicks,
+  filterLocations,
+  filterReferences,
+  getAllDataFromAPI,
+} from "../utils/dashboard";
 
-export function DashboardContextProvider ({children}) {
+export const dashboardContext = createContext({});
 
-  const {token}  = useContext(userContext)
+export function DashboardContextProvider({ children }) {
+  const { token } = useContext(userContext);
 
-  const [linkCount, setlinkCount] = useState(0)
-  const [clickCount, setclickCount] = useState(0)
-  const [referenceCount, setreferenceCount] = useState(0)
-  const [locationsCount, setlocationsCount] = useState(0)
-  const [deletedCount, setdeletedCount] = useState(0)
+  const [loading, setLoading] = useState(true);
 
-  const [links, setLinks] = useState([])
-  const [references, setReferences] = useState([])
-  const [locations, setLocations] = useState([])
-  const [loading, setLoading] = useState(true)
-  
-  useEffect(()=> {
-    const clickCounter = links && links.length === 0 ? 0 : ( 
-    links.reduce((b, c)=> {
-      return {clicks: parseInt(b.clicks) + parseInt(c.clicks)}
-    })?.clicks )
+  const [linkCount, setlinkCount] = useState(0);
+  const [clickCount, setclickCount] = useState(0);
+  const [referenceCount, setreferenceCount] = useState(0);
+  const [locationsCount, setlocationsCount] = useState(0);
 
-    setlinkCount(links.length)
-    setclickCount(clickCounter)
-  }, [links])
+  const [links, setLinks] = useState([]);
+  const [references, setReferences] = useState([]);
+  const [locations, setLocations] = useState([]);
 
-  useEffect(()=> {
-    setreferenceCount(references.length)
-  },[references])
+  useEffect(() => {
+    setReferences(filterReferences(links));
+    setLocations(filterLocations(links));
 
-  useEffect(()=> {
-    setlocationsCount(locations.length)
-  }, [locations])
+    setlinkCount(links.length);
+    setclickCount(countLinkClicks(links));
+    setreferenceCount(references.length);
+    setlocationsCount(locations.length);
+  }, [links]);
 
-  useEffect(()=> {
-    importFromDatabase(token)
-  }, [token])
+  useEffect(() => {
+    importFromDatabase(token);
+  }, [token]);
 
   async function importFromDatabase(token) {
-    if(!token) return
-    setLoading(true)
-    const res = await fetch(`${window.location.origin}/api/v2`, {
-      method: "GET",
-      headers: {
-        authorization: token
-      }
-    })
+    if (!token) return;
+    setLoading(true);
 
-    const data = await res.json()
-    if(data.links && data.references && data.locations && data.deleted != null) {
-      setLinks(data.links)
-      setReferences(data.references)
-      setLocations(data.locations)
-      setdeletedCount(data.deleted)
-    }
+    await getAllDataFromAPI([token, "http://localhost:6060/"], setLinks);
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
-    <dashboardContext.Provider value={{
-      loading,
-      linkCount,
-      clickCount,
-      referenceCount,
-      locationsCount,
-      deletedCount,
-      links,
-      references,
-      locations
-    }}>
+    <dashboardContext.Provider
+      value={{
+        loading,
+        linkCount,
+        clickCount,
+        referenceCount,
+        locationsCount,
+        links,
+        references,
+        locations,
+      }}
+    >
       {children}
     </dashboardContext.Provider>
-  )
+  );
 }

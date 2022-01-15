@@ -10,6 +10,7 @@ import Link from 'next/link'
 import copy from "copy-to-clipboard";
 import {Footer} from '../components/Footer'
 import { userContext } from "../contexts/UserContext";
+import { DeveloperSideBar } from "../components/Developer/DeveloperSideBar";
 
 export default function Developer() {
 
@@ -17,30 +18,6 @@ export default function Developer() {
   
   const [version, setVersion] = useState(Object.keys(contents)[0])
   const [content, setContent] = useState(contents[version])
-
-  const indexes = content.document.map((elem)=> {
-    return elem.anchor
-  }).filter((value)=> { return value != null})
-  
-  const [currentIndex, setCurrentIndex] = useState()
-
-  useEffect(()=> {
-    document.addEventListener('load', setCurrentIndex(indexes[0][0]))
-    document.addEventListener('scroll', ()=> {
-      let current = indexes[0][0]
-      let scrolled = document.scrollingElement.scrollTop + 60
-      indexes.map((ind)=> {
-        const offset = document.getElementById(ind[0])?.offsetTop
-        if(!offset) return {id: "", is: false}
-        return {id: ind[0], is: offset  <= scrolled}
-      }).forEach((ind)=> {
-        if(ind.is) current = ind.id
-      })
-      if(current === currentIndex) return
-      setTimeout(()=> {
-      setCurrentIndex(current)}, 200)
-    }) 
-  }, [])
 
   useEffect(()=> {
     setContent(contents[version])
@@ -61,19 +38,7 @@ export default function Developer() {
     }
 
     <div className={styles.developerContainer}>
-      <aside className={styles.menu}>
-        {
-          indexes.map((keys, index)=> {
-            const mykey = keys[0]
-            return (
-              <a 
-              key={mykey+index} className={mykey === currentIndex? styles.currentIndex : null}
-              onClick={()=> {setCurrentIndex(mykey)}} href={`#${mykey}`}>{keys[1]}
-              </a>
-            )
-          })
-        }
-      </aside>
+      <DeveloperSideBar content={content} />
       <div className={styles.developerContent}>
         <div>
         <h1>A API do Simplifiga 

@@ -1,12 +1,8 @@
-import { useContext } from "react";
 import { Header } from "../components/Header";
-import { userContext } from "../contexts/UserContext";
-
 import styles from '../styles/pages/Support.module.css'
 
 export default function Support() {
-  const {name} = useContext(userContext)
-  
+
   return (
     <>
     <Header fixed padding routes={['/', '/dashboard', '/developer', 'Sair']}/>

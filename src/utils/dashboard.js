@@ -1,38 +1,32 @@
-import { Database } from "../pages/api/database";
+export function countLinkClicks(links) {
+  return links && links.length === 0
+    ? 0
+    : links.reduce((b, c) => {
+        return { clicks: parseInt(b.clicks) + parseInt(c.clicks) };
+      })?.clicks;
+}
 
-export async function DashboardTools (db) {
+export function filterReferences(links) {
+  const references = links && links.map((link) => link.references);
+  return references.flatMap((element) => [...element]);
+}
 
-  if(!db) {
-    db = new Database()
-    await db.connect()
-  }
+export function filterLocations(links) {
+  const locations = links && links.map((link) => link.locations);
+  return locations.flatMap((element) => [...element]);
+}
 
-    async function getAllLinksWithToken(token) {
-      const links = await db.allWithParameter({name: 'origin', data: token, collection: 'links'})
-      if(!links) return null
-      return links.map((e)=> {
-        const {_id, origin, ...filter} = e
-        return filter
-      })
-    }
-
-    async function getAllReferencesWithToken(token) {
-      const res = await db.find({collection: 'clients', key: 'token', data: token})
-      return res ? res.references : null
-    }
-
-    async function getUserData(token) {
-      const res = await db.find({collection: 'clients', key: 'token', data: token})
-      return res ? {
-        references: res.references,
-        locations: res.locations,
-        deleted: res.deleted
-      } : null
-    }
-
-  return {
-    getAllLinksWithToken,
-    getAllReferencesWithToken,
-    getUserData
-  }
+export async function getAllDataFromAPI([token, uri], callback) {
+  await fetch(uri, {
+    method: "GET",
+    headers: new Headers({
+      authorization: token,
+    }),
+  }).then(
+    async (res) => {
+      const data = await res.json();
+      if (data.length > 0) callback(data);
+    },
+    () => errorCallback()
+  );
 }

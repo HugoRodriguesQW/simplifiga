@@ -1,77 +1,79 @@
-import NextCors from "nextjs-cors"
-import { ResetTools } from "../../utils/reset"
-import {Database} from './database'
-import nodemailer from 'nodemailer'
-import {google} from 'googleapis'
-import Email from "../../utils/email"
-
+import NextCors from "nextjs-cors";
+import { ResetTools } from "../../utils/reset";
+import { Database } from "./database";
+import nodemailer from "nodemailer";
+import { google } from "googleapis";
+import Email from "../../utils/email";
 
 const handler = async (req, res) => {
-
   await NextCors(req, res, {
-  methods: ["POST"],
+    methods: ["POST"],
     origin: "*",
     optionsSuccessStatus: 200,
-  })
+  });
 
   // Receive email to send
-  const {email} = JSON.parse(req.body)
+  const { email } = JSON.parse(req.body);
 
-  if(!email) return res.status(400).json(onError(res, 400))
-  
-  const db = new Database()
-  await db.connect()
+  if (!email) return res.status(400).json(onError(res, 400));
 
-  const {isEmailValid, generateCode} = await ResetTools(db)
+  const db = new Database();
+  await db.connect();
 
-  if(! await isEmailValid(email)) return res.status(200).json({sucess: true}) // false
+  const { isEmailValid, generateCode } = await ResetTools(db);
 
-  const code = await generateCode(email)
- 
-  if(!code) return res.status(400).json(onError(res, 400))
+  if (!(await isEmailValid(email)))
+    return res.status(200).json({ sucess: true }); // false
 
-  const oAuth2 = new google.auth.OAuth2(process.env.G_ID, process.env.G_SECRET, process.env.REDIRECT_TO)
-  oAuth2.setCredentials({refresh_token: process.env.R_TOKEN})
+  const code = await generateCode(email);
 
-  const acessToken = await oAuth2.getAccessToken()
+  if (!code) return res.status(400).json(onError(res, 400));
+
+  const oAuth2 = new google.auth.OAuth2(
+    process.env.G_ID,
+    process.env.G_SECRET,
+    process.env.REDIRECT_TO
+  );
+  oAuth2.setCredentials({ refresh_token: process.env.R_TOKEN });
+
+  const acessToken = await oAuth2.getAccessToken();
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      type: 'OAuth2',
+      type: "OAuth2",
       user: process.env.APP_EMAIL,
       clientId: process.env.G_ID,
       clientSecret: process.env.G_SECRET,
       refreshToken: process.env.R_TOKEN,
-      accessToken: acessToken
-    }
-    });
+      accessToken: acessToken,
+    },
+  });
 
   const mailOptions = {
-    from: 'SIMPLIFIGA <mailvitorhugosr@gmail.com>',
+    from: "SIMPLIFIGA <mailvitorhugosr@gmail.com>",
     to: email,
-    subject: '[Simplifiga] Recuperação de conta',
-    text: Email(code, 'text'),
-    html: Email(code, 'html')
+    subject: "[Simplifiga] Recuperação de conta",
+    text: Email(code, "text"),
+    html: Email(code, "html"),
   };
-  
-  
-  transporter.sendMail(mailOptions, (err, info) => {
-    if(err) {
-      console.log("Error: send-code:", err)
-      return res.status(200).json({sucess: false})
-    } 
 
-    if(info?.accepted?.includes(email)){
-      return res.status(200).json({sucess: true})
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log("Error: send-code:", err);
+      return res.status(200).json({ sucess: false });
     }
 
-    return res.status(200).json({sucess: false})
-  })
-}
+    if (info?.accepted?.includes(email)) {
+      return res.status(200).json({ sucess: true });
+    }
+
+    return res.status(200).json({ sucess: false });
+  });
+};
 
 function onError(method, code) {
-  return method.status(code).json(errors[code])
+  return method.status(code).json(errors[code]);
 }
 
-export default handler
+export default handler;

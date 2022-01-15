@@ -1,7 +1,6 @@
 import { Footer } from '../components/Footer'
 import { PrivacyHead } from '../components/Head/PrivacyHead'
 import { Header } from '../components/Header'
-import { Logo } from '../components/Logo'
 import styles from '../styles/pages/Privacy.module.css'
 
 export default function Privacy() {
