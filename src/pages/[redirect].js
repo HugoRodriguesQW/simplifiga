@@ -1,4 +1,3 @@
-import { redirect } from "next/dist/server/api-utils";
 import { Database } from "./api/database";
 import requestIp from "request-ip";
 import iplocate from "node-iplocate";
@@ -15,13 +14,28 @@ export async function getServerSideProps({ query, req, res }) {
   const db = new Database();
   await db.connect();
 
-  const { target } = await db.getLink({ id: redirectId });
+  let target = null;
+
+  await fetch("https://simplifiga-api.herokuapp.com/" + redirectId, {
+    headers: {
+      authorization: process.env.NEXT_PUBLIC_API_TOKEN,
+    },
+  }).then(async (response) => {
+    const result = await response.json();
+    target = result.target;
+  });
+
   if (target) {
     await generateAnalytics({
       req,
       redirectId,
     });
-    redirect(res, target);
+
+    return {
+      redirect: {
+        destination: target,
+      },
+    };
   }
 
   return {
