@@ -28,7 +28,7 @@ export function ShortenerContextProvider({ children }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:6060/`, {
+      const res = await fetch(`https://simplifiga-api.herokuapp.com/`, {
         method: "POST",
         headers: {
           authorization:
