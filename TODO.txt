@@ -1,0 +1,1 @@
+1) Verificar os códigos de erros e definí-los corretamente, mas antes, fazer com que o site funcione com a API descolada.
