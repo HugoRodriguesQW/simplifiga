@@ -29,22 +29,6 @@ export class Database {
     return this;
   }
 
-  async getLink({ id }) {
-    if (!id) return null;
-    const query = { id: id };
-    const res = await this.db?.collection(`${node}links`)?.findOne(query);
-    return {
-      target: res?.target ?? null,
-      origin: res?.origin ?? null,
-    };
-  }
-
-  async allWithParameter({ name, data, collection }) {
-    const res = await this.db?.collection(collection).find({ [name]: data });
-    if (res) return res.toArray();
-    return null;
-  }
-
   async validate({ token }) {
     const isValid =
       (await this.db
@@ -120,10 +104,8 @@ export class Database {
   async updateLocation(local, id) {
     // {country, code, region}
     try {
-      if (!origin) return;
-      const doc = await this.db
-        ?.collection(`${node}links`)
-        ?.findOne({ token: origin });
+      if (!id) return;
+      const doc = await this.db?.collection(`${node}links`)?.findOne({ id });
       const locExist =
         doc.locations.filter(({ country, regions }) => {
           const regExist =
@@ -170,7 +152,7 @@ export class Database {
 
   async updateReferrer(referer, id) {
     try {
-      if (!origin) return;
+      if (!id) return;
       const doc = await this.db?.collection(`${node}links`).findOne({ id });
       const refExist =
         doc.references.filter(({ ref }) => {
