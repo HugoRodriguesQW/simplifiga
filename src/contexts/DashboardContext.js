@@ -52,6 +52,10 @@ export function DashboardContextProvider({ children }) {
     setLoading(false);
   }
 
+  function updateLinks(newLinks) {
+    setLinks(newLinks);
+  }
+
   return (
     <dashboardContext.Provider
       value={{

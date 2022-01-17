@@ -127,6 +127,34 @@
 
 }
 
+.detailsList button {
+  background: none;
+  opacity: 0;
+  transition: .2s;
+  position: relative;
+  overflow: visible;
+}
+
+.detailsList > div:hover button {
+  opacity: 1;
+}
+
+.detailsList > div:hover button:hover::after {
+  content: 'excluir';
+  background: #000;
+  border-radius: 5px;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  display: inline;
+  font-size: 1.2rem;
+  padding: .1rem .4rem;
+  margin-left: -5rem;
+  margin-top: .5rem;
+}
+
+
+
 .detailsList > div {
   display: flex;
   align-items: center;
