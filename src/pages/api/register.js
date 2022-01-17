@@ -20,9 +20,6 @@ const handler = async (req, res) => {
       email,
       company,
       password,
-      deleted: 0,
-      locations: [],
-      references: [],
       createdAt: new Date(),
       token: `${Math.random().toString(32).substring(2)}${Math.random()
         .toString(19)
