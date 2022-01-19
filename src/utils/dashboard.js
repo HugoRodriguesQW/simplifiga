@@ -1,3 +1,5 @@
+import { ClientRSA } from "./crypto";
+
 export function countLinkClicks(links) {
   return links && links.length === 0
     ? 0
@@ -17,16 +19,17 @@ export function filterLocations(links) {
 }
 
 export async function getAllDataFromAPI([token, uri], callback) {
+  const client = new ClientRSA({ bits: 1024 });
   await fetch(uri, {
     method: "GET",
-    headers: new Headers({
+    headers: {
       authorization: token,
-    }),
-  }).then(
-    async (res) => {
-      const data = await res.json();
-      if (data.length > 0) callback(data);
+      "x-api-key": client.export(),
     },
-    () => errorCallback()
-  );
+  }).then(async (res) => {
+    const decrypted = client.decrypt(await res.text());
+    const data = JSON.parse(decrypted);
+    console.info(data);
+    if (data.length > 0) callback(data);
+  });
 }

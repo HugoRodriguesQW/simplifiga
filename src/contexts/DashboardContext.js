@@ -44,10 +44,7 @@ export function DashboardContextProvider({ children }) {
     if (!token) return;
     setLoading(true);
 
-    await getAllDataFromAPI(
-      [token, "https://simplifiga-api.herokuapp.com/"],
-      setLinks
-    );
+    await getAllDataFromAPI([token, "http://localhost:6060"], setLinks);
 
     setLoading(false);
   }

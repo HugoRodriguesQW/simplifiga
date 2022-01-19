@@ -33,7 +33,7 @@ class NodeEncoder {
   }
 }
 
-class ClientRSA {
+export class ClientRSA {
   constructor({ bits }) {
     this.RSA = new NodeRSA({ b: bits });
   }
@@ -59,7 +59,7 @@ class ClientRSA {
   }
 }
 
-class ServerRSA {
+export class ServerRSA {
   constructor(serverKey) {
     this.number = Math.round(Math.random() * 1000);
     this.RSA = new NodeRSA(tools.toUTF(serverKey));
