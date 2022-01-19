@@ -5,6 +5,9 @@
     "license": "MIT License",
     "document": [
       {
+        "content": "*Esta referência está desatualizada e será substituída em breve."
+      },
+      {
         "anchor": ["introduction", "Introdução"],
         "title": "Introdução",
         "content": "A Simplifiga é uma plataforma de gerenciamento com foco na simplicidade e eficiência. Com nossa API seus links são facilmente encurtados tornando-os curtos e memoráveis com a opção de apelido personalizável."
@@ -13,7 +16,7 @@
         "subtitle": "Requisitos",
         "list": [
           {
-            "name": "Conhecimento da ferramenta:", 
+            "name": "Conhecimento da ferramenta:",
             "content": "Confira os terminais de entrada e saída de nossa API para enviar e receber os dados."
           },
           {
@@ -58,16 +61,26 @@
         "subtitle": "Entrada",
         "table": [
           ["url", "obrigatório", "string", "link que deve ser encurtado"],
-          ["nick", "opcional", "string", "apelido personalizado de identificação"],
-          ["token", "obrigatório", "string", "o token de acesso gerado em dashboard"]
-        ] 
+          [
+            "nick",
+            "opcional",
+            "string",
+            "apelido personalizado de identificação"
+          ],
+          [
+            "token",
+            "obrigatório",
+            "string",
+            "o token de acesso gerado em dashboard"
+          ]
+        ]
       },
       {
         "subtitle": "Saída",
         "table": [
           ["target", "string"],
           ["shortened", "string"]
-        ] 
+        ]
       },
       {
         "anchor": ["methods", "Métodos"],
@@ -82,38 +95,36 @@
         "anchor": ["alias", "Alias"],
         "title": "Apelido personalizado",
         "content": "É possível escolher o que deve aparecer como apelido do link encurtado passando o parâmetro 'nick' na requisição. Observe os exemplos de aplicação:",
-        "table": [
-          ["nick","simples",  "https://simplifi.ga/simples"]
-        ]
+        "table": [["nick", "simples", "https://simplifi.ga/simples"]]
       },
       {
         "anchor": ["example", "Exemplo"],
         "title": "Exemplo prático",
         "content": "Um request padrão com os parâmetros obrigatórios utilizando o método POST e seu respectivo retorno:",
         "multiple": {
-          "title": "Request POST", 
+          "title": "Request POST",
           "data": [
-          {
-            "name": "JS",
-            "code": "httpRequest"
-          },
-          {
-            "name": "Axios",
-            "code": "axiosRequest"
-          },
-          {
-            "name": "cURL",
-            "code": "curlRequest"
-          },
-          {
-            "name": "Python",
-            "code": "pythonRequest"
-          },
-          {
-            "name": "Java",
-            "code": "javaRequest"
-          }
-        ]
+            {
+              "name": "JS",
+              "code": "httpRequest"
+            },
+            {
+              "name": "Axios",
+              "code": "axiosRequest"
+            },
+            {
+              "name": "cURL",
+              "code": "curlRequest"
+            },
+            {
+              "name": "Python",
+              "code": "pythonRequest"
+            },
+            {
+              "name": "Java",
+              "code": "javaRequest"
+            }
+          ]
         }
       },
       {
@@ -167,10 +178,18 @@
       ["conta gratuita", "/user/register"],
       ["Dashboard", "/dashboard"],
       ["autenticação", "#auth"],
-      ["Saiba mais", "https://imasters.com.br/desenvolvimento/protegendo-seus-dados-utilizando-variaveis-de-ambiente", "newtab"],
+      [
+        "Saiba mais",
+        "https://imasters.com.br/desenvolvimento/protegendo-seus-dados-utilizando-variaveis-de-ambiente",
+        "newtab"
+      ],
       ["Parâmetros", "#parameters"],
       ["Métodos", "#methods"],
-      ["https://github.com/hugorodriguesqw/simplifiga", "https://github.com/hugorodriguesqw/simplifiga", "newtab"]
+      [
+        "https://github.com/hugorodriguesqw/simplifiga",
+        "https://github.com/hugorodriguesqw/simplifiga",
+        "newtab"
+      ]
     ]
   }
 }
