@@ -30,7 +30,7 @@ export function BasicAnalytics() {
             <strong>{referenceCount}</strong>
           </div>
           <div className={styles.cell}>
-            <span>Locais</span>
+            <span>Regiões</span>
             <strong>{locationsCount}</strong>
           </div>
         </div>
