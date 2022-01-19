@@ -29,7 +29,6 @@ export async function getAllDataFromAPI([token, uri], callback) {
   }).then(async (res) => {
     const decrypted = client.decrypt(await res.text());
     const data = JSON.parse(decrypted);
-    console.info(data);
     if (data.length > 0) callback(data);
   });
 }
