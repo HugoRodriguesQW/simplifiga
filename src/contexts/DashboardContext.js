@@ -32,8 +32,11 @@ export function DashboardContextProvider({ children }) {
 
     setlinkCount(links.length);
     setclickCount(countLinkClicks(links));
+
     setreferenceCount(references.length);
-    setlocationsCount(locations.length);
+    setlocationsCount(
+      locations.flatMap((element) => [...element.regions]).length
+    );
   }, [links]);
 
   useEffect(() => {
