@@ -54,7 +54,7 @@ export function BasicLocations() {
             <>
               <div>
                 <div className={gstyles.basicInfoBox}>
-                  <span>Principais locais</span>
+                  <span>Principais regiões</span>
                   <strong>{data.length}</strong>
                 </div>
                 <div className={gstyles.basicGraphBox}>
