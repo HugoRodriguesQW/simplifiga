@@ -54,6 +54,9 @@ export function ShortenerContextProvider({ children }) {
         case 409:
           setIsSurnameValid(false);
           break;
+        case 406:
+          setIsSurnameValid(false);
+          break;
         default:
           setError(100);
       }
