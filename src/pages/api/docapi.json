@@ -1,12 +1,9 @@
 {
   "v1": {
     "version": "1.0.0",
-    "path": "/api/v1",
+    "path": "/v1",
     "license": "MIT License",
     "document": [
-      {
-        "content": "*Esta referência está desatualizada e será substituída em breve."
-      },
       {
         "anchor": ["introduction", "Introdução"],
         "title": "Introdução",
@@ -32,9 +29,9 @@
             "content": "Obtenha seu token de acesso na página de @link1@. Ele é único para cada usuário e não deve ser compartilhado nem exposto. Veja mais detalhes na seção de @link2@."
           },
           {
-            "content": "Utilize o método POST para uma requisição HTTP em https://simplifi.ga/api.  O endpoint /api redireciona a requisição para a versão mais recente da API. Observe os parâmetros no elemento BODY da requisição.",
-            "code": "latestJsRequest",
-            "description": "Uma responsa bem-sucedida retornará o link encurtado com o destino absoluto no formato JSON."
+            "content": "Utilize o método POST para uma requisição HTTP em https://simplifiga-api.herokuapp.com/.  O endpoint '/' redireciona a requisição para a versão mais recente da API. Observe os parâmetros no elemento BODY da requisição.",
+            "code": "v1RequestDefault",
+            "description": "Uma resposta bem-sucedida retornará o link encurtado, o id e o destino absoluto no formato JSON."
           },
           {
             "content": "Consulte mais detalhes sobre os terminais de entrada e saída na seção de @link4@ da API."
@@ -50,94 +47,152 @@
         "content": "Esse token deve ser escondido e protegido para que apenas o usuário tenha a capacidade de utilizar o serviço. Sua exposição pode acarretar a utilização do serviço de encurtamento e edição por terceiros na sua conta."
       },
       {
-        "content": "Um método para esconder é a utilização de variáveis de ambiente. @link3@."
+        "content": "Um método para esconder é a utilização de variáveis de ambiente. @link3@.",
+        "code": "authExample"
+      },
+      {
+        "anchor": ["methods", "Métodos"],
+        "title": "Métodos",
+        "content": "As ações da API são direcionados através de métodos HTTP. Segue abaixo a lista de métodos aceitos e seus parâmetros.",
+        "table": [
+          ["POST", "ID, URL", "Requisita um encurtamento"],
+          ["PATCH", "PROPS", "Atualiza um documento"],
+          ["GET", "Nenhum", "Obtém um ou mais documentos"],
+          ["DEL", "Nenhum", "Remove um documento do banco de dados"]
+        ]
       },
       {
         "anchor": ["parameters", "Parâmetros"],
         "title": "Parâmetros",
-        "content": "Segue os parâmetros obrigatórios e opcionais para realizar um encurtamento de link e seus respectivos retornos."
+        "content": "Alguns métodos exigem parâmetros enviados no BODY da requisição para que a ação seja executada. Segue abaixo a lista de parâmetros de entrada/saída possíveis."
       },
       {
         "subtitle": "Entrada",
         "table": [
-          ["url", "obrigatório", "string", "link que deve ser encurtado"],
+          ["URL", "obrigatório", "string", "url de destino"],
           [
-            "nick",
+            "ID",
             "opcional",
             "string",
             "apelido personalizado de identificação"
           ],
-          [
-            "token",
-            "obrigatório",
-            "string",
-            "o token de acesso gerado em dashboard"
-          ]
+          ["PROPS", "obrigatório", "array", "Parâmetros alvos de atualização"],
+          ["ENCRYPTED", "opcional", "string", "JSON criptografado"]
         ]
       },
       {
         "subtitle": "Saída",
         "table": [
-          ["target", "string"],
-          ["shortened", "string"]
-        ]
-      },
-      {
-        "anchor": ["methods", "Métodos"],
-        "title": "Métodos",
-        "content": "No momento apenas o método POST é utilizado. Conforme expansão da API com novas funções incluindo consultas e alterações, novos métodos serão utilizados.",
-        "table": [
-          ["POST", "aceito", "Encurtar um link"],
-          ["GET, PUT, DELETE", "negado", "Funções em construção"]
+          ["ID", "string", "Identificação exclusiva"],
+          ["TARGET", "string", "url de destino"],
+          ["SHORTCUT", "string", "url de redirecionamento"],
+          ["REFERENCES", "array", "Lista de referências"],
+          ["LOCATIONS", "array", "Lista de regiões de acesso"],
+          ["CLICKS", "number", "Contagem de cliques"],
+          ["APPLIED", "boolean", "Status da atualização"],
+          ["ACKNOWLEDGED", "array", "Lista das alterações feitas"]
         ]
       },
       {
         "anchor": ["alias", "Alias"],
         "title": "Apelido personalizado",
-        "content": "É possível escolher o que deve aparecer como apelido do link encurtado passando o parâmetro 'nick' na requisição. Observe os exemplos de aplicação:",
-        "table": [["nick", "simples", "https://simplifi.ga/simples"]]
+        "content": "É possível escolher o que deve aparecer como apelido do link encurtado passando o parâmetro 'id' na requisição. Observe os exemplos de aplicação:",
+        "table": [["id", "simples", "https://simplifi.ga/simples"]]
       },
       {
-        "anchor": ["example", "Exemplo"],
-        "title": "Exemplo prático",
-        "content": "Um request padrão com os parâmetros obrigatórios utilizando o método POST e seu respectivo retorno:",
+        "anchor": ["selector", "Seletores"],
+        "title": "Seletores",
+        "content": "Os métodos GET, PATCH e DEL podem exigir/permitir a seleção de um ID específico para a operação desejada.",
+        "table": [["/v1/{id}", "Aplica apenas ao ID especificado"]]
+      },
+      {
+        "anchor": ["examples", "Exemplos"],
+        "title": "Exemplos práticos",
+        "content": "Veja abaixo a aplicação dos métodos, parâmetros e seletores especificados nos tópicos acima."
+      },
+      {
+        "subtitle": "Input / Request",
         "multiple": {
-          "title": "Request POST",
+          "title": "HTTP",
           "data": [
             {
-              "name": "JS",
-              "code": "httpRequest"
+              "name": "POST",
+              "code": "postRequest"
             },
             {
-              "name": "Axios",
-              "code": "axiosRequest"
+              "name": "PATCH",
+              "code": "patchRequest"
             },
             {
-              "name": "cURL",
-              "code": "curlRequest"
+              "name": "GET",
+              "code": "getRequest"
             },
             {
-              "name": "Python",
-              "code": "pythonRequest"
-            },
-            {
-              "name": "Java",
-              "code": "javaRequest"
+              "name": "DEL",
+              "code": "delRequest"
             }
           ]
         }
       },
       {
+        "subtitle": "Output / Response",
         "multiple": {
-          "title": "Response 200",
+          "title": "JSON",
           "data": [
             {
-              "name": "JSON",
-              "code": "defaultResponse"
+              "name": "POST",
+              "code": "postResponse"
+            },
+            {
+              "name": "PATCH",
+              "code": "patchResponse"
+            },
+            {
+              "name": "GET",
+              "code": "getResponse"
+            },
+            {
+              "name": "DEL",
+              "code": "delResponse"
             }
           ]
         }
       },
+
+      {
+        "anchor": ["encrypt", "Critografia"],
+        "title": "Critografia RSA",
+        "content": "A API tem suporta criptografia @link9@ com chaves de 1024 bits. Nossa chave pública está disponível nos endpoints abaixo em @link7@ e @link8@.",
+        "table": [
+          ["https://simplifiga-api.herokuapp.com/key", "UTF-8"],
+          ["https://simplifiga-api.herokuapp.com/key64", "BASE64"]
+        ]
+      },
+
+      {
+        "content": "Para enviar dados critografados ao servidor, é necessário adicionar o mesmo em um objeto 'encrypted' para que o servidor possa acessá-los. Exemplo:",
+        "code": "bodyEncrypted"
+      },
+
+      {
+        "content": "Para receber dados criptografados é necessário adicionar o parâmetro 'x-api-key' ao HEADER da solicitação com a chave pública do cliente. Exemplo:",
+        "code": "headerEncrypted"
+      },
+
+      {
+        "anchor": ["filters", "Filtros"],
+        "title": "Filtros personalizados",
+        "content": "O método GET aceita filtros personalizados inseridos na URL da requisição. Ainda estamos trabalhando nessa função e, futuramente, novos filtros serão adicionados.",
+        "table": [
+          ["/v1/filter/country={country name}", "Filtra por nome do país"],
+          ["/v1/filter/countryCode={code}", "Filtra por código do país"],
+          [
+            "/v1/filter/country={country name}&countryCode={code}",
+            "Múltiplos parâmetros permitido"
+          ]
+        ]
+      },
+
       {
         "anchor": ["errors", "Erros"],
         "title": "Erros conhecidos",
@@ -145,28 +200,31 @@
       },
       {
         "subtitle": "400: Bad Request",
-        "content": "Algum parâmetro obrigatório não foi passado durante o request ou o tipo está incorreto. Veja os parâmetros aceitos em @link4@.",
-        "code": "erro400"
+        "content": "Algum parâmetro obrigatório não foi passado durante o request ou o tipo está incorreto. Veja os parâmetros aceitos em @link4@."
       },
       {
         "subtitle": "401: Unauthorized",
-        "content": "O token informado não é válido. Verifique se o token foi passado corretamente para o request. Seu token está disponível em @link1@.",
-        "code": "erro401"
+        "content": "O token informado não é válido. Verifique se o token foi passado corretamente para o request. Seu token está disponível em @link1@."
       },
       {
-        "subtitle": "422: Unprocessable Entity",
-        "content": "Todas as informações foram recebidas pelo servidor, mas não foi possível completar a operação por já existir no banco de dados o apelido informado.",
-        "code": "erro422"
+        "subtitle": "404: Not Found",
+        "content": "O endereço da solicitação não foi encontrado."
       },
       {
-        "subtitle": "500: Internal Server",
-        "content": "Um erro interno ocorreu. Isso pode ter causado por vários motivos, como inúmeras tentativas de encurtamento seguidas por parte do servidor.",
-        "code": "erro500"
+        "subtitle": "406: Not Acceptable",
+        "content": "Algum parâmetro utilizado foi bloqueado para evitar erros futuros. Tente usar outros parâmetros."
       },
       {
-        "subtitle": "405: Method Not Allowed",
-        "content": "O método utilizado não é aceito pelo servidor. No momento, apenas o método POST é aceito. Veja os @link5@ disponíveis.",
-        "code": "erro405"
+        "subtitle": "409: Conflict",
+        "content": "Certamente já existe um documento com o ID informado. Tente usar outro ID."
+      },
+      {
+        "subtitle": "501: Server Error",
+        "content": "Um erro interno ocorreu. Isso pode ter causado por vários motivos, como inúmeras tentativas de encurtamento seguidas por parte do servidor."
+      },
+      {
+        "subtitle": "510: Gone",
+        "content": "O documento do ID informado não foi encontrado."
       },
       {
         "anchor": ["code", "Código Fonte"],
@@ -188,6 +246,13 @@
       [
         "https://github.com/hugorodriguesqw/simplifiga",
         "https://github.com/hugorodriguesqw/simplifiga",
+        "newtab"
+      ],
+      ["UTF-8", "https://simplifiga-api.herokuapp.com/key", "newtab"],
+      ["BASE64", "https://simplifiga-api.herokuapp.com/key64", "newtab"],
+      [
+        "RSA",
+        "https://pt.wikipedia.org/wiki/RSA_(sistema_criptogr%C3%A1fico)",
         "newtab"
       ]
     ]
