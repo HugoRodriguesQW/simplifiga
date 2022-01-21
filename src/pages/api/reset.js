@@ -1,4 +1,5 @@
 import NextCors from "nextjs-cors";
+import { serverEncoder } from "../../utils/crypto";
 import { ResetTools } from "../../utils/reset";
 import { Database } from "./database";
 
@@ -9,17 +10,24 @@ const handler = async (req, res) => {
     optionsSuccessStatus: 200,
   });
 
-  // Receive email to send
-  const { password, email } = JSON.parse(req.body);
-  if (!password || !email) return res.json({ missing: true });
+  serverEncoder(async (server) => {
+    // Receive email to send
+    const { password, email, clientKey } = JSON.parse(server.decrypt(req.body));
+    if (!password || !email) return res.json({ missing: true });
 
-  const db = new Database();
-  await db.connect();
+    const db = new Database();
+    await db.connect();
 
-  const { resetPassword } = await ResetTools(db);
+    const { resetPassword } = await ResetTools(db);
 
-  const sucess = await resetPassword(password, email);
-  return res.status(200).json({ sucess });
+    const msg = JSON.stringify({
+      sucess: await resetPassword(password, email),
+    });
+
+    res.status(200).json({
+      encrypted: server.encryptWithCustomKey(msg, clientKey),
+    });
+  });
 };
 
 export default handler;
