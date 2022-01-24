@@ -75,6 +75,7 @@ export function DashboardContextProvider({ children }) {
         links,
         references,
         locations,
+        updateLinks,
       }}
     >
       {children}

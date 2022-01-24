@@ -19,6 +19,7 @@ import {
   nostyle,
   full,
   exportCsv,
+  droplistItemWithTrash,
 } from "../../styles/components/global.module.css";
 import { Loading } from "../../components/Effects/Loading";
 import { Empty } from "../../components/Effects/Empty";
@@ -26,8 +27,11 @@ import { DashboardHead } from "../../components/Head/DashboardHead";
 import { MainComponent } from "../../components/MainComponent";
 import { CSVLink } from "react-csv";
 import Router from "next/router";
+import { DeleteBox } from "../../components/Dashboard/DeleteBox";
 
 const Links = () => {
+  const [deleteId, setDeleteId] = useState(null);
+
   const logged = useContext(userContext).logged;
   const loading = useContext(dashboardContext).loading;
 
@@ -149,9 +153,18 @@ const Links = () => {
                               </p>
                             </a>
                           }
-                          <div>
-                            <p>{currentData} cliques</p>
-                            <p>{percent}%</p>
+                          <div className={droplistItemWithTrash}>
+                            <div>
+                              <p>{currentData} cliques</p>
+                              <p>{percent}%</p>
+                            </div>
+                            <div
+                              onClick={() => {
+                                setDeleteId(id);
+                              }}
+                            >
+                              <img src="/icons/bxs-trash.svg" alt="Del" />
+                            </div>
                           </div>
                         </div>
                       );
@@ -160,6 +173,7 @@ const Links = () => {
                 )}
               </>
             )}
+            {deleteId && <DeleteBox id={deleteId} reset={setDeleteId} />}
             <Footer />
           </div>
         </>
