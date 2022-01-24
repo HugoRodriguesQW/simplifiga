@@ -10,13 +10,12 @@ export function countLinkClicks(links) {
 
 export function filterReferences(links) {
   const references = links && links.map((link) => link.references);
-  return references.flatMap((element) => [...element]);
+  return sumArrayReferences(references.flatMap((element) => [...element]));
 }
 
 export function filterLocations(links) {
   const locations = links && links.map((link) => link.locations);
-  const resLoc = locations.flatMap((element) => [...element]);
-  return sumArrayLocations(resLoc);
+  return sumArrayLocations(locations.flatMap((element) => [...element]));
 }
 
 export async function getAllDataFromAPI([token, uri], callback) {
@@ -46,7 +45,6 @@ function sumArrayLocations(locations) {
           const regions = b.regions.concat(a.regions);
           const resRegions = [];
           regions.forEach(({ name }) => {
-            console.info("Resolving:", name);
             if (resRegions.filter((c) => c.name === name).length !== 0) return;
             resRegions.push(
               regions
@@ -69,6 +67,37 @@ function sumArrayLocations(locations) {
     );
   });
 
-  console.info(countries[0]);
-  return countries;
+  return countries.map(({ code, country, regions }) => {
+    return {
+      code,
+      country,
+      regions: regions.map((region) => {
+        if (region.name) return region;
+        return {
+          name: "Região Desconhecida",
+          clicks: region.clicks,
+        };
+      }),
+    };
+  });
+}
+
+export function sumArrayReferences(references) {
+  const resRef = [];
+  references.forEach(({ ref }) => {
+    if (resRef.filter((c) => c.ref === ref).length !== 0) return;
+    resRef.push(
+      references
+        .filter((c) => {
+          return c.ref === ref;
+        })
+        .reduce((a, b) => {
+          return {
+            ref,
+            clicks: a.clicks + b.clicks,
+          };
+        })
+    );
+  });
+  return resRef;
 }
