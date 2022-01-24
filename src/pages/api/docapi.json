@@ -58,7 +58,7 @@
           ["POST", "ID, URL", "Requisita um encurtamento"],
           ["PATCH", "PROPS", "Atualiza um documento"],
           ["GET", "Nenhum", "Obtém um ou mais documentos"],
-          ["DEL", "Nenhum", "Remove um documento do banco de dados"]
+          ["DELETE", "Nenhum", "Remove um documento do banco de dados"]
         ]
       },
       {
@@ -102,7 +102,7 @@
       {
         "anchor": ["selector", "Seletores"],
         "title": "Seletores",
-        "content": "Os métodos GET, PATCH e DEL podem exigir/permitir a seleção de um ID específico para a operação desejada.",
+        "content": "Os métodos GET, PATCH e DELETE podem exigir/permitir a seleção de um ID específico para a operação desejada.",
         "table": [["/v1/{id}", "Aplica apenas ao ID especificado"]]
       },
       {
@@ -128,7 +128,7 @@
               "code": "getRequest"
             },
             {
-              "name": "DEL",
+              "name": "DELETE",
               "code": "delRequest"
             }
           ]
@@ -152,7 +152,7 @@
               "code": "getResponse"
             },
             {
-              "name": "DEL",
+              "name": "DELETE",
               "code": "delResponse"
             }
           ]
