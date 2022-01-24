@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <center>Encurtador e Simplificador de URLs para torná-las memoráveis.</center>
+  <center>A Simplifiga é uma plataforma de gerenciamento de links com foco na simplicidade. Para realizar um encurtamento rápido cole seu link no campo acima, defina um apelido (opcional) e clique em encurtar. Copie o link e deixe o resto com a Simplifiga.</center>
 </div>
 
 <br>
@@ -19,30 +19,19 @@
   <center><h3>Lighthouse (desktop)</h3></center>
 </div>
 
-<kbd>
+<kbd align="center">
 <img src="https://user-images.githubusercontent.com/71078903/138092973-1d5560fc-9da6-487b-91f2-46ea8299d0c6.png">
+  <center>Avaliação Lighthouse do Google</center>
 </kbd>
  
-<br><br><br><br>
+<br>
 
 <h3>🖥️ Para usar</h3>
 
  Acesse [simplifi.ga](https://simplifi.ga/) para acessar a aplicação.
 
-<br><br><br>
+<br>
 
-<h3>🚀 Para iniciar</h3>
+<h3>📚 Repositório da API</h3>
 
-##### Clone o respositório e acesse a pasta (GIT no exemplo):
- ```shell 
- git clone https://github.com/HugoRodriguesQW/simplifiga.git simplifiga
- cd simplifiga
-
- ```
- 
- ##### Instale as dependências e inicie o projeto (NPM no exemplo):
- ```shell 
- npm install && npm run dev
- # É necessário algumas chaves privadas para que a aplicação funcione corretamente.
-
- ```
+Nossa API está localizada em [https://github.com/simplifiga/api](https://github.com/simplifiga/api)
