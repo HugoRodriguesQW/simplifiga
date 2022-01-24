@@ -90,7 +90,9 @@ export class Database {
   }
 
   async find({ collection, key, data }) {
-    const has = await this.db?.collection(collection)?.findOne({ [key]: data });
+    const has = await this.db
+      ?.collection(`${node}${collection}`)
+      ?.findOne({ [key]: data });
     return has ?? null;
   }
 
