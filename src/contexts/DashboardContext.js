@@ -32,12 +32,17 @@ export function DashboardContextProvider({ children }) {
 
     setlinkCount(links.length);
     setclickCount(countLinkClicks(links));
+  }, [links]);
 
-    setreferenceCount(references.length);
+  useEffect(() => {
     setlocationsCount(
       locations.flatMap((element) => [...element.regions]).length
     );
-  }, [links]);
+  }, [locations]);
+
+  useEffect(() => {
+    setreferenceCount(references.length);
+  }, [locations]);
 
   useEffect(() => {
     importFromDatabase(token);
