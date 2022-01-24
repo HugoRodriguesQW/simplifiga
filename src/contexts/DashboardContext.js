@@ -60,7 +60,11 @@ export function DashboardContextProvider({ children }) {
     setLoading(false);
   }
 
-  function updateLinks(newLinks) {
+  function updateLinks(newLinks, created) {
+    if (newLinks === null) {
+      if (!created) return;
+      return setLinks([...links, created]);
+    }
     setLinks(newLinks);
   }
 

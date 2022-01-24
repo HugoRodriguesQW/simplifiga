@@ -18,7 +18,7 @@ export function ShortenerContextProvider({ children }) {
 
   const [error, setError] = useState(null);
 
-  async function handleShortLink() {
+  async function handleShortLink({ updateLinks }) {
     if (typeof logged !== "boolean") return setError(101);
     setProcessState(true);
 
@@ -46,6 +46,15 @@ export function ShortenerContextProvider({ children }) {
       if (!result.shortcut) {
         throw result.statusCode;
       }
+
+      updateLinks &&
+        updateLinks(null, {
+          id: linkSurname,
+          target: link,
+          references: [],
+          locations: [],
+          clicks: 0,
+        });
 
       setShortenedLink(result.shortcut);
       setIsShortened(true);

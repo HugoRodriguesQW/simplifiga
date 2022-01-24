@@ -31,6 +31,7 @@ import { DeleteBox } from "../../components/Dashboard/DeleteBox";
 
 const Links = () => {
   const [deleteId, setDeleteId] = useState(null);
+  const updateLinks = useContext(dashboardContext).updateLinks;
 
   const logged = useContext(userContext).logged;
   const loading = useContext(dashboardContext).loading;
@@ -113,7 +114,7 @@ const Links = () => {
                   </div>
 
                   <div className={`${droplistContent} ${nostyle}`}>
-                    <MainComponent />
+                    <MainComponent updateLinks={updateLinks} />
                   </div>
                 </div>
               </div>
