@@ -34,7 +34,7 @@ export default function Developer() {
         <Header
           fixed
           padding
-          routes={["/dashboard", "/developer", "/", "Sair"]}
+          routes={["/pricing", "/dashboard", "/developer", "/", "Sair"]}
         />
       ) : (
         <Header fixed padding routes={["/user/register", "/user/login", "/"]} />
