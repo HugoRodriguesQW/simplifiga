@@ -1,13 +1,14 @@
 .dashboardContainer {
   min-width: 100vw;
   min-height: 100vh;
-  background-color: #f2f2f2;
+  background-color: #cadffa;
+
   display: flex;
   overflow: scroll;
 }
 
 .dashboardContent {
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .dashboardContent footer {
@@ -49,7 +50,7 @@
   color: var(--white);
   background: var(--blue);
   border-radius: 5px;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   font-size: 2rem;
   display: flex;
   align-items: center;
@@ -62,7 +63,7 @@
   border-radius: 10px;
 }
 
-.dashboardContent span{
+.dashboardContent span {
   font-size: 2.2rem;
 }
 
@@ -71,8 +72,8 @@
   font-weight: 400;
 }
 
-@media  screen and (max-width:850px) {
-  .dashboardContent { 
+@media screen and (max-width: 850px) {
+  .dashboardContent {
     margin-left: 0;
     padding-top: 8rem;
   }
