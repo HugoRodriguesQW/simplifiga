@@ -202,24 +202,52 @@ export class Database {
     return orderId ?? null;
   }
 
-  async searchOrderIdInDatabase({ orderId }) {
+  searchOrderIdInDatabase({ orderId }) {
     return new Promise((resolve, reject) => {
       this.db
         ?.collection(`${node}clients`)
         .findOne({ orderId })
         .then((obj) => {
           if (!obj) return resolve(orderId);
-          throw Error();
+          reject('OrderId not found')
         }, reject);
     });
   }
 
-  async changePaidStatus({ status, orderId }) {
+  receivePaymentStatus({captureId}) {
     return new Promise((resolve, reject) => {
       this.db
-        ?.collection(`${node}clients`)
+        ?.collection(`${node}payments`)
+        .findOne(
+          { captureId}
+        )
+        .then((payment) => {
+          if (payment) return resolve(payment);
+          reject('Payment not found')
+        }, reject);
+    });
+  }
+
+  createNewPaymentStatus({captureId, status}) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}payments`)
+        .insertOne(
+          { captureId, status}
+        )
+        .then(({ insertedId , acknowledged }) => {
+          if (acknowledged) return resolve(insertedId);
+          reject('Payment not created')
+        }, reject);
+    });
+  }
+
+  changePaymentStatus({captureId, status}) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}payments`)
         .updateOne(
-          { orderId },
+          { captureId },
           {
             $set: {
               status,
@@ -228,7 +256,27 @@ export class Database {
         )
         .then(({ applied, acknowledged }) => {
           if (applied) return resolve(acknowledged);
-          throw Error();
+          reject('Pay Update not applied.')
+        }, reject);
+    });
+  }
+
+  setOrderReference({ orderRef, orderId, payee }) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}clients`)
+        .updateOne(
+          { orderId },
+          {
+            $set: {
+              orderRef,
+              payee
+            },
+          }
+        )
+        .then(({ applied, acknowledged }) => {
+          if (applied) return resolve(acknowledged);
+          reject('Order Reference not applied')
         }, reject);
     });
   }
