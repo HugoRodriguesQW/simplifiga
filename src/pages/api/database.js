@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { generateUUID } from "../../utils/checkout";
 
 let cachedDb = null;
 let cachedCl = null;
@@ -181,5 +182,54 @@ export class Database {
     } catch (err) {
       return console.info("Um erro ocorreu:", err);
     }
+  }
+
+  async getOrCreateAnOrderID({ token }) {
+    const client = await this.db
+      ?.collection(`${node}clients`)
+      .findOne({ token });
+    let orderId = client.orderId ?? null;
+
+    if (!orderId) {
+      await generateUUID({ tries: 10 }).then((validId) =>
+        this.db
+          ?.collection(`${node}clients`)
+          .updateOne({ token }, { $set: { orderId: validId } })
+          .then(() => (orderId = validId))
+      );
+    }
+
+    return orderId ?? null;
+  }
+
+  async searchOrderIdInDatabase({ orderId }) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}clients`)
+        .findOne({ orderId })
+        .then((obj) => {
+          if (!obj) return resolve(orderId);
+          throw Error();
+        }, reject);
+    });
+  }
+
+  async changePaidStatus({ status, orderId }) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}clients`)
+        .updateOne(
+          { orderId },
+          {
+            $set: {
+              status,
+            },
+          }
+        )
+        .then(({ applied, acknowledged }) => {
+          if (applied) return resolve(acknowledged);
+          throw Error();
+        }, reject);
+    });
   }
 }
