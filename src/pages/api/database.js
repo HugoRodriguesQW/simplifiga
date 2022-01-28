@@ -209,7 +209,7 @@ export class Database {
         .findOne({ orderId })
         .then((obj) => {
           if (!obj) return resolve(orderId);
-          reject('OrderId not found')
+          reject('[LOW] OrderId not found')
         }, reject);
     });
   }
@@ -223,7 +223,7 @@ export class Database {
         )
         .then((payment) => {
           if (payment) return resolve(payment);
-          reject('Payment not found')
+          reject('[LOW] Payment not found')
         }, reject);
     });
   }
@@ -237,7 +237,7 @@ export class Database {
         )
         .then(({ insertedId , acknowledged }) => {
           if (acknowledged) return resolve(insertedId);
-          reject('Payment not created')
+          reject('[HIGH] Payment not created')
         }, reject);
     });
   }
@@ -256,7 +256,7 @@ export class Database {
         )
         .then(({ applied, acknowledged }) => {
           if (applied) return resolve(acknowledged);
-          reject('Pay Update not applied.')
+          reject('[LOW] Pay Update not applied.')
         }, reject);
     });
   }
@@ -276,7 +276,7 @@ export class Database {
         )
         .then(({ applied, acknowledged }) => {
           if (applied) return resolve(acknowledged);
-          reject('Order Reference not applied')
+          reject('[LOW] Order reference not updated.')
         }, reject);
     });
   }
