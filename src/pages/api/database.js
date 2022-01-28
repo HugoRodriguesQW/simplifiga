@@ -209,40 +209,36 @@ export class Database {
         .findOne({ orderId })
         .then((obj) => {
           if (!obj) return resolve(orderId);
-          reject('[LOW] OrderId not found')
+          reject("[LOW] OrderId not found");
         }, reject);
     });
   }
 
-  receivePaymentStatus({captureId}) {
+  receivePaymentStatus({ captureId }) {
     return new Promise((resolve, reject) => {
       this.db
         ?.collection(`${node}payments`)
-        .findOne(
-          { captureId}
-        )
+        .findOne({ captureId })
         .then((payment) => {
           if (payment) return resolve(payment);
-          reject('[LOW] Payment not found')
+          reject("[LOW] Payment not found");
         }, reject);
     });
   }
 
-  createNewPaymentStatus({captureId, status}) {
+  createNewPaymentStatus({ captureId, status }) {
     return new Promise((resolve, reject) => {
       this.db
         ?.collection(`${node}payments`)
-        .insertOne(
-          { captureId, status}
-        )
-        .then(({ insertedId , acknowledged }) => {
+        .insertOne({ captureId, status })
+        .then(({ insertedId, acknowledged }) => {
           if (acknowledged) return resolve(insertedId);
-          reject('[HIGH] Payment not created')
+          reject("[HIGH] Payment not created");
         }, reject);
     });
   }
 
-  changePaymentStatus({captureId, status}) {
+  changePaymentStatus({ captureId, status }) {
     return new Promise((resolve, reject) => {
       this.db
         ?.collection(`${node}payments`)
@@ -256,7 +252,7 @@ export class Database {
         )
         .then(({ applied, acknowledged }) => {
           if (applied) return resolve(acknowledged);
-          reject('[LOW] Pay Update not applied.')
+          reject("[LOW] Pay Update not applied.");
         }, reject);
     });
   }
@@ -270,14 +266,80 @@ export class Database {
           {
             $set: {
               orderRef,
-              payee
+              payee,
             },
           }
         )
         .then(({ applied, acknowledged }) => {
           if (applied) return resolve(acknowledged);
-          reject('[LOW] Order reference not updated.')
+          reject("[LOW] Order reference not updated.");
         }, reject);
+    });
+  }
+
+  getPaymentStatus({ orderId }) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}clients`)
+        .findOne({ orderId })
+        .then(
+          (data) => {
+            if (!data?.orderRef) return reject("order-not-found");
+            this.db
+              ?.collection(`${node}payments`)
+              .findOne({
+                captureId: data.orderRef,
+              })
+              .then((payment) => {
+                if (!payment) return reject("payment-not-found");
+                resolve({
+                  captureId: payment.captureId,
+                  status: payment.status,
+                });
+              });
+          },
+          () => {
+            reject("other-error");
+          }
+        );
+    });
+  }
+
+  clearOrderField({ orderId }) {
+    return new Promise((resolve, reject) => {
+      console.info("Cleaning:", orderId);
+      this.db
+        ?.collection(`${node}clients`)
+        .findOne({ orderId })
+        .then(
+          (data) => {
+            console.info("Data:", data);
+            if (!data?.orderRef) return reject("order-ref-not-found");
+
+            this.db
+              ?.collection(`${node}clients`)
+              .updateOne(
+                { orderId },
+                {
+                  $unset: {
+                    payee: "",
+                    orderId: "",
+                  },
+                  $push: {
+                    oldOrdersRef: data.orderRef,
+                  },
+                }
+              )
+              .then(
+                ({ applied }) => {
+                  if (!applied) return reject("update-error");
+                  resolve({ applied });
+                },
+                () => reject("update-ref-reject")
+              );
+          },
+          () => reject("order-ref-reject")
+        );
     });
   }
 }

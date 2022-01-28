@@ -1,23 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { loadScript } from "@paypal/paypal-js";
 import Router from "next/router";
-import { useContext, useEffect, useRef, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
+import { Loading } from "../components/Effects/Loading";
+import { Header } from "../components/Header";
 import { userContext } from "../contexts/UserContext";
+import styles from "../styles/pages/Checkout.module.css";
+import productData from "../../product.json";
+import { Purchase } from "../components/Checkout/Purchase";
+import { ErrorInfo } from "../components/Checkout/ErrorInfo";
+import CancelInfo from "../components/Checkout/CancelInfo";
+import Completed from "../components/Checkout/Completed";
+import Pending from "../components/Checkout/Pending";
+import Denied from "../components/Checkout/Denied";
+import Reversed from "../components/Checkout/Reversed";
 
-export default function Checkout({ product, appToken, clientId }) {
-  const [paid, setPaid] = useState(false);
+const CheckoutComponent = ({ product, appToken, clientId }) => {
+  const upgradeStatus = useContext(userContext).upgraded;
+
+  const [status, setStatus] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
   const { logged, token } = useContext(userContext);
 
   let paypalRef = useRef();
 
   useEffect(() => {
+    console.info(upgradeStatus);
+  }, [upgradeStatus]);
+
+  useEffect(() => {
     if (logged === false) return Router.push("/user/login/?next=checkout");
-    if(logged === null) return
+    if (logged === null) return;
 
     if (document.getElementsByClassName("paypal-buttons").length >= 1) return;
-
+    if (upgradeStatus) return setLoaded(true);
     loadScript({
       "client-id": clientId,
       currency: "BRL",
@@ -36,12 +52,15 @@ export default function Checkout({ product, appToken, clientId }) {
           }),
         }).then(async (response) => {
           const result = await response.json();
-          if (!result.orderId) throw Error();
-          console.info("Creating a order:", result.orderId);
-
+          if (!result.orderId) throw Error("OrderId not found");
+          setStatus("purchase");
           setLoaded(true);
           paypal
             .Buttons({
+              style: {
+                color: "blue",
+                label: "pay",
+              },
               createOrder: (_, actions) => {
                 return actions.order.create({
                   purchase_units: [
@@ -58,9 +77,12 @@ export default function Checkout({ product, appToken, clientId }) {
               },
               onApprove: async (_, actions) => {
                 const order = await actions.order.capture();
-                setPaid(true);
-                console.info("order:", order);
+                console.info(order);
+                setStatus("approved");
               },
+              onCancel: () => setStatus("cancel"),
+              onError: () => setStatus("error"),
+              onClick: () => setStatus("purchase"),
             })
             .render(paypalRef.current);
         });
@@ -72,19 +94,34 @@ export default function Checkout({ product, appToken, clientId }) {
 
   return (
     <div>
-      Checkout page paid:{String(paid)}
-      <div ref={paypalRef}></div>
-      loading: {String(loaded)}
+      <Header
+        fixed
+        padding
+        routes={["/pricing", "/dashboard", "/developer", "/", "Sair"]}
+      />
+
+      {!loaded && <Loading height="600px" />}
+      {loaded && (
+        <div className={styles.container}>
+          {["purchase", "cancel", "error"].includes(status) &&
+            !upgradeStatus && <Purchase paypalRef={paypalRef} />}
+
+          {["error"].includes(status) && <ErrorInfo />}
+          {["cancel"].includes(status) && <CancelInfo />}
+
+          {["approved"].includes(status) && <Pending />}
+          {["PENDING"].includes(upgradeStatus) && <Pending />}
+          {["DENIED"].includes(upgradeStatus) && <Denied />}
+          {["REVERSED"].includes(upgradeStatus) && <Reversed />}
+          {["COMPLETED"].includes(upgradeStatus) && <Completed />}
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export const getServerSideProps = async () => {
-  const product = {
-    code: "BRL",
-    value: 19,
-    description: "Simplifiga Premium",
-  };
+  const product = productData;
 
   return {
     props: {
@@ -94,3 +131,6 @@ export const getServerSideProps = async () => {
     },
   };
 };
+
+const Checkout = memo(CheckoutComponent);
+export default Checkout;

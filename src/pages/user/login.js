@@ -79,18 +79,20 @@ export default function Login({ serverKey, next }) {
         token: login.token,
         email: login.email,
         company: login.company,
+        orderId: login.orderId ?? null,
+        payee: login.payee ?? null,
         lifetime: date,
       })
     );
-    
+
     Router.reload();
   }
 
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-       if(acceptableNext.includes(next)) return Router.push("/" + next);
-       return Router.push('/dashboard')
+      if (acceptableNext.includes(next)) return Router.push("/" + next);
+      return Router.push("/dashboard");
     }
     isShow(true);
   }, []);

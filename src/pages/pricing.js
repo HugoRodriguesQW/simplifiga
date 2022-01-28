@@ -4,6 +4,7 @@ import { PricingHead } from "../components/Head/PricingHead";
 import { Header } from "../components/Header";
 import { userContext } from "../contexts/UserContext";
 import styles from "../styles/pages/Pricing.module.css";
+import productData from "../../product.json";
 
 export default function Pricing() {
   const { logged } = useContext(userContext);
@@ -79,7 +80,7 @@ export default function Pricing() {
               </div>
 
               <div className={styles.pricingValue}>
-                <span>R$19</span>
+                <span>R${productData.value}</span>
                 <span>/única</span>
               </div>
 

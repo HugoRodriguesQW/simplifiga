@@ -1,0 +1,128 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  overflow-x: hidden;
+  height: 100vh;
+  justify-content: flex-start;
+}
+
+.approvedBox {
+  margin-top: 12rem;
+  max-width: 950px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+}
+
+.contentBox {
+  margin-top: 12rem;
+  max-width: 950px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap-reverse;
+  gap: 3rem;
+  padding: 2rem;
+}
+
+.rightBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1.6;
+  min-width: 200px;
+}
+
+.textBox h1 {
+  color: #000;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.textBox p {
+  text-align: center;
+}
+
+.pricingBox {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem 3rem 3rem 3rem;
+  gap: 0.5rem;
+}
+
+.titleBox p {
+  text-align: center;
+  color: #000;
+}
+
+.pricingValue span {
+  font-size: 3.4rem;
+}
+
+.pricingValue span:last-child {
+  font-size: 1.2rem;
+}
+
+.pricingDetails p {
+  font-weight: bold;
+}
+
+.pricingDetails ul {
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+.pricingDetails li {
+  margin: 0;
+}
+
+.info {
+  animation: up 0.3s forwards;
+  padding: 2rem;
+  color: red;
+  font-weight: 400;
+}
+
+.approvedDetails {
+  padding: 2rem;
+  box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+}
+
+.approvedBox .buttonBox {
+  display: flex;
+  gap: 2rem;
+}
+
+.approvedBox button {
+  padding: 1rem;
+  width: 100%;
+}
+
+.detailsBox p {
+  margin-bottom: 2rem;
+}
+
+.detailsBox p:last-child {
+  margin-bottom: 4rem;
+}
+
+@keyframes up {
+  from {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
