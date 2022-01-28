@@ -13,8 +13,8 @@ export default function Checkout({ product, appToken, clientId }) {
   let paypalRef = useRef();
 
   useEffect(() => {
-    if (!token) return;
-    if (logged === false) return Router.push("/login");
+    if (logged === false) return Router.push("/user/login/?next=checkout");
+    if(logged === null) return
 
     if (document.getElementsByClassName("paypal-buttons").length >= 1) return;
 

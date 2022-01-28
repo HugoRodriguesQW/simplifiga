@@ -82,13 +82,16 @@ export default function Login({ serverKey, next }) {
         lifetime: date,
       })
     );
-    if (acceptableNext.includes(next)) return Router.push("/" + next);
+    
     Router.reload();
   }
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    if (user) return Router.push("/dashboard");
+    if (user) {
+       if(acceptableNext.includes(next)) return Router.push("/" + next);
+       return Router.push('/dashboard')
+    }
     isShow(true);
   }, []);
 
