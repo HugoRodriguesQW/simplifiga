@@ -19,12 +19,7 @@ export function UserContextProvider({ children }) {
       const lifetime = new Date(JSON.parse(user).lifetime);
       if (lifetime < new Date()) return clearUser();
       const userData = JSON.parse(user);
-      setName(userData.name);
-      setEmail(userData.email);
-      setToken(userData.token);
-      setCompany(userData.company);
-      setOrderId(userData.orderId);
-      setpayer(userData.payer);
+      updateLocalVariables({ userData });
 
       if (!userData.orderId) return setLogged(true);
       checkUpgradeStatus(userData).then(
@@ -43,7 +38,7 @@ export function UserContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (payer !== null) return;
+    if (payer) return;
     setpayer({
       name: {
         given_name: "Name",
@@ -53,15 +48,32 @@ export function UserContextProvider({ children }) {
     });
   }, [payer]);
 
+  function updateLocalVariables({ userData }) {
+    setName(userData.name);
+    setEmail(userData.email);
+    setToken(userData.token);
+    setCompany(userData.company);
+    setOrderId(userData.orderId);
+    setpayer(userData.payer);
+  }
+
   function clearUser() {
     localStorage.removeItem("user");
     Router.reload();
   }
 
-  function removePayer() {
+  function updateCacheProp({ prop, value }) {
     const user = localStorage.getItem("user");
     const userData = JSON.parse(user);
-    userData.payer = null;
+    userData[prop] = value;
+    localStorage.setItem("user", JSON.stringify(userData));
+    updateLocalVariables({ userData });
+  }
+
+  function removeCacheProp({ prop }) {
+    const user = localStorage.getItem("user");
+    const userData = JSON.parse(user);
+    userData[prop] = null;
     localStorage.setItem("user", JSON.stringify(userData));
   }
 
@@ -85,7 +97,7 @@ export function UserContextProvider({ children }) {
           if (!data) return reject("cleaning-failed");
           if (data.error) return reject(data.error);
           console.info("receive response:", data);
-          removePayer();
+          removeCacheProp({ prop: "payer" });
           resolve("cleaned");
         },
         (error) => {
@@ -137,6 +149,7 @@ export function UserContextProvider({ children }) {
         orderId,
         payer,
         clearOrderData,
+        updateCacheProp,
       }}
     >
       {children}

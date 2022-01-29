@@ -17,6 +17,7 @@ import Reversed from "../components/Checkout/Reversed";
 
 const CheckoutComponent = ({ product, appToken, clientId }) => {
   const upgradeStatus = useContext(userContext).upgraded;
+  const updateCacheProp = useContext(userContext).updateCacheProp;
 
   const [status, setStatus] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -53,6 +54,7 @@ const CheckoutComponent = ({ product, appToken, clientId }) => {
         }).then(async (response) => {
           const result = await response.json();
           if (!result.orderId) throw Error("OrderId not found");
+          updateCacheProp({ prop: "orderId", value: result.orderId });
           setStatus("purchase");
           setLoaded(true);
           paypal
@@ -77,7 +79,7 @@ const CheckoutComponent = ({ product, appToken, clientId }) => {
               },
               onApprove: async (_, actions) => {
                 const order = await actions.order.capture();
-                console.info(order);
+                updateCacheProp({ prop: "payer", value: order.payer });
                 setStatus("approved");
               },
               onCancel: () => setStatus("cancel"),
