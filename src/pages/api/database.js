@@ -19,6 +19,8 @@ export class Database {
       return this;
     }
 
+    console.info("Creating a new connection...");
+
     cachedCl = await MongoClient.connect(secret, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -307,7 +309,6 @@ export class Database {
 
   clearOrderField({ orderId }) {
     return new Promise((resolve, reject) => {
-      console.info("Cleaning:", orderId);
       this.db
         ?.collection(`${node}clients`)
         .findOne({ orderId })
@@ -337,6 +338,21 @@ export class Database {
               );
           },
           () => reject("order-ref-reject")
+        );
+    });
+  }
+
+  getUsage({ tag }) {
+    return new Promise((resolve, reject) => {
+      this.db
+        ?.collection(`${node}usage`)
+        .findOne({ tag })
+        .then(
+          (data) => {
+            if (!data) reject("data-not-found");
+            resolve(data);
+          },
+          () => reject("get-usage-error")
         );
     });
   }

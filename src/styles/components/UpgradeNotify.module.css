@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  background-color: #f7efa2 !important;
+}
+
+.content .usage {
+  margin: 0;
+  margin-right: 1rem;
+}
+
+.usage span {
+  font-size: clamp(1.4rem, 1.4vw, 1.7rem);
+}
+
+.usage.warning span {
+  font-weight: 700;
+  color: red;
+}
+
+.redirect {
+  cursor: pointer;
+  color: var(--white);
+  background-color: var(--blue);
+  padding: 0 1rem;
+  border-radius: 4px;
+}

@@ -11,6 +11,7 @@ import { BasicLocations } from "../../components/Dashboard/BasicLocations";
 import { BasicReference } from "../../components/Dashboard/BasicReference";
 import { SideBar } from "../../components/Dashboard/SideBar";
 import { DashboardHead } from "../../components/Head/DashboardHead";
+import { UpgradeNotify } from "../../components/UpgradeNotify";
 
 export default function Dashboard() {
   const { logged } = useContext(userContext);
@@ -32,6 +33,7 @@ export default function Dashboard() {
           <SideBar current="/dashboard" />
 
           <div className={styles.dashboardContent}>
+            <UpgradeNotify />
             <BasicAnalytics />
             <BasicUserInfo />
             <BasicReference />

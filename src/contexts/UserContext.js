@@ -12,6 +12,7 @@ export function UserContextProvider({ children }) {
   const [orderId, setOrderId] = useState(null);
   const [payer, setpayer] = useState(null);
   const [logged, setLogged] = useState(null);
+  const [usage, setUsage] = useState(0);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -20,6 +21,7 @@ export function UserContextProvider({ children }) {
       if (lifetime < new Date()) return clearUser();
       const userData = JSON.parse(user);
       updateLocalVariables({ userData });
+      importUserUsage(userData);
 
       if (!userData.orderId) return setLogged(true);
       checkUpgradeStatus(userData).then(
@@ -55,6 +57,7 @@ export function UserContextProvider({ children }) {
     setCompany(userData.company);
     setOrderId(userData.orderId);
     setpayer(userData.payer);
+    setUsage(userData.usage);
   }
 
   function clearUser() {
@@ -109,7 +112,6 @@ export function UserContextProvider({ children }) {
   }
 
   function checkUpgradeStatus({ orderId }) {
-    console.info("I found a orderId. Checking...");
     return new Promise((resolve, reject) => {
       fetch(`${window.location.origin}/api/checkout`, {
         method: "POST",
@@ -136,6 +138,27 @@ export function UserContextProvider({ children }) {
     });
   }
 
+  function importUserUsage({ token }) {
+    fetch(`${window.location.origin}/api/usage`, {
+      method: "POST",
+      headers: {
+        authorization: process.env.NEXT_PUBLIC_APP_TOKEN,
+      },
+      body: JSON.stringify({
+        tag: token,
+      }),
+    }).then(
+      async (response) => {
+        const res = await response.json();
+        setUsage(res.requests ?? 0);
+      },
+      (error) => {
+        setUsage(0);
+        console.error("UserContext:", error);
+      }
+    );
+  }
+
   return (
     <userContext.Provider
       value={{
@@ -150,6 +173,7 @@ export function UserContextProvider({ children }) {
         payer,
         clearOrderData,
         updateCacheProp,
+        usage,
       }}
     >
       {children}
