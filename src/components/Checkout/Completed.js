@@ -4,7 +4,7 @@ import { userContext } from "../../contexts/UserContext";
 import styles from "../../styles/pages/Checkout.module.css";
 
 export default function Completed() {
-  const { orderId, payee } = useContext(userContext);
+  const { orderId, payer } = useContext(userContext);
 
   function handleNextButton() {
     Router.push("/dashboard");
@@ -28,8 +28,8 @@ export default function Completed() {
           <p>
             <strong>beneficiário: </strong>
             <span>
-              {payee.name.given_name} {payee.name.surname},{" "}
-              {payee.email_address}
+              {payer.name.given_name} {payer.name.surname},{" "}
+              {payer.email_address}
             </span>
           </p>
         </div>

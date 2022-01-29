@@ -4,7 +4,7 @@ import { userContext } from "../../contexts/UserContext";
 import styles from "../../styles/pages/Checkout.module.css";
 
 export default function Reversed() {
-  const { orderId, payee, clearOrderData } = useContext(userContext);
+  const { orderId, payer, clearOrderData } = useContext(userContext);
 
   function handleNextButton() {
     clearOrderData().then(() => {
@@ -34,8 +34,8 @@ export default function Reversed() {
           <p>
             <strong>beneficiário: </strong>
             <span>
-              {payee.name.given_name} {payee.name.surname},{" "}
-              {payee.email_address}
+              {payer.name.given_name} {payer.name.surname},{" "}
+              {payer.email_address}
             </span>
           </p>
         </div>

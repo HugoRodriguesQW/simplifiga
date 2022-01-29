@@ -4,12 +4,18 @@ import { userContext } from "../../contexts/UserContext";
 import styles from "../../styles/pages/Checkout.module.css";
 
 export default function Denied() {
-  const { orderId, payee, clearOrderData } = useContext(userContext);
+  const { orderId, payer, clearOrderData } = useContext(userContext);
 
   function handleNextButton() {
-    clearOrderData().then(() => {
-      Router.reload();
-    });
+    clearOrderData().then(
+      (data) => {
+        console.info("Cleaned data", data);
+        Router.reload();
+      },
+      (error) => {
+        console.info("Error ocurred", error);
+      }
+    );
   }
 
   function handleContact() {
@@ -34,8 +40,8 @@ export default function Denied() {
           <p>
             <strong>beneficiário: </strong>
             <span>
-              {payee.name.given_name} {payee.name.surname},{" "}
-              {payee.email_address}
+              {payer.name.given_name} {payer.name.surname},{" "}
+              {payer.email_address}
             </span>
           </p>
         </div>

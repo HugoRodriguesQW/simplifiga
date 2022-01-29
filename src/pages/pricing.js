@@ -7,7 +7,7 @@ import styles from "../styles/pages/Pricing.module.css";
 import productData from "../../product.json";
 
 export default function Pricing() {
-  const { logged } = useContext(userContext);
+  const { logged, upgraded } = useContext(userContext);
 
   function handleGetStarted() {
     if (logged) return Router.push("/dashboard/");
@@ -47,8 +47,12 @@ export default function Pricing() {
             </p>
           </div>
 
-          <div className={styles.pricingContainer}>
-            <div className={styles.pricingBox}>
+          <div
+            className={`${styles.pricingContainer} ${
+              upgraded && styles.upgraded
+            }`}
+          >
+            <div className={`${styles.pricingBox}`}>
               <div className={styles.titleBox}>
                 <p>BÁSICO</p>
               </div>
@@ -96,7 +100,7 @@ export default function Pricing() {
               </div>
 
               <button onClick={handleUpgrade}>
-                <span>ATUALIZAR</span>
+                <span>{upgraded ? "VER ANDAMENTO" : "ATUALIZAR"}</span>
               </button>
             </div>
           </div>

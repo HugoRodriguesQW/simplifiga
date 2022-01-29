@@ -257,7 +257,7 @@ export class Database {
     });
   }
 
-  setOrderReference({ orderRef, orderId, payee }) {
+  setOrderReference({ orderRef, orderId, payer }) {
     return new Promise((resolve, reject) => {
       this.db
         ?.collection(`${node}clients`)
@@ -266,7 +266,7 @@ export class Database {
           {
             $set: {
               orderRef,
-              payee,
+              payer,
             },
           }
         )
@@ -313,7 +313,6 @@ export class Database {
         .findOne({ orderId })
         .then(
           (data) => {
-            console.info("Data:", data);
             if (!data?.orderRef) return reject("order-ref-not-found");
 
             this.db
@@ -322,8 +321,7 @@ export class Database {
                 { orderId },
                 {
                   $unset: {
-                    payee: "",
-                    orderId: "",
+                    orderRef: "",
                   },
                   $push: {
                     oldOrdersRef: data.orderRef,
@@ -331,9 +329,9 @@ export class Database {
                 }
               )
               .then(
-                ({ applied }) => {
-                  if (!applied) return reject("update-error");
-                  resolve({ applied });
+                ({ acknowledged }) => {
+                  if (!acknowledged) return reject("update-error");
+                  resolve({ acknowledged });
                 },
                 () => reject("update-ref-reject")
               );

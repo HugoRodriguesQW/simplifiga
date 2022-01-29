@@ -61,3 +61,14 @@
 .pricingDetails li {
   margin: 0;
 }
+
+.upgraded > div:first-child > div,
+.upgraded > div:first-child > p {
+  opacity: 0.6;
+  user-select: none;
+}
+
+.upgraded > div:first-child > button {
+  background-color: var(--black-36);
+  opacity: 0.84;
+}

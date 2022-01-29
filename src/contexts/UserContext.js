@@ -10,7 +10,7 @@ export function UserContextProvider({ children }) {
   const [company, setCompany] = useState("SpaceX");
   const [upgraded, setUpgraded] = useState(null);
   const [orderId, setOrderId] = useState(null);
-  const [payee, setPayee] = useState(null);
+  const [payer, setpayer] = useState(null);
   const [logged, setLogged] = useState(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function UserContextProvider({ children }) {
       setToken(userData.token);
       setCompany(userData.company);
       setOrderId(userData.orderId);
-      setPayee(userData.payee);
+      setpayer(userData.payer);
 
       if (!userData.orderId) return setLogged(true);
       checkUpgradeStatus(userData).then(
@@ -42,21 +42,31 @@ export function UserContextProvider({ children }) {
     setLogged(false);
   }, []);
 
+  useEffect(() => {
+    if (payer !== null) return;
+    setpayer({
+      name: {
+        given_name: "Name",
+        surname: "Surname",
+      },
+      email_address: "email.address@email.default",
+    });
+  }, [payer]);
+
   function clearUser() {
     localStorage.removeItem("user");
     Router.reload();
   }
 
-  function clearOrderDataInCache() {
+  function removePayer() {
     const user = localStorage.getItem("user");
     const userData = JSON.parse(user);
-    delete userData.orderId;
-    delete userData.payee;
+    userData.payer = null;
     localStorage.setItem("user", JSON.stringify(userData));
   }
 
   function clearOrderData() {
-    console.info("Cleaning orderData");
+    console.info("Cleaning orderData...");
     return new Promise((resolve, reject) => {
       fetch(`${window.location.origin}/api/checkout`, {
         method: "POST",
@@ -74,10 +84,8 @@ export function UserContextProvider({ children }) {
           const data = await response.json();
           if (!data) return reject("cleaning-failed");
           if (data.error) return reject(data.error);
-          clearOrderDataInCache();
-          setOrderId(null);
-          setUpgraded(null);
-          setPayee(null);
+          console.info("receive response:", data);
+          removePayer();
           resolve("cleaned");
         },
         (error) => {
@@ -127,7 +135,7 @@ export function UserContextProvider({ children }) {
         clearUser,
         upgraded,
         orderId,
-        payee,
+        payer,
         clearOrderData,
       }}
     >

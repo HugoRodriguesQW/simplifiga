@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import styles from "../styles/components/Header.module.css";
 import { Logo } from "./Logo";
@@ -7,10 +8,10 @@ import { userContext } from "../contexts/UserContext";
 
 const HeaderComponent = ({ routes, ...style }) => {
   const [isOpened, setIsOpened] = useState(true);
-  const { clearUser } = useContext(userContext);
+  const { clearUser, upgraded } = useContext(userContext);
   const [closeTimer, setCloseTimer] = useState(null);
 
-  const paths = {
+  const [paths, setPaths] = useState({
     "/": "Encurtador",
     "/developer": "API",
     "/dashboard": "Dashboard",
@@ -18,7 +19,14 @@ const HeaderComponent = ({ routes, ...style }) => {
     "/user/register": "Criar conta",
     "/pricing": "Preços",
     Sair: clearUser,
-  };
+  });
+
+  useEffect(() => {
+    if (!upgraded) return;
+    const newPaths = paths;
+    newPaths["/pricing"] = "Premium";
+    setPaths(newPaths);
+  }, [upgraded]);
 
   function handleMenuEvent(state, delay) {
     if (state === true) return setIsOpened(state);

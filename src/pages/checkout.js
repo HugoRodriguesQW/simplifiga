@@ -25,7 +25,7 @@ const CheckoutComponent = ({ product, appToken, clientId }) => {
   let paypalRef = useRef();
 
   useEffect(() => {
-    console.info(upgradeStatus);
+    console.info("upgrade status:", upgradeStatus);
   }, [upgradeStatus]);
 
   useEffect(() => {
