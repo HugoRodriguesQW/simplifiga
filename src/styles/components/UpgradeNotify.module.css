@@ -4,6 +4,7 @@
   justify-content: space-between;
   padding: 0.5rem 2rem;
   background-color: #f7efa2 !important;
+  flex-wrap: wrap;
 }
 
 .content .usage {
