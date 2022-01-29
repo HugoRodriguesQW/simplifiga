@@ -3,23 +3,66 @@ import { useContext } from "react";
 import { userContext } from "../contexts/UserContext";
 import styles from "../styles/components/UpgradeNotify.module.css";
 
-export function UpgradeNotify({ props }) {
-  const usage = useContext(userContext).usage;
+export function UpgradeNotify({ customValue, fixed, animation }) {
+  const { usage, upgraded } = useContext(userContext);
 
-  function handlePricingClick() {
-    Router.push("/pricing");
+  const data = {
+    DEFAULT: {
+      title: "Atualize sua conta e obtenha acesso ilimitado",
+      limits: true,
+      button: {
+        text: "Preços",
+        ref: "/pricing",
+      },
+    },
+    PENDING: {
+      title: "Seu pagamento está sendo processado",
+      limits: true,
+      button: {
+        ref: "/checkout",
+        text: "Andamento",
+      },
+    },
+
+    COMPLETED: {
+      title: "Sua conta possui o plano Premium ilimitado",
+      limits: false,
+    },
+  };
+
+  const useData = data[upgraded] ?? data["DEFAULT"];
+
+  function handlePricingClick(ref) {
+    Router.push(ref);
   }
+
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${fixed && styles.fixed} ${
+        animation && styles.animation
+      }`}
+    >
       <div className={styles.content}>
-        <span>Atualize sua conta e obtenha acesso ilimitado</span>
+        <span>{useData.title}</span>
         <p className={styles.usage}>
-          <span>{((usage ?? 0) / 100) * 100}%</span> do limite mensal atingido
+          {useData.limits && (
+            <>
+              <span>{customValue ?? ((usage ?? 0) / 100) * 100}%</span>
+              {" do limite mensal atingido"}
+            </>
+          )}
         </p>
       </div>
-      <span className={styles.redirect} onClick={handlePricingClick}>
-        Preços
-      </span>
+      {useData.button && (
+        <span
+          className={styles.redirect}
+          onClick={() => {
+            handlePricingClick(useData.button.ref);
+          }}
+        >
+          {useData.button.text}
+        </span>
+      )}
     </div>
   );
 }

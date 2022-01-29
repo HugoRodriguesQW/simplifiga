@@ -8,19 +8,25 @@
   background: #e32d2d;
   color: #fff;
 
-  animation: errorFrame 4s ease-in-out;
-  
+  animation: errorFrame 5s ease-in-out forwards;
+  display: inline-flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.errorContainer a {
+  color: var(--white);
+  text-decoration: underline;
 }
 
 @keyframes errorFrame {
   0% {
-    bottom: -20rem;
+    bottom: -5rem;
   }
-  10%, 90% {
-     bottom: 0;
-  }
-
-  0% {
-    bottom: -10rem;
+  10%,
+  100% {
+    bottom: 0;
   }
 }

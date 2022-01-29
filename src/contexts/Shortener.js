@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Router } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { dashboardContext } from "./DashboardContext";
 import { userContext } from "./UserContext";
@@ -17,6 +19,7 @@ export function ShortenerContextProvider({ children }) {
   const [isProcessing, setProcessState] = useState(false);
 
   const [error, setError] = useState(null);
+  const [errorTimeout, setErrorTimeOut] = useState(null);
 
   async function handleShortLink({ updateLinks }) {
     if (typeof logged !== "boolean") return setError(101);
@@ -60,11 +63,11 @@ export function ShortenerContextProvider({ children }) {
       setIsShortened(true);
     } catch (err) {
       switch (err) {
-        case 409:
+        case (406, 409):
           setIsSurnameValid(false);
           break;
-        case 406:
-          setIsSurnameValid(false);
+        case 429:
+          setError(101);
           break;
         default:
           setError(100);
@@ -100,9 +103,13 @@ export function ShortenerContextProvider({ children }) {
 
   useEffect(() => {
     setProcessState(false);
-    setTimeout(() => {
-      setError(null);
-    }, 4000);
+    if (errorTimeout) return;
+    setErrorTimeOut(
+      setTimeout(() => {
+        setError(null);
+        setErrorTimeOut(null);
+      }, 5000)
+    );
   }, [error]);
 
   return (

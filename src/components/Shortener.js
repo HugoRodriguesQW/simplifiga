@@ -74,7 +74,7 @@ export function Shortener({ updateLinks }) {
         ) : (
           <button
             onClick={() => {
-              handleShortLink({ updateDashboard });
+              handleShortLink({ updateLinks });
             }}
           >
             Encurtar

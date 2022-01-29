@@ -41,7 +41,6 @@ const Links = () => {
   );
   const data = links.map(({ clicks }) => clicks);
 
-  console.info("Links:", links);
   function handleDropListClick() {
     const droplist = document.getElementById(`droplist-1`);
     if (droplist.classList.contains(active)) {

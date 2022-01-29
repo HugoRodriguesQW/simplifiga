@@ -2,7 +2,6 @@
 
 import { MainComponent } from "../components/MainComponent";
 import styles from "../styles/pages/Home.module.css";
-import { Error } from "../components/Error";
 import { Footer } from "../components/Footer";
 import { IndexHead } from "../components/Head/IndexHead";
 import { Logo } from "../components/Logo";
@@ -35,7 +34,6 @@ export default function Home() {
         <IndexHead />
         <Logo type="full" />
         <MainComponent />
-        <Error />
       </div>
 
       <div id="content" className={styles.contentBox}>
