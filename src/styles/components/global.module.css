@@ -138,22 +138,26 @@
   opacity: 1;
 }
 
-.detailsList > div .droplistItemWithTrash {
+.detailsList > div .droplistItemWithButtons {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
-.detailsList > div:hover .droplistItemWithTrash > div:last-child {
+.detailsList > div p {
+  margin: 0.3rem;
+}
+
+.detailsList > div:hover .droplistItemWithButtons > div:last-child > div {
   cursor: pointer;
   padding: 0.6rem;
-  margin: 1.2rem;
   border-radius: 5px;
   width: auto;
   opacity: 1;
 }
 
-.detailsList > div .droplistItemWithTrash > div:last-child {
+.detailsList > div .droplistItemWithButtons > div:last-child > div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,14 +165,23 @@
   transition: 0.3s;
   opacity: 0;
   width: 0;
-  background-color: rgba(255, 0, 0, 0.7);
 }
 
-.detailsList > div .droplistItemWithTrash > div:last-child img {
+.detailsList > div:hover .droplistItemWithButtons > div:last-child {
+  transition: 0.3s;
+}
+
+.detailsList > div:hover .droplistItemWithButtons > div:last-child {
+  display: flex;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+
+.detailsList > div .droplistItemWithButtons > div:last-child > div img {
   width: 100%;
 }
 
-.detailsList > div .droplistItemWithTrash > div:first-child p {
+.detailsList > div .droplistItemWithButtons > div:first-child > div p {
   margin-bottom: 0;
 }
 
@@ -314,6 +327,19 @@
 
 .exportCsv {
   color: #000;
+}
+
+.droplistItemWithQrCode {
+  display: flex;
+  gap: 1rem;
+}
+
+.blackButton {
+  background-color: var(--black-36);
+}
+
+.redButton {
+  background-color: rgba(255, 0, 0, 0.7);
 }
 
 @media screen and (max-width: 650px) {

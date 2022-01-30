@@ -19,7 +19,9 @@ import {
   nostyle,
   full,
   exportCsv,
-  droplistItemWithTrash,
+  droplistItemWithButtons,
+  redButton,
+  blackButton,
 } from "../../styles/components/global.module.css";
 import { Loading } from "../../components/Effects/Loading";
 import { Empty } from "../../components/Effects/Empty";
@@ -28,9 +30,11 @@ import { MainComponent } from "../../components/MainComponent";
 import { CSVLink } from "react-csv";
 import Router from "next/router";
 import { DeleteBox } from "../../components/Dashboard/DeleteBox";
+import { QRcodeWindow } from "../../components/Dashboard/QRcode";
 
 const Links = () => {
   const [deleteId, setDeleteId] = useState(null);
+  const [QrCode, setQrCode] = useState(null);
   const updateLinks = useContext(dashboardContext).updateLinks;
 
   const logged = useContext(userContext).logged;
@@ -153,17 +157,33 @@ const Links = () => {
                               </p>
                             </a>
                           }
-                          <div className={droplistItemWithTrash}>
+                          <div className={droplistItemWithButtons}>
                             <div>
                               <p>{currentData} cliques</p>
                               <p>{percent}%</p>
                             </div>
-                            <div
-                              onClick={() => {
-                                setDeleteId(id);
-                              }}
-                            >
-                              <img src="/icons/bxs-trash.svg" alt="Del" />
+
+                            <div>
+                              <div
+                                className={blackButton}
+                                onClick={() => {
+                                  setQrCode({
+                                    url: "https://simplifi.ga/" + id,
+                                    id,
+                                  });
+                                }}
+                              >
+                                <img src="/icons/bx-qr.svg" alt="QR" />
+                              </div>
+
+                              <div
+                                className={redButton}
+                                onClick={() => {
+                                  setDeleteId(id);
+                                }}
+                              >
+                                <img src="/icons/bxs-trash.svg" alt="Del" />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -174,6 +194,13 @@ const Links = () => {
               </>
             )}
             {deleteId && <DeleteBox id={deleteId} reset={setDeleteId} />}
+            {QrCode && (
+              <QRcodeWindow
+                id={QrCode?.id}
+                url={QrCode?.url}
+                reset={setQrCode}
+              />
+            )}
             <Footer />
           </div>
         </>

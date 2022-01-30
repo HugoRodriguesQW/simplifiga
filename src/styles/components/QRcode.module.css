@@ -1,0 +1,63 @@
+.container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  width: 20%;
+}
+
+.container span {
+  font-size: 1.8rem;
+}
+
+.container > img {
+  width: 60%;
+}
+
+.container > p {
+  text-align: center;
+}
+
+.container > img {
+  margin-bottom: 2rem;
+}
+
+.container button {
+  padding: 0 1rem;
+  background-color: var(--black-36);
+}
+
+.container button:hover {
+  background-color: var(--blue);
+}
+
+.overlay {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.buttonBox {
+  display: flex;
+  gap: 2rem;
+}
+
+.downloadButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container .button:hover,
+.downloadButton:hover {
+  background: #363636;
+}
