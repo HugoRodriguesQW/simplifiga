@@ -1,8 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShortenerContext } from "../contexts/Shortener";
 import styles from "../styles/components/Shortener.module.css";
+import { BulkLinks } from "./BulkLinks";
 
 export function Shortener({ updateLinks }) {
+  const [showBulk, setShowBulk] = useState(false);
+
   const {
     handleShortLink,
     setLink,
@@ -64,7 +67,15 @@ export function Shortener({ updateLinks }) {
             </span>
           ) : null}
           Use esse campo para definir um apelido para sua URL. Apenas caracteres
-          de ‘0’ a ‘9’, ‘a’ a ‘z’ e ‘-’ são permitidos
+          de ‘0’ a ‘9’, ‘a’ a ‘z’ e ‘-’ são permitidos{" "}
+          <span
+            onClick={() => {
+              setShowBulk(true);
+            }}
+            className={styles.linkStyle + " " + styles.floatRight}
+          >
+            Encurtar em massa
+          </span>
         </p>
       </section>
 
@@ -81,6 +92,8 @@ export function Shortener({ updateLinks }) {
           </button>
         )}
       </div>
+
+      <BulkLinks reset={setShowBulk} show={showBulk} />
     </>
   );
 }

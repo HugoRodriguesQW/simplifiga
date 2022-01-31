@@ -7,5 +7,9 @@
     "code": 101,
     "message": "Limite mensal atingido. Atualize para o Premium para continuar encurtando.",
     "redirect": ["/pricing", "Upgrade"]
+  },
+  "102": {
+    "code": 102,
+    "message": "Não foi possível encurtar a lista de links. Tente novamente."
   }
 }

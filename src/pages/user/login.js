@@ -12,6 +12,9 @@ import { Finder } from "./register";
 
 export default function Login({ serverKey, next }) {
   const acceptableNext = ["checkout", "dashboard", "pricing"];
+  const customNext = {
+    index: "/",
+  };
 
   const formRef = useRef(null);
   const [processing, isProcessing] = useState(false);
@@ -91,6 +94,7 @@ export default function Login({ serverKey, next }) {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
+      if (customNext[next + ""]) return Router.push(customNext[next + ""]);
       if (acceptableNext.includes(next)) return Router.push("/" + next);
       return Router.push("/dashboard");
     }

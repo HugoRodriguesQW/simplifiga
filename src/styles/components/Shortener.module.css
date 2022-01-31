@@ -6,7 +6,7 @@
   width: 100%;
   max-width: 960px;
 
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .shortenerContainer .inputBox {
@@ -25,7 +25,7 @@
 .shortenerContainer .keyboardIcon {
   position: absolute;
   top: 0;
-  bottom:0;
+  bottom: 0;
   left: 0;
   width: calc(2.4rem + 3.4rem);
 
@@ -61,9 +61,9 @@
 }
 
 .shortedLinkContainer button {
-  padding: .7rem .5rem .6rem .6rem;
+  padding: 0.7rem 0.5rem 0.6rem 0.6rem;
   position: relative;
-  transition: .1s;
+  transition: 0.1s;
 }
 
 .shortedLinkContainer button strong {
@@ -83,12 +83,11 @@
   filter: invert(1);
 }
 
-
 .mobileButtonContainer {
   display: none;
 
   margin-top: 1.1rem;
-  text-align:  center;
+  text-align: center;
 }
 
 .linkInputContainer button,
@@ -118,9 +117,9 @@
 }
 
 .shortMoreButton::after {
-  content: ' ';
+  content: " ";
   display: inline-block;
-  margin-left: .6rem;
+  margin-left: 0.6rem;
   width: 2.4rem;
   height: 2.4rem;
   background: url(/icons/right-arrow.svg);
@@ -141,15 +140,15 @@
   white-space: nowrap;
 
   opacity: 0;
-  transition: .1s;
+  transition: 0.1s;
   transform: translateY(10px);
 }
 
 .copyPopBubble::after {
   margin-top: 2.5rem;
-  content: ' ';
-  width: 0; 
-  height: 0; 
+  content: " ";
+  width: 0;
+  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 8px solid #343434;
@@ -157,7 +156,6 @@
   margin-top: 2.3rem;
   margin-left: -2.2rem;
   z-index: 0;
-
 }
 
 .linkInputContainer {
@@ -176,7 +174,7 @@
   border-radius: 5px;
   z-index: -1;
 
-  transition: .1s;
+  transition: 0.1s;
 
   font-size: 1.6rem;
 }
@@ -193,9 +191,22 @@
 }
 
 .shortedLinkContainer button.enable .copyPopBubble {
-    opacity: 1;
-    transform: translateY(0);
-} 
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.linkStyle {
+  cursor: pointer;
+  color: var(--blue);
+}
+
+.linkStyle:hover {
+  text-decoration: underline;
+}
+
+.floatRight {
+  float: right;
+}
 
 /* Media Queries */
 
@@ -208,7 +219,7 @@
   .mobileButtonContainer,
   .linkInputContainer,
   .shortedLinkContainer,
-  .shortedLinkContainer button strong  {
+  .shortedLinkContainer button strong {
     display: block;
   }
 

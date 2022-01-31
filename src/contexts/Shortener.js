@@ -126,6 +126,7 @@ export function ShortenerContextProvider({ children }) {
         handleShortOtherLink,
         error,
         isProcessing,
+        setError,
       }}
     >
       {children}
