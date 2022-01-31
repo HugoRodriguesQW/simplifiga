@@ -1,9 +1,7 @@
 import { Header } from "../components/Header";
-import { userContext } from "../contexts/UserContext";
 import styles from "../styles/pages/Support.module.css";
 
 export default function Support() {
-  const { upgraded } = userContext(userContext);
   return (
     <>
       <Header
