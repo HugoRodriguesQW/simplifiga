@@ -5,7 +5,7 @@ import { Header } from "../components/Header";
 import styles from "../styles/pages/Redirect.module.css";
 import Router from "next/router";
 
-export default function RedirectPage(props) {
+export default function RedirectPage() {
   function handleBack() {
     Router.back();
   }
@@ -28,7 +28,7 @@ export default function RedirectPage(props) {
   );
 }
 
-export async function getServerSideProps({ query, req, res }) {
+export async function getServerSideProps({ query, req }) {
   const redirectId = query?.redirect;
 
   if (redirectId === "favicon.ico") return { props: {} };
@@ -61,9 +61,7 @@ export async function getServerSideProps({ query, req, res }) {
   }
 
   return {
-    props: {
-      id: redirectId,
-    },
+    props: {},
   };
 }
 
