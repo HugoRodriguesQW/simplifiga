@@ -3,7 +3,7 @@ import { ResetTools } from "../../utils/reset";
 import { Database } from "./database";
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
-import Email from "../../utils/email";
+import ResetEmail from "../../utils/mailshape";
 
 const handler = async (req, res) => {
   await NextCors(req, res, {
@@ -51,11 +51,11 @@ const handler = async (req, res) => {
   });
 
   const mailOptions = {
-    from: "SIMPLIFIGA <mailvitorhugosr@gmail.com>",
+    from: "SIMPLIFIGA <simplifiga@gmail.com>",
     to: email,
     subject: "[Simplifiga] Recuperação de conta",
-    text: Email(code, "text"),
-    html: Email(code, "html"),
+    text: ResetEmail(code, "text"),
+    html: ResetEmail(code, "html"),
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
