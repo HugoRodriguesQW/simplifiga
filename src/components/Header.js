@@ -13,11 +13,13 @@ const HeaderComponent = ({ routes, ...style }) => {
 
   const [paths, setPaths] = useState({
     "/": "Encurtador",
-    "/developer": "API",
     "/dashboard": "Dashboard",
+    "/developer": "API",
+
+    "/pricing": "Preços",
+    "/support": "Suporte",
     "/user/login": "Entrar",
     "/user/register": "Criar conta",
-    "/pricing": "Preços",
     Sair: clearUser,
   });
 

@@ -99,7 +99,14 @@ const CheckoutComponent = ({ product, appToken, clientId }) => {
       <Header
         fixed
         padding
-        routes={["/pricing", "/dashboard", "/developer", "/", "Sair"]}
+        routes={[
+          "/pricing",
+          "/support",
+          "/dashboard",
+          "/developer",
+          "/",
+          "Sair",
+        ]}
       />
 
       {!loaded && <Loading height="600px" />}

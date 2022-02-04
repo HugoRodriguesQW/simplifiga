@@ -21,13 +21,19 @@ export default function Home() {
         <Header
           fixed
           padding
-          routes={["/dashboard", "/developer", "/pricing", "Sair"]}
+          routes={["/dashboard", "/support", "/developer", "/pricing", "Sair"]}
         />
       ) : (
         <Header
           fixed
           padding
-          routes={["/user/register", "/user/login", "/developer", "/pricing"]}
+          routes={[
+            "/user/register",
+            "/support",
+            "/user/login",
+            "/developer",
+            "/pricing",
+          ]}
         />
       )}
       <div className={styles.container}>

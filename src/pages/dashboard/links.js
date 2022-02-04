@@ -72,7 +72,14 @@ const Links = () => {
           <Header
             fixed
             padding
-            routes={["/pricing", "/dashboard", "/developer", "/", "Sair"]}
+            routes={[
+              "/pricing",
+              "/support",
+              "/dashboard",
+              "/developer",
+              "/",
+              "Sair",
+            ]}
           />
           <SideBar current="/dashboard/links" />
 

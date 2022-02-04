@@ -25,13 +25,19 @@ export default function Pricing() {
         <Header
           fixed
           padding
-          routes={["/", "/dashboard", "/developer", "Sair"]}
+          routes={["/", "/support", "/dashboard", "/developer", "Sair"]}
         />
       ) : (
         <Header
           fixed
           padding
-          routes={["/", "/user/register", "/user/login", "/developer"]}
+          routes={[
+            "/",
+            "/support",
+            "/user/register",
+            "/user/login",
+            "/developer",
+          ]}
         />
       )}
 
