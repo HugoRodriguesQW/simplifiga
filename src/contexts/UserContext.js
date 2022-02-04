@@ -4,10 +4,10 @@ import Router from "next/router";
 export const userContext = createContext({});
 
 export function UserContextProvider({ children }) {
-  const [name, setName] = useState("Elon Musk");
-  const [email, setEmail] = useState("elomusk@elon.musk");
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
   const [token, setToken] = useState(null);
-  const [company, setCompany] = useState("SpaceX");
+  const [company, setCompany] = useState(null);
   const [upgraded, setUpgraded] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [payer, setpayer] = useState(null);

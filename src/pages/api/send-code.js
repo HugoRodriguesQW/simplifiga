@@ -1,9 +1,8 @@
 import NextCors from "nextjs-cors";
 import { ResetTools } from "../../utils/reset";
 import { Database } from "./database";
-import nodemailer from "nodemailer";
-import { google } from "googleapis";
 import ResetEmail from "../../utils/mailshape";
+import { getTransporter, googleOAuth, sendEmail } from "../../utils/mail";
 
 const handler = async (req, res) => {
   await NextCors(req, res, {
@@ -29,47 +28,26 @@ const handler = async (req, res) => {
 
   if (!code) return res.status(400).json(onError(res, 400));
 
-  const oAuth2 = new google.auth.OAuth2(
-    process.env.G_ID,
-    process.env.G_SECRET,
-    process.env.REDIRECT_TO
-  );
-  oAuth2.setCredentials({ refresh_token: process.env.R_TOKEN });
-
-  const acessToken = await oAuth2.getAccessToken();
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.APP_EMAIL,
-      clientId: process.env.G_ID,
-      clientSecret: process.env.G_SECRET,
-      refreshToken: process.env.R_TOKEN,
-      accessToken: acessToken,
+  sendEmail(
+    {
+      subject: "[Simplifiga] Recuperação de senha",
+      text: ResetEmail(code).text,
+      html: ResetEmail(code).html,
+      email,
     },
-  });
+    (err, info) => {
+      if (err) {
+        console.log("Error: send-code:", err);
+        return res.status(200).json({ sucess: false });
+      }
 
-  const mailOptions = {
-    from: "SIMPLIFIGA <simplifiga@gmail.com>",
-    to: email,
-    subject: "[Simplifiga] Recuperação de conta",
-    text: ResetEmail(code, "text"),
-    html: ResetEmail(code, "html"),
-  };
+      if (info?.accepted?.includes(email)) {
+        return res.status(200).json({ sucess: true });
+      }
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log("Error: send-code:", err);
       return res.status(200).json({ sucess: false });
     }
-
-    if (info?.accepted?.includes(email)) {
-      return res.status(200).json({ sucess: true });
-    }
-
-    return res.status(200).json({ sucess: false });
-  });
+  );
 };
 
 function onError(method, code) {

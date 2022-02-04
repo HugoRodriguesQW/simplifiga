@@ -11,5 +11,9 @@
   "102": {
     "code": 102,
     "message": "Não foi possível encurtar a lista de links. Tente novamente."
+  },
+  "103": {
+    "code": 103,
+    "message": "Não foi possível enviar sua mensagem. Tente novamente."
   }
 }

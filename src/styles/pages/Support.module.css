@@ -6,12 +6,17 @@
   justify-content: center;
 }
 
-.supportContainer div {
+.supportContainer > div > button {
+  padding: 0.6rem;
+}
+
+.supportContainer > div {
   max-width: 960px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 2rem;
 }
 
 .supportContainer a {
@@ -19,4 +24,77 @@
   color: var(--white);
   padding: 1rem;
   border-radius: 5px;
+}
+
+.supportDualBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 4rem;
+  flex-flow: row wrap;
+}
+
+.loginBox {
+  flex: 0.5;
+  min-width: 195px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+  align-items: center;
+}
+
+.loginBox img {
+  width: 40%;
+  margin: 2rem;
+}
+
+.loginBox button {
+  padding: 0.4rem 1rem;
+}
+
+.formBox {
+  flex: 1;
+  min-width: 350px;
+}
+
+.formBox label {
+  font-size: clamp(1.5rem, 1.6vh, 2.4rem);
+  color: #000;
+  font-weight: 400;
+}
+
+.formBox button {
+  padding: 0.4rem 2rem;
+  float: right;
+}
+
+.formBox textarea {
+  width: 100%;
+  resize: none;
+  border-radius: 5px;
+}
+
+.formBox > div {
+  margin-bottom: 1rem;
+}
+
+.formBox input,
+.formBox textarea {
+  padding: 0.5rem;
+  font-size: 1.8rem;
+  margin-top: 0.6rem;
+}
+
+.formBox label {
+  user-select: none;
+}
+
+.logged input {
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
 }

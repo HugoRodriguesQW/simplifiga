@@ -11,7 +11,7 @@ import { clientEncoder } from "../../utils/crypto";
 import { Finder } from "./register";
 
 export default function Login({ serverKey, next }) {
-  const acceptableNext = ["checkout", "dashboard", "pricing"];
+  const acceptableNext = ["checkout", "dashboard", "pricing", "support"];
   const customNext = {
     index: "/",
   };
