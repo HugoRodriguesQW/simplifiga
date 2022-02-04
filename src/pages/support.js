@@ -29,7 +29,7 @@ export default function Support({ appToken }) {
   }
 
   function handleBack() {
-    Router.push("/");
+    Router.back();
   }
 
   async function sendEmail(data, { reset }) {

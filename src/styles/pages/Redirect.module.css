@@ -1,0 +1,38 @@
+.redirectContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 12rem;
+}
+
+.redirectBox {
+  user-select: none;
+  pointer-events: none;
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.redirectBox img {
+  max-width: 17rem;
+}
+
+.redirectBox h1 {
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.redirectBox h1 span {
+  z-index: 999999;
+  pointer-events: all;
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--blue);
+}

@@ -1,9 +1,31 @@
 import { Database } from "./api/database";
 import requestIp from "request-ip";
 import iplocate from "node-iplocate";
+import { Header } from "../components/Header";
+import styles from "../styles/pages/Redirect.module.css";
+import Router from "next/router";
 
 export default function RedirectPage(props) {
-  return <div>Destino não encontrado :(</div>;
+  function handleBack() {
+    Router.back();
+  }
+
+  return (
+    <div className={styles.redirectContainer}>
+      <Header
+        fixed
+        padding
+        routes={["/", "/pricing", "/support", "/developer", "/", "Sair"]}
+      />
+
+      <div className={styles.redirectBox}>
+        <img src="/icons/empty-folder.svg" alt="not-found" />
+        <h1>
+          Destino não encontrado <span onClick={handleBack}>voltar</span>
+        </h1>
+      </div>
+    </div>
+  );
 }
 
 export async function getServerSideProps({ query, req, res }) {
